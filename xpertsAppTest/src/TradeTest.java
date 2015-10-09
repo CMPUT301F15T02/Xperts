@@ -57,8 +57,8 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
         Service service4 = new Service("math tutoring");
         trade.addBorrowerService(service3);
         trade.addOwnerService(service4);
-        assertEquals(trade.hasBorrowerService(service3));
-        assertEquals(trade.hasOwnerService(service4));
+        assertEquals(trade.hasBorrowerService(service3), true);
+        assertEquals(trade.hasOwnerService(service4), true);
     }
 
     public void testDeleteTrade() {
@@ -77,10 +77,12 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
         Service service2 = new Service("haircut");
         trade.setTrade(service1, service2);
         User owner = new User();
-        trade.sendNotification(owner);
+        User borrower = new User();
+        borrower.createOffer(trade);
         owner.acceptTrade(trade);
         /* test that email sent to both owner and borrower and owner adds comments on how to continue */
-
+        assertEquals(owner.gotEmail(), true);
+        assertEquals(borrower.gotEmail(), true);
     }
 
     public void testBrowseMyTradesAsOwner() {
