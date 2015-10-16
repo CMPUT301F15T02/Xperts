@@ -18,7 +18,7 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
     }
 
 	public void testNotifyOwner() {
-		Trade trade = new Trade("Trade name");
+	Trade trade = new Trade("Trade name");
         //trade plumbing (borrower service) for a hair cut (owner service)
         Service service1 = new Service("plumbing");
         Service service2 = new Service("haircut");
