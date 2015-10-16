@@ -7,6 +7,27 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
     public TradeTest() {
         super(com.ualberta.kmbaker.project.MainActivity.class);
     }
+
+   public void testOfferTrade() {
+        Trade trade = new Trade("Trade name");
+        //trade plumbing (borrower service) for a hair cut (owner service)
+        Service service1 = new Service("plumbing");
+        Service service2 = new Service("haircut");
+        trade.setTrade(service1, service2);
+		assertNotNull(trade);
+    }
+
+	public void testNotifyOwner() {
+		Trade trade = new Trade("Trade name");
+        //trade plumbing (borrower service) for a hair cut (owner service)
+        Service service1 = new Service("plumbing");
+        Service service2 = new Service("haircut");
+        trade.setTrade(service1, service2);
+        User owner = new User();
+        trade.sendNotification(owner);
+		assertTrue(owner.hasNotification());
+	}
+
     public void testAcceptTrade() {
         Trade trade = new Trade("Trade name");
         //trade plumbing (borrower service) for a hair cut (owner service)
