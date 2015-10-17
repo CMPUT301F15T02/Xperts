@@ -3,16 +3,10 @@ public class ConfigurationTest extends ActivityInstrumentationTestCase2 implemen
     super(MainActivity.class);
   }
 
-  private Boolean imageDownloaded;
-
-  public void notifyDownloaded() {
-    imageDownloaded = Boolean.TRUE;
-  }
-
-  public void testDownloaded() {
-    imageDownloaded = Boolean.FALSE;
-    new DownloadManager(this).downloadImage(imageUrl);
-    assertTrue(imageDownloaded);
+  public void testToggleDownload() {
+    User user = new User("username");
+    user.getSettings().setToggleDownload(Boolean.TRUE);
+    assertTrue(user.getSettings().getToggleDownload());
   }
 
   private Boolean profileWasChanged;
