@@ -39,7 +39,7 @@ public class AddServiceActivity extends Activity {
 		TextView description = (TextView) findViewById(R.id.detailsDescriptionText);
 
 		Service newService = new Service();
-		newService.setId(Integer.parseInt(id.getText().toString()));
+		newService.setId(id.getText().toString());
 		newService.setName(name.getText().toString());
 		newService.setDescription(description.getText().toString());
 
