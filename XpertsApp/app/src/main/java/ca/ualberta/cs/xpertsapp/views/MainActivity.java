@@ -24,8 +24,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(self, ProfileActivity.class);
-				// TODO: CONVERT ID TO STRING
-				intent.putExtra(R.string.id_user_email, UserManager.sharedUserManager().findUser(R.string.id_local_user).getEmail());
+				intent.putExtra(self.getString(R.string.id_user_email), UserManager.sharedUserManager().findUser(self.getString(R.string.id_local_user)).getEmail());
 				self.startActivity(intent);
 			}
 		});

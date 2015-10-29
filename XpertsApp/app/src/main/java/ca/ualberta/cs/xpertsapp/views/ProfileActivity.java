@@ -26,8 +26,7 @@ public class ProfileActivity extends Activity {
 
 		// Load from Intent
 		Intent intent = getIntent();
-		// TODO: CONVERT ID TO STRING
-		String email = intent.getStringExtra(R.string.id_user_email);
+		String email = intent.getStringExtra(this.getString(R.string.id_user_email));
 		this.user = UserManager.sharedUserManager().findUser(email);
 	}
 
