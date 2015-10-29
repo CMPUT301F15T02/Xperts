@@ -1,5 +1,6 @@
 package ca.ualberta.cs.xpertsapp.models;
 
+import android.graphics.Bitmap;
 import android.graphics.Picture;
 
 import java.io.Serializable;
@@ -7,22 +8,24 @@ import java.util.ArrayList;
 
 public class Service implements Serializable {
 
-    private int id;
+
+    private String id;
     private String name;
     private String description;
     private Category category;
-    private ArrayList<Picture> photos;
+    private ArrayList<Bitmap> photos;
     private boolean shareable;
     private User owner;
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
+
 
     public String getName() {
         return name;
@@ -36,8 +39,17 @@ public class Service implements Serializable {
         return description;
     }
 
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean getShareable() {
+        return shareable;
+    }
+
+    public User getOwner() {
+        return owner;
     }
 
     public Category getCategory() {
