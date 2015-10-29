@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">XpertsApp</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_browse_services">BrowseServicesActivity</string>
+    <string name="esBaseURL">http://cmput301.softwareprocess.es:8080/cmput301f15t02/</string>
 </resources>
