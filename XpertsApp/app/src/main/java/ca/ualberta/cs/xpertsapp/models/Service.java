@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class Service implements Serializable {
 
-
     private String id;
     private String name;
     private String description;
