@@ -18,6 +18,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".views.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName=".views.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.MainActivity" />
+        </activity>
+        <activity
+            android:name=".views.EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:parentActivityName=".views.ProfileActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.ProfileActivity" />
+        </activity>
     </application>
 
 </manifest>

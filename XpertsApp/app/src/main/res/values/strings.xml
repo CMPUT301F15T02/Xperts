@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">XpertsApp</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_edit_profile">EditProfile</string>
 
     <string name="esBaseURL">http://cmput301.softwareprocess.es:8080/cmput301f15t02/</string>
+
+    <string name="mainActivity_MyProfile">My Profile</string>
+
+    <string name="editProfileActivty_AddImage">Add Photo</string>
 </resources>
