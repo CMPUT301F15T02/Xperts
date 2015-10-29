@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/Users/hammadjutt/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar"
+        jar="/Users/hammadjutt/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/pre-dexed/debug/gson-2.3.1-957fd50018e18844a6b80972eb002545e59d908e.jar" />
+        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
+        <dex dex="/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/pre-dexed/debug/gson-2.4-12dbbadc05c012d0429c877fe7f6abe2e33cc4da.jar" />
     </item>
 
 </items>
