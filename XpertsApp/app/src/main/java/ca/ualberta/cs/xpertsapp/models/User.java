@@ -15,6 +15,10 @@ public class User implements Serializable {
     private Picture picture = null;
     private ArrayList<Trade> tradeHistory = new ArrayList<Trade>();
 
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 
     public String getName() {
         return name;
@@ -43,5 +47,15 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return name + " (" + email + ")";
+    }
+
+    public ArrayList<User> getFriends() {
+        return friends;
+    }
+
+    public void addFriend(User user) {
+    }
+
+    public void removeFriend(User user2) {
     }
 }
