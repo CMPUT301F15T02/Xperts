@@ -17,7 +17,7 @@ public class TradeManager {
     private TradeManager() { }
 
     //?
-    public TradeManager sharedManager() {
+    public static TradeManager sharedManager() {
         if (instance == null) {
             instance = new TradeManager();
         }
