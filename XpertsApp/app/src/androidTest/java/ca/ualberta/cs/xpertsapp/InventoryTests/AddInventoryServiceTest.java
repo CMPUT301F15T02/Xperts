@@ -12,6 +12,7 @@ import ca.ualberta.cs.xpertsapp.models.Service;
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  */
 public class AddInventoryServiceTest extends ApplicationTestCase<Application> {
+
     public AddInventoryServiceTest() {
         super(Application.class);
 
@@ -47,5 +48,6 @@ public class AddInventoryServiceTest extends ApplicationTestCase<Application> {
 
         assertEquals(myServices, serviceManager.getServices());
     }
+
 
 }

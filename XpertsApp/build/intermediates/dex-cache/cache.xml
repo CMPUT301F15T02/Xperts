@@ -2,11 +2,33 @@
 <items version="2" >
 
     <item
-        jar="/Users/hammadjutt/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar"
+<<<<<<< HEAD
+        jar="/Users/hammadjutt/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.1/860340562250678d1a344907ac75754e259cdb14/hamcrest-core-1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="860340562250678d1a344907ac75754e259cdb14">
+        <dex dex="/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/pre-dexed/debug/hamcrest-core-1.1-71f06dd7284292c5b90723a9e8c162fb2d3d8100.jar" />
+    </item>
+    <item
+        jar="/Users/hammadjutt/.gradle/caches/modules-2/files-2.1/junit/junit-dep/4.10/64417b3bafdecd366afa514bd5beeae6c1f85ece/junit-dep-4.10.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="64417b3bafdecd366afa514bd5beeae6c1f85ece">
+        <dex dex="/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/pre-dexed/debug/junit-dep-4.10-5ac723f527f433f6724b3ebc2fd55bff8389d4b0.jar" />
+    </item>
+    <item
+        jar="/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/exploded-aar/com.android.support.test/testing-support-lib/0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2700b782e8c78b36636a15b0ed86126a96295de7">
+        <dex dex="/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/pre-dexed/debug/classes-6afdc7fa8b03b1c224584623dfb61ec2611c5eac.jar" />
+=======
+        jar="/cshome/kmbaker/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
-        <dex dex="/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/pre-dexed/debug/gson-2.4-12dbbadc05c012d0429c877fe7f6abe2e33cc4da.jar" />
+        <dex dex="/cshome/kmbaker/Xperts/XpertsApp/app/build/intermediates/pre-dexed/debug/gson-2.4-01c38ad87ba9f366d3a5d917d38215dc711abe70.jar" />
+>>>>>>> kathb
     </item>
 
 </items>
