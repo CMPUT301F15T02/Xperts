@@ -14,7 +14,7 @@ public class ServiceManager {
 
     private ServiceManager() { }
 
-    public static ServiceManager sharedServiceManager() {
+    public static ServiceManager sharedManager() {
         return ServiceManager.instance;
     }
 

@@ -22,7 +22,7 @@ public class AddInventoryServiceTest extends ApplicationTestCase<Application> {
         service1.setName(name);
         assertEquals(name, service1.getName());
         service1.setId(id);
-        ServiceManager serviceManager = ServiceManager.sharedServiceManager();
+        ServiceManager serviceManager = ServiceManager.sharedManager();
         serviceManager.addService(service1);
         assertEquals(service1, serviceManager.getService(id));
 
@@ -46,7 +46,6 @@ public class AddInventoryServiceTest extends ApplicationTestCase<Application> {
         serviceManager.clearCache();
 
         assertEquals(myServices, serviceManager.getServices());
-
     }
 
 }

@@ -5,8 +5,8 @@ import android.graphics.Picture;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 public class User implements Serializable {
+
     private String name;
     private String email;
     private String location;
@@ -15,6 +15,10 @@ public class User implements Serializable {
     private Picture picture = null;
     private ArrayList<Trade> tradeHistory = new ArrayList<Trade>();
 
+    public User(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
 
     public String getName() {
         return name;
@@ -40,8 +44,22 @@ public class User implements Serializable {
         services.add(service);
     }
 
+    public void removeService(Service service) {
+        services.remove(service);
+    }
+
     @Override
     public String toString() {
         return name + " (" + email + ")";
+    }
+
+    public ArrayList<User> getFriends() {
+        return friends;
+    }
+
+    public void addFriend(User user) {
+    }
+
+    public void removeFriend(User user) {
     }
 }
