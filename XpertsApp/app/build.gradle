@@ -4,6 +4,8 @@ android {
     compileSdkVersion 18
     buildToolsVersion "22.0.1"
     defaultConfig {
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
         applicationId "ca.ualberta.cs.xpertsapp"
         minSdkVersion 18
         targetSdkVersion 21
@@ -22,4 +24,12 @@ android {
 
 dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
+    // for UI Test
+    androidTestCompile 'com.android.support.test:runner:0.4'
+    // Set this dependency to use JUnit 4 rules
+    androidTestCompile 'com.android.support.test:rules:0.4'
+    // Set this dependency to build and run Espresso tests
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    // Set this dependency to build and run UI Automator tests
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 }
