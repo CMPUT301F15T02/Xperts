@@ -1,24 +1,54 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
+import android.widget.TextView;
+
 
 import ca.ualberta.cs.xpertsapp.R;
 
-public class BrowseServicesActivity extends Activity {
+public class BrowseServicesActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_services);
+
+        handleIntent(getIntent());
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+
+        handleIntent(intent);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_browse_services, menu);
+
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+
         return true;
     }
 
@@ -35,5 +65,19 @@ public class BrowseServicesActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void handleIntent (Intent intent) {
+        //if intent is a search, use query to search and filter data
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            TextView test = (TextView) findViewById(R.id.testText);
+
+            test.setText(query);
+
+
+            //use the query to search your data somehow
+        }
+        //otherwise display all items
     }
 }

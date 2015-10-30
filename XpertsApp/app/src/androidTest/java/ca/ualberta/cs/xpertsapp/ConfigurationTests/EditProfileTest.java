@@ -2,6 +2,7 @@ package ca.ualberta.cs.xpertsapp.ConfigurationTests;
 
 import android.app.Application;
 import android.test.ActivityInstrumentationTestCase2;
+import android.support.test.InstrumentationRegistry;
 import android.test.ApplicationTestCase;
 
 /**
@@ -11,4 +12,5 @@ public class EditProfileTest extends ActivityInstrumentationTestCase2 {
     public EditProfileTest() {
         super(ca.ualberta.cs.xpertsapp.views.MainActivity.class);
     }
+
 }
