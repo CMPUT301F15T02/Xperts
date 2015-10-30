@@ -3,7 +3,7 @@ package ca.ualberta.cs.xpertsapp.models;
 import java.util.ArrayList;
 import java.util.Date;
 
-
+/* need to implement isEditable() */
 public class Trade {
     private String id;
     private ArrayList<Service> borrowerServices = new ArrayList<Service>();
@@ -70,7 +70,7 @@ public class Trade {
 
     private Boolean isEditable() {
         //change this to check if owner is current user and status is pending and return correct bool
-        return Boolean.FALSE;
+        return null;
     }
 
     public void setTradeState(TradeState state) {
