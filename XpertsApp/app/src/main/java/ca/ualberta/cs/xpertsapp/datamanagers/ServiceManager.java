@@ -10,6 +10,13 @@ import ca.ualberta.cs.xpertsapp.models.Service;
 public class ServiceManager {
 
     private Map<String, Service> services = new HashMap<String, Service>();
+    private static ServiceManager instance = new ServiceManager();
+
+    private ServiceManager() { }
+
+    public static ServiceManager sharedServiceManager() {
+        return ServiceManager.instance;
+    }
 
     public void addService(Service service) {
         services.put(service.getId(), service);

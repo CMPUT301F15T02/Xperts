@@ -22,7 +22,7 @@ public class AddInventoryServiceTest extends ApplicationTestCase<Application> {
         service1.setName(name);
         assertEquals(name, service1.getName());
         service1.setId(id);
-        ServiceManager serviceManager = new ServiceManager();
+        ServiceManager serviceManager = ServiceManager.sharedServiceManager();
         serviceManager.addService(service1);
         assertEquals(service1, serviceManager.getService(id));
 
