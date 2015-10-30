@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import ca.ualberta.cs.xpertsapp.R;
-import ca.ualberta.cs.xpertsapp.controllers.UsersController;
+import ca.ualberta.cs.xpertsapp.datamanagers.IOManager;
 import ca.ualberta.cs.xpertsapp.models.Service;
 import ca.ualberta.cs.xpertsapp.models.User;
 import ca.ualberta.cs.xpertsapp.models.Users;
@@ -14,7 +14,7 @@ import ca.ualberta.cs.xpertsapp.models.Users;
 
 public class AddServiceActivity extends Activity {
 
-	private UsersController usersController;
+	private IOManager ioManager;
 	private Users users;
 	private User user;
 
@@ -24,15 +24,17 @@ public class AddServiceActivity extends Activity {
 		setContentView(R.layout.activity_add_service);
 
 		users = new Users();
-		usersController = new UsersController(users);
+		ioManager = new IOManager(this);
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
+
 		user = (User) getIntent().getExtras().getSerializable("User");
 	}
 
+	// Button's function
 	public void saveService(View view) {
 		TextView id = (TextView) findViewById(R.id.detailsIdText);
 		TextView name = (TextView) findViewById(R.id.detailsNameText);
@@ -42,7 +44,6 @@ public class AddServiceActivity extends Activity {
 		newService.setId(id.getText().toString());
 		newService.setName(name.getText().toString());
 		newService.setDescription(description.getText().toString());
-
 
 		user.addService(newService);
 		// Execute the thread to write to server
@@ -59,7 +60,7 @@ public class AddServiceActivity extends Activity {
 
 		@Override
 		public void run() {
-			usersController.addUser(user);
+			ioManager.addUserToServer(user);
 
 			// Give some time to get updated info
 			try {

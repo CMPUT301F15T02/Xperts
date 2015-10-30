@@ -8,15 +8,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 import ca.ualberta.cs.xpertsapp.R;
-import ca.ualberta.cs.xpertsapp.controllers.UsersController;
 import ca.ualberta.cs.xpertsapp.datamanagers.IOManager;
 import ca.ualberta.cs.xpertsapp.models.User;
+import ca.ualberta.cs.xpertsapp.models.Users;
 
 public class MainActivity extends Activity {
 
-    private UsersController usersController;
     private IOManager ioManager;
     private User user;
+    private Users users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
 
+    // Button's function
     public void viewServices(View view) {
         // Create test user
         /*User user = new User();
@@ -34,13 +35,28 @@ public class MainActivity extends Activity {
         thread.start();*/
 
         // Search user by my email
-        ioManager = new IOManager();
-        ioManager.search("*");
+        ioManager = new IOManager(this);
         // Need change email here
         Thread thread = new GetThread("hindle");
         thread.start();
     }
 
+    // If you need list all users
+    class SearchThread extends Thread {
+        private String search;
+
+        public SearchThread(String search) {
+            this.search = search;
+        }
+
+        @Override
+        public void run() {
+            users.clear();
+            users.addAll(ioManager.searchUsers(search, null));
+        }
+    }
+
+    // Search only a specific user
     class GetThread extends Thread {
         private String email;
 
@@ -51,13 +67,6 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             user = ioManager.getUser(email);
-
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
 
             runOnUiThread(doFinishGet);
         }
@@ -71,6 +80,7 @@ public class MainActivity extends Activity {
         }
     };
 
+    // If you need add a user
     class AddThread extends Thread {
         private User user;
 
@@ -80,7 +90,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void run() {
-            usersController.addUser(user);
+            ioManager.addUserToServer(user);
 
             // Give some time to get updated info
             try {

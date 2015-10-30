@@ -15,7 +15,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ca.ualberta.cs.xpertsapp.R;
-import ca.ualberta.cs.xpertsapp.controllers.UsersController;
 import ca.ualberta.cs.xpertsapp.datamanagers.IOManager;
 import ca.ualberta.cs.xpertsapp.interfaces.Observable;
 import ca.ualberta.cs.xpertsapp.interfaces.Observer;
@@ -29,7 +28,6 @@ public class ViewServicesActivity extends Activity implements Observer {
 	private String userEmail;
 	private User user;
 	private Users users;
-	private UsersController usersController;
 	private ArrayList<Service> services;
 	private ListView serviceList;
 	private ArrayAdapter<Service> servicesViewAdapter;
@@ -43,18 +41,15 @@ public class ViewServicesActivity extends Activity implements Observer {
 
 		serviceList = (ListView) findViewById(R.id.serviceList);
 		users = new Users();
-		usersController = new UsersController(users);
+		ioManager = new IOManager(this);
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 
-		// Search user by email
-		ioManager = new IOManager();
-		ioManager.search("*");
-
 		userEmail = getIntent().getExtras().getString("EMAIL");
+		// Search user by email
 		Thread thread = new GetThread(userEmail);
 		thread.start();
 
@@ -82,7 +77,8 @@ public class ViewServicesActivity extends Activity implements Observer {
 
 				services.remove(position);
 
-				Thread thread = new ModifyThread(user);
+				// Thread to overide user
+				Thread thread = new AddThread(user);
 				thread.start();
 
 				return true;
@@ -108,22 +104,23 @@ public class ViewServicesActivity extends Activity implements Observer {
 		runOnUiThread(doUpdateGUIList);
 	}
 
+	// Button's function
 	public void add(View view) {
 		Intent intent = new Intent(mContext, AddServiceActivity.class);
 		intent.putExtra("User", user);
 		startActivity(intent);
 	}
 
-	class ModifyThread extends Thread {
+	class AddThread extends Thread {
 		private User user;
 
-		public ModifyThread(User user) {
+		public AddThread(User user) {
 			this.user = user;
 		}
 
 		@Override
 		public void run() {
-			usersController.addUser(user);
+			ioManager.addUserToServer(user);
 
 			// Give some time to get updated info
 			try {
@@ -152,13 +149,6 @@ public class ViewServicesActivity extends Activity implements Observer {
 		@Override
 		public void run() {
 			user = ioManager.getUser(email);
-
-			// Give some time to get updated info
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 
 			runOnUiThread(doFinishGet);
 		}
