@@ -60,10 +60,7 @@ public class User implements Serializable {
     public void addFriend(User user) {
     }
 
-<<<<<<< HEAD
     public void removeFriend(User user) {
-=======
-    public void removeFriend(User user2) {
->>>>>>> d851e0410b604342a9fa91dc54919e9bc069977a
+
     }
 }
