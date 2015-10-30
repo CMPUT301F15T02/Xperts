@@ -1,24 +1,24 @@
-package ca.ualberta.cs.xpertsapp.model.manager;
+package ca.ualberta.cs.xpertsapp.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observer;
 
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
-import ca.ualberta.cs.xpertsapp.model.Constants;
-import ca.ualberta.cs.xpertsapp.model.User;
 
 public class UserManager implements IObserver {
 	public static UserManager instance = new UserManager();
 
-	public static UserManager sharedUserManager() {
-		return UserManager.instance;
+	private UserManager() {
 	}
 
-	private UserManager() {
+	/**
+	 * @return The singleton instance of UserManager
+	 */
+	public static UserManager sharedManager() {
+		return UserManager.instance;
 	}
 
 	private Map<String, User> users = new HashMap<String, User>();
@@ -29,6 +29,11 @@ public class UserManager implements IObserver {
 			users.add(user);
 		}
 		return users;
+	}
+
+	private void addUser(User user) {
+		user.addObserver(this);
+		this.users.put(user.getID(), user);
 	}
 
 	public User localUser() {
@@ -42,7 +47,13 @@ public class UserManager implements IObserver {
 		if (this.users.containsKey(id)) {
 			return this.users.get(id);
 		}
-		// TODO: Load from IOManager
+		String loadedData = IOManager.sharedManager().fetchData("");
+		if (loadedData.equals(Constants.nullDataString())) {
+			User newUser = new User(Constants.deviceUUID(), "", "");
+			this.addUser(newUser);
+			return newUser;
+		}
+		// TODO: Load loaded data
 		return null;
 	}
 

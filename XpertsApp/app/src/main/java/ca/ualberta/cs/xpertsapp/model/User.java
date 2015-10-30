@@ -2,7 +2,6 @@ package ca.ualberta.cs.xpertsapp.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
@@ -30,8 +29,10 @@ public class User implements IObservable {
 	}
 
 	public void setName(String name) {
-		this.name = name;
-		this.notifyObservers();
+		if (this.isEditable()) {
+			this.name = name;
+			this.notifyObservers();
+		}
 	}
 
 	public String getEmail() {
@@ -39,8 +40,10 @@ public class User implements IObservable {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
-		this.notifyObservers();
+		if (this.isEditable()) {
+			this.email = email;
+			this.notifyObservers();
+		}
 	}
 
 	public List<User> getFriends() {
@@ -49,13 +52,17 @@ public class User implements IObservable {
 	}
 
 	public void addFriend(String id) {
-		this.friends.add(id);
-		this.notifyObservers();
+		if (this.isEditable()) {
+			this.friends.add(id);
+			this.notifyObservers();
+		}
 	}
 
 	public void removeFriend(String id) {
-		this.friends.remove(id);
-		this.notifyObservers();
+		if (this.isEditable()) {
+			this.friends.remove(id);
+			this.notifyObservers();
+		}
 	}
 
 	public List<Service> getServices() {
@@ -64,13 +71,17 @@ public class User implements IObservable {
 	}
 
 	public void addService(String id) {
-		this.services.add(id);
-		this.notifyObservers();
+		if (this.isEditable()) {
+			this.services.add(id);
+			this.notifyObservers();
+		}
 	}
 
 	public void removeService(String id) {
-		this.services.remove(id);
-		this.notifyObservers();
+		if (this.isEditable()) {
+			this.services.remove(id);
+			this.notifyObservers();
+		}
 	}
 
 	public List<Trade> getTrades() {
@@ -81,6 +92,10 @@ public class User implements IObservable {
 	public void addTrade(String id) {
 		this.trades.add(id);
 		this.notifyObservers();
+	}
+
+	public boolean isEditable() {
+		return this == UserManager.sharedManager().localUser();
 	}
 
 	/// Observable
