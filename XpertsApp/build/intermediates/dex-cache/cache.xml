@@ -2,6 +2,7 @@
 <items version="2" >
 
     <item
+<<<<<<< HEAD
         jar="/Users/hammadjutt/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.1/860340562250678d1a344907ac75754e259cdb14/hamcrest-core-1.1.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -21,6 +22,13 @@
         revision="22.0.1"
         sha1="2700b782e8c78b36636a15b0ed86126a96295de7">
         <dex dex="/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/pre-dexed/debug/classes-6afdc7fa8b03b1c224584623dfb61ec2611c5eac.jar" />
+=======
+        jar="/cshome/kmbaker/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.4/695b63d702f505b9b916e02272e3b6381bade7f/gson-2.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0695b63d702f505b9b916e02272e3b6381bade7f">
+        <dex dex="/cshome/kmbaker/Xperts/XpertsApp/app/build/intermediates/pre-dexed/debug/gson-2.4-01c38ad87ba9f366d3a5d917d38215dc711abe70.jar" />
+>>>>>>> kathb
     </item>
 
 </items>
