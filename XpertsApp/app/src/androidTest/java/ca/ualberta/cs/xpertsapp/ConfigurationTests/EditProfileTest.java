@@ -16,10 +16,6 @@ public class EditProfileTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testProfileChanged() {
-        /*User user = new User();
-        profileWasChanged = Boolean.FALSE;
-        user.addObserver(this);
-        user.setName("test");
-        assertTrue(profileWasChanged);*/
+
     }
 }
