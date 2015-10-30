@@ -12,10 +12,12 @@ public class Trade {
     private Date updated;
     private Boolean isCounter;
     private TradeState status;
+    private Boolean isEditable;
 
     public Trade(String id, Boolean isCounter) {
         this.id = id;
         this.isCounter = isCounter;
+        status = new TradeStatePending();
     }
 
     public String getId() {
@@ -31,46 +33,63 @@ public class Trade {
     }
 
     public ArrayList<Service> getOwnerServices() {
-        return null;
+        return ownerServices;
     }
 
     public void addOwnerService(Service service) {
+        ownerServices.add(service);
     }
 
     public void removeOwnerService(Service service) {
-
+        ownerServices.remove(service);
     }
 
     public ArrayList<Service> getBorrowerServices() {
-        return null;
+        return borrowerServices;
     }
 
     public void addBorrowerService(Service service) {
-
+        borrowerServices.add(service);
     }
 
     public void removeBorrowerService(Service service) {
-
+        borrowerServices.remove(service);
     }
 
     public Date getProposedDate() {
-        return null;
+        return start;
     }
 
     public Date getLastUpdatedDate() {
-        return null;
+        return updated;
     }
 
     public Boolean isCounterOffer() {
         return isCounter;
     }
-    /*
-    public TradeStatus getStatus() {
-        return null;
-    }*/
 
     private Boolean isEditable() {
-        return null;
+        //change this to check if owner is current user and status is pending and return correct bool
+        return Boolean.FALSE;
     }
 
+    public void setTradeState(TradeState state) {
+        status = state;
+    }
+
+    public TradeState getTradeState() {
+        return status;
+    }
+
+    public void accept() {
+        status.accept(this);
+    }
+
+    public void decline() {
+        status.decline(this);
+    }
+
+    public void cancel() {
+        status.cancel(this);
+    }
 }
