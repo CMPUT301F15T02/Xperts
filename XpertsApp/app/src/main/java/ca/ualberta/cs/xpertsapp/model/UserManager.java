@@ -1,5 +1,8 @@
 package ca.ualberta.cs.xpertsapp.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +10,7 @@ import java.util.Map;
 
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
+import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 
 public class UserManager implements IObserver {
 	public static UserManager instance = new UserManager();
@@ -37,35 +41,40 @@ public class UserManager implements IObserver {
 	}
 
 	public User localUser() {
-		return this.getUser(Constants.localUserString());
+		return this.getUser(Constants.deviceUUID());
 	}
 
 	public User getUser(String id) {
-		if (id.equals(Constants.localUserString())) {
-			return this.getUser(Constants.deviceUUID());
-		}
 		if (this.users.containsKey(id)) {
 			return this.users.get(id);
 		}
-		String loadedData = IOManager.sharedManager().fetchData("");
-		if (loadedData.equals(Constants.nullDataString())) {
-			User newUser = new User(Constants.deviceUUID(), "", "");
-			this.addUser(newUser);
-			return newUser;
+		String loadedData = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + id);
+		try {
+			SearchHit<User> loadedUser = (new Gson()).fromJson(loadedData, new TypeToken<SearchHit<User>>() {
+			}.getType());
+			if (loadedUser.isFound()) {
+				this.addUser(loadedUser.getSource());
+				return loadedUser.getSource();
+			} else {
+				User newUser = new User(Constants.deviceUUID(), "", "");
+				this.addUser(newUser);
+				return newUser;
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		// TODO: Load loaded data
-		return null;
 	}
 
 	public void clearCache() {
 		this.users.clear();
 		// Make sure to reload the local user
-		this.getUser(Constants.localUserString());
+		this.localUser();
 	}
 
 	/// Observer
 
 	public void notify(IObservable observable) {
-		// TODO: Save the changes
+		User user = (User) observable;
+		IOManager.sharedManager().storeData((new Gson()).toJson(user), Constants.serverUserExtension());
 	}
 }

@@ -2,6 +2,7 @@ package ca.ualberta.cs.xpertsapp;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
+import android.util.Log;
 
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
@@ -12,10 +13,5 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
 public class ApplicationTest extends ApplicationTestCase<Application> {
 	public ApplicationTest() {
 		super(Application.class);
-	}
-
-	public void testModel() {
-		User user = UserManager.sharedManager().localUser();
-
 	}
 }

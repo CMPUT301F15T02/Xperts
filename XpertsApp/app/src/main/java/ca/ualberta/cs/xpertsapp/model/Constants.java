@@ -1,28 +1,45 @@
 package ca.ualberta.cs.xpertsapp.model;
 
-import android.app.Activity;
-import android.content.Context;
-import android.telephony.TelephonyManager;
+import android.provider.Settings.Secure;
+
+import ca.ualberta.cs.xpertsapp.MyApplication;
 
 /**
  * A class with only static methods which are used to retrieve constant strings
  */
 public class Constants {
 	/**
-	 * @return The string used to represent wanting to load the local user
-	 */
-	public static String localUserString() { return "ølocal¶userø"; }
-
-	/**
 	 * @return The string representing the devices UUID
 	 */
 	public static String deviceUUID() {
-		TelephonyManager tManager = (TelephonyManager)(new Activity()).getSystemService(Context.TELEPHONY_SERVICE);
-		return tManager.getDeviceId();
+		return Secure.getString(MyApplication.getAppContext().getContentResolver(), Secure.ANDROID_ID);
 	}
 
 	/**
-	 * @return The string used to represent the absence of data from the IOManager
+	 * @return The base URL of the server
 	 */
-	public static String nullDataString() { return "øøøøøøøøøø"; }
+	public static String serverBaseURL() {
+		return "http://cmput301.softwareprocess.es:8080/cmput301f15t02/";
+	}
+
+	/**
+	 * @return The URL extension for Users
+	 */
+	public static String serverUserExtension() {
+		return "users/";
+	}
+
+	/**
+	 * @return The URL extension for Services
+	 */
+	public static String serverServiceExtension() {
+		return "services/";
+	}
+
+	/**
+	 * @return The URL extension for Trades
+	 */
+	public static String serverTradeExtension() {
+		return "trades";
+	}
 }
