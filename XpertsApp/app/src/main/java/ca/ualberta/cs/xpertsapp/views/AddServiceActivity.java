@@ -30,7 +30,6 @@ public class AddServiceActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		user = (User) getIntent().getExtras().getSerializable("User");
 	}
 
 	public void saveService(View view) {

@@ -10,6 +10,7 @@ import ca.ualberta.cs.xpertsapp.models.Service;
 
 public class ServiceDetailsActivity extends Activity {
 
+
 	private Service service;
 
 	@Override

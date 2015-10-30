@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.UsersController;
@@ -22,9 +23,37 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button MyProfileBtn = (Button) findViewById(R.id.MyProfileBtn);
+        MyProfileBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ViewProfileActivity.class));
+            }
+        });
+
+        Button BrowseBtn = (Button) findViewById(R.id.BrowseBtn);
+        BrowseBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BrowseServicesActivity.class));
+            }
+        });
+
+        Button TradesBtn = (Button) findViewById(R.id.TradesBtn);
+        TradesBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TradesActivity.class));
+            }
+        });
+
+        Button FriendsBtn = (Button) findViewById(R.id.FriendsBtn);
+        FriendsBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FriendsActivity.class));
+            }
+        });
     }
 
-    public void viewServices(View view) {
+    public void viewProfile(View view) {
         // Create test user
         /*User user = new User();
         user.setEmail("hindle");
@@ -65,7 +94,7 @@ public class MainActivity extends Activity {
 
     private Runnable doFinishGet = new Runnable() {
         public void run() {
-            Intent intent = new Intent(MainActivity.this, ViewServicesActivity.class);
+            Intent intent = new Intent(MainActivity.this, ViewProfileActivity.class);
             intent.putExtra("EMAIL", user.getEmail());
             startActivity(intent);
         }
