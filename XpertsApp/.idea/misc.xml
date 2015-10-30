@@ -3,6 +3,7 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+<<<<<<< HEAD
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" value="/../temp" />
     <option name="OPTION_SCOPE" value="protected" />
@@ -21,6 +22,8 @@
     <option name="OPEN_IN_BROWSER" value="true" />
     <option name="OPTION_INCLUDE_LIBS" value="false" />
   </component>
+=======
+>>>>>>> 3bf6c24e61cf1185cbfadd1d43661add76fb8a14
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
