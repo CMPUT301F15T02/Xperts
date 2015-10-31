@@ -31,10 +31,9 @@ public class User implements IObservable {
 	}
 
 	public void setName(String name) {
-		if (this.isEditable()) {
-			this.name = name;
-			this.notifyObservers();
-		}
+		assert this.isEditable();
+		this.name = name;
+		this.notifyObservers();
 	}
 
 	public String getContactInfo() {
@@ -42,10 +41,9 @@ public class User implements IObservable {
 	}
 
 	public void setContactInfo(String contactInfo) {
-		if (this.isEditable()) {
-			this.contactInfo = contactInfo;
-			this.notifyObservers();
-		}
+		assert this.isEditable();
+		this.contactInfo = contactInfo;
+		this.notifyObservers();
 	}
 
 	public List<User> getFriends() {
@@ -54,17 +52,15 @@ public class User implements IObservable {
 	}
 
 	public void addFriend(String id) {
-		if (this.isEditable()) {
-			this.friends.add(id);
-			this.notifyObservers();
-		}
+		assert this.isEditable();
+		this.friends.add(id);
+		this.notifyObservers();
 	}
 
 	public void removeFriend(String id) {
-		if (this.isEditable()) {
-			this.friends.remove(id);
-			this.notifyObservers();
-		}
+		assert this.isEditable();
+		this.friends.remove(id);
+		this.notifyObservers();
 	}
 
 	public List<Service> getServices() {
@@ -73,17 +69,15 @@ public class User implements IObservable {
 	}
 
 	public void addService(String id) {
-		if (this.isEditable()) {
-			this.services.add(id);
-			this.notifyObservers();
-		}
+		assert this.isEditable();
+		this.services.add(id);
+		this.notifyObservers();
 	}
 
 	public void removeService(String id) {
-		if (this.isEditable()) {
-			this.services.remove(id);
-			this.notifyObservers();
-		}
+		assert this.isEditable();
+		this.services.remove(id);
+		this.notifyObservers();
 	}
 
 	public List<Trade> getTrades() {
@@ -96,7 +90,7 @@ public class User implements IObservable {
 		this.notifyObservers();
 	}
 
-	public boolean isEditable() {
+	private boolean isEditable() {
 		return this == UserManager.sharedManager().localUser();
 	}
 
