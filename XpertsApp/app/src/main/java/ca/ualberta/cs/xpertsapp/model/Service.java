@@ -31,7 +31,7 @@ public class Service implements IObservable {
 	}
 
 	public void setName() {
-		
+
 	}
 
 	public String getDescription() {
