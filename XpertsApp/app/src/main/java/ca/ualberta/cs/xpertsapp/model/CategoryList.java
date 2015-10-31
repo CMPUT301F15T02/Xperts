@@ -4,7 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryList {
-	private static String[] categoryNames = {""};
+	private static String[] categoryNames = {
+			"ACCOUNTING",
+			"CONSTRUCTION",
+			"COMPUTER",
+			"FITNESS",
+			"GENERAL LABOUR",
+			"HEALTHCARE",
+			"LEGAL",
+			"MUSIC",
+			"TUTORING",
+			"OTHER"
+	};
 	private List<Category> categories = new ArrayList<Category>();
 
 	public List<Category> getCategories() {
@@ -17,10 +28,14 @@ public class CategoryList {
 
 	// Singleton
 	private static CategoryList instance = new CategoryList();
+
 	private CategoryList() {
 		for (String name : CategoryList.categoryNames) {
 			this.categories.add(new Category(name));
 		}
 	}
-	public static CategoryList sharedCategoryList() { return CategoryList.instance; }
+
+	public static CategoryList sharedCategoryList() {
+		return CategoryList.instance;
+	}
 }
