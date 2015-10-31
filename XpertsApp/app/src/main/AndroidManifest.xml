@@ -21,7 +21,7 @@
         <activity android:name=".views.ViewServicesActivity"/>
         <activity android:name=".views.ServiceDetailsActivity"/>
         <activity android:name=".views.AddServiceActivity"/>
-
+        <activity android:name=".views.ChangeProfileActivity"/>
     </application>
 
 </manifest>

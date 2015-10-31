@@ -7,6 +7,7 @@ import ca.ualberta.cs.xpertsapp.interfaces.Observer;
 
 // Code from cmput301's lab
 public class Users extends ArrayList<User> implements Observable {
+
 	private volatile ArrayList<Observer> observers = new ArrayList<Observer>();
 	private static final String RESOURCE_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t02/user/";
 	private static final String SEARCH_URL = "http://cmput301.softwareprocess.es:8080/cmput301f15t02/user/_search";

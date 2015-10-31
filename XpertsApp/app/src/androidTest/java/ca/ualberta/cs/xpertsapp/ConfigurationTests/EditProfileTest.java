@@ -1,13 +1,12 @@
 package ca.ualberta.cs.xpertsapp.ConfigurationTests;
 
-import android.app.Activity;
-import android.app.Application;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ApplicationTestCase;
-import android.widget.Button;
 
+import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.datamanagers.IOManager;
 import ca.ualberta.cs.xpertsapp.models.User;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
+import ca.ualberta.cs.xpertsapp.models.Users;
+import ca.ualberta.cs.xpertsapp.views.ChangeProfileActivity;
 import android.support.test.InstrumentationRegistry;
 
 import org.junit.Before;
@@ -20,14 +19,12 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
-public class EditProfileTest extends ActivityInstrumentationTestCase2<MainActivity> {
-    private MainActivity mActivity;
+
+public class EditProfileTest extends ActivityInstrumentationTestCase2<ChangeProfileActivity> {
+    private ChangeProfileActivity mActivity;
 
     public EditProfileTest() {
-        super(MainActivity.class);
+        super(ChangeProfileActivity.class);
     }
 
     @Before
@@ -38,17 +35,19 @@ public class EditProfileTest extends ActivityInstrumentationTestCase2<MainActivi
     }
 
     public void testProfileChanged() {
-        User user = new User();
-        //profileWasChanged = Boolean.FALSE;
-        //user.addObserver(this);
-        user.setName("test");
-        //assertTrue(profileWasChanged);*/
+        // Load user from local
+        Users users = new IOManager(mActivity).loadFromFile();
+        User user = users.get(0);
+        user.setName("testName");
 
         onView(withId(R.id.editTextName))
                 .perform(typeText("newName"), closeSoftKeyboard());
         onView(withId(R.id.buttonChangeName)).perform(click());
 
         // Check that user's name was changed
+        users = new IOManager(mActivity).loadFromFile();
+        user = users.get(0);
+
         assertEquals("newName", user.getName());
     }
 }
