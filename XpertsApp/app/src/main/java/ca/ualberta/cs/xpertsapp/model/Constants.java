@@ -40,6 +40,6 @@ public class Constants {
 	 * @return The URL extension for Trades
 	 */
 	public static String serverTradeExtension() {
-		return "trades";
+		return "trades/";
 	}
 }
