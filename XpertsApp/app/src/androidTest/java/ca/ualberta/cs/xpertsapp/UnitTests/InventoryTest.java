@@ -10,6 +10,7 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
 public class InventoryTest extends TestCase {
 	// test_01_04_01 and test_01_05_01 cover the rest of this case
 	public void test_01_01_01() {
+		// Test adding a service
 		User user = UserManager.sharedManager().localUser();
 		Service newService = ServiceManager.newService(user.getID());
 		newService.setName("some new service");
