@@ -96,7 +96,7 @@ public class Trade implements IObservable {
 		this.state = state;
 	}
 
-	public boolean isEditable() {
+	private boolean isEditable() {
 		return this.getOwner() == UserManager.sharedManager().localUser();
 	}
 
