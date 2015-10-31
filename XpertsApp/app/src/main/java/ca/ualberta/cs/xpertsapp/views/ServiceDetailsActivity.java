@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import ca.ualberta.cs.xpertsapp.R;
-import ca.ualberta.cs.xpertsapp.models.Service;
+import ca.ualberta.cs.xpertsapp.model.Service;
 
 
 public class ServiceDetailsActivity extends Activity {
