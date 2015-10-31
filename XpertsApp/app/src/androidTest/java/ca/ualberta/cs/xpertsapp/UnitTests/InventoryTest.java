@@ -37,4 +37,6 @@ public class InventoryTest extends TestCase {
 		// TODO: Test settings a category and make sure there are only 10
 		assertTrue(false);
 	}
+
+	// 01_07_01 is not model
 }
