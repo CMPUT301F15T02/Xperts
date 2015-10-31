@@ -10,6 +10,7 @@ public class User implements IObservable {
 	private String id;
 	private String name = "";
 	private String contactInfo = "";
+	private String location = "";
 	private List<String> friends = new ArrayList<String>();
 	private List<String> services = new ArrayList<String>();
 	private List<String> trades = new ArrayList<String>();
@@ -43,6 +44,16 @@ public class User implements IObservable {
 	public void setContactInfo(String contactInfo) {
 		if (!this.isEditable()) throw new AssertionError();
 		this.contactInfo = contactInfo;
+		this.notifyObservers();
+	}
+
+	public String getLocation() {
+		return this.location;
+	}
+
+	public void setLocation(String location) {
+		if (!this.isEditable()) throw new AssertionError();
+		this.location = location;
 		this.notifyObservers();
 	}
 
