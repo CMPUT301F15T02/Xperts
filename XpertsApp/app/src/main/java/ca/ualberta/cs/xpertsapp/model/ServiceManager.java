@@ -24,7 +24,7 @@ public class ServiceManager implements IObserver {
 		return new ArrayList<Service>(this.services.values());
 	}
 
-	public void addService(Service service) {
+	private void addService(Service service) {
 		service.addObserver(this);
 		this.services.put(service.getID(), service);
 	}

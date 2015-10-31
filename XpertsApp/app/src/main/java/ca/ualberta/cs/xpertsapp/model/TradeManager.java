@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
@@ -29,9 +30,9 @@ public class TradeManager implements IObserver {
 		return null;
 	}
 
-	public Trade newTrade(String borrower) {
-		// TODO:
-		return null;
+	public Trade newTrade(String borrower, boolean isCounter) {
+		Trade trade = new Trade(UUID.randomUUID().toString(), isCounter, UserManager.sharedManager().localUser().getID(), borrower);
+		return trade;
 	}
 
 	public void clearCache() {

@@ -2,10 +2,22 @@ package ca.ualberta.cs.xpertsapp.UnitTests;
 
 import junit.framework.TestCase;
 
+import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.ServiceManager;
+import ca.ualberta.cs.xpertsapp.model.User;
+import ca.ualberta.cs.xpertsapp.model.UserManager;
+
 public class InventoryTest extends TestCase {
+	// test_01_04_01 and test_01_05_01 cover the rest of this case
 	public void test_01_01_01() {
-		// TODO: Test adding a service
-		assertTrue(false);
+		User user = UserManager.sharedManager().localUser();
+		Service newService = ServiceManager.newService(user.getID());
+		newService.setName("some new service");
+		user.addService(newService.getID());
+
+		assertTrue(user.getServices().size() == 1);
+		assertTrue(ServiceManager.sharedManager().getServices().size() == 1);
+		assertTrue(ServiceManager.sharedManager().getServices().get(0) == newService);
 	}
 
 	public void test_01_02_01() {
