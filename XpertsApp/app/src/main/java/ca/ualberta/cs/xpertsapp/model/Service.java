@@ -30,7 +30,9 @@ public class Service implements IObservable {
 		return name;
 	}
 
-	public void setNam
+	public void setName() {
+		
+	}
 
 	public String getDescription() {
 		return description;
