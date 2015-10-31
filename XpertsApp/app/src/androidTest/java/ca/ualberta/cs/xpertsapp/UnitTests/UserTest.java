@@ -2,8 +2,6 @@ package ca.ualberta.cs.xpertsapp.UnitTests;
 
 import junit.framework.TestCase;
 
-import ca.ualberta.cs.xpertsapp.models.User;
-
 /**
  * Created by hammadjutt on 2015-10-29.
  */

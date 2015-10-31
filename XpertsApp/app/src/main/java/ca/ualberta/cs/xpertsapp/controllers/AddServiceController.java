@@ -1,7 +1,7 @@
 package ca.ualberta.cs.xpertsapp.controllers;
 
-import ca.ualberta.cs.xpertsapp.models.Service;
-import ca.ualberta.cs.xpertsapp.models.User;
+import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.User;
 
 public class AddServiceController {
 
@@ -9,10 +9,10 @@ public class AddServiceController {
     public Service service;
 
     public void addService(Service service) {
-        owner.addService(service);
+        owner.addService("A");
     }
 
     public void removeService(Service service) {
-        owner.removeService(service);
+        owner.removeService("A");
     }
 }

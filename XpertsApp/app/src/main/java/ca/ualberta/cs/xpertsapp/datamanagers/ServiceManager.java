@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.ualberta.cs.xpertsapp.models.Service;
+import ca.ualberta.cs.xpertsapp.model.Service;
 
 public class ServiceManager {
 
@@ -19,7 +19,6 @@ public class ServiceManager {
     }
 
     public void addService(Service service) {
-        services.put(service.getId(), service);
     }
 
     public Service getService(String id) {

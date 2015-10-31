@@ -8,7 +8,6 @@ import ca.ualberta.cs.xpertsapp.models.Trade;
 import ca.ualberta.cs.xpertsapp.models.TradeStateAccepted;
 import ca.ualberta.cs.xpertsapp.models.TradeStateDeclined;
 import ca.ualberta.cs.xpertsapp.models.TradeStatePending;
-import ca.ualberta.cs.xpertsapp.models.User;
 
 /**
  * Created by hammadjutt on 2015-10-29.
