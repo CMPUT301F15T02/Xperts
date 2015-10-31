@@ -31,7 +31,7 @@ public class User implements IObservable {
 	}
 
 	public void setName(String name) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.name = name;
 		this.notifyObservers();
 	}
@@ -41,7 +41,7 @@ public class User implements IObservable {
 	}
 
 	public void setContactInfo(String contactInfo) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.contactInfo = contactInfo;
 		this.notifyObservers();
 	}
@@ -52,13 +52,13 @@ public class User implements IObservable {
 	}
 
 	public void addFriend(String id) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.friends.add(id);
 		this.notifyObservers();
 	}
 
 	public void removeFriend(String id) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.friends.remove(id);
 		this.notifyObservers();
 	}
@@ -69,13 +69,13 @@ public class User implements IObservable {
 	}
 
 	public void addService(String id) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.services.add(id);
 		this.notifyObservers();
 	}
 
 	public void removeService(String id) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.services.remove(id);
 		this.notifyObservers();
 	}
