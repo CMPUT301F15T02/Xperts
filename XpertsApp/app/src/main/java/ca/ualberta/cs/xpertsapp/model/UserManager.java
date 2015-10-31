@@ -20,11 +20,7 @@ public class UserManager implements IObserver {
 
 	// Get/Set
 	public List<User> getUsers() {
-		List<User> users = new ArrayList<User>();
-		for (User user : this.users.values()) {
-			users.add(user);
-		}
-		return users;
+		return new ArrayList<User>(this.users.values());
 	}
 
 	private void addUser(User user) {
