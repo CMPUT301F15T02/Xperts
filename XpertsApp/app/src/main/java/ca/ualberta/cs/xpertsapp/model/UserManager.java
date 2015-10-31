@@ -41,6 +41,7 @@ public class UserManager implements IObserver {
 	public void clearCache() {
 		this.users.clear();
 		this.localUser();
+		// TODO:
 	}
 
 	// Singleton

@@ -48,13 +48,13 @@ public class Trade implements IObservable {
 	}
 
 	public void addOwnerService(String service) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.ownerServices.add(service);
 		this.notifyObservers();
 	}
 
 	public void removeOwnerService(String service) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.ownerServices.remove(service);
 		this.notifyObservers();
 	}
@@ -65,13 +65,13 @@ public class Trade implements IObservable {
 	}
 
 	public void addBorrowerService(String service) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.borrowerServices.add(service);
 		this.notifyObservers();
 	}
 
 	public void removeBorrowerService(String service) {
-		assert this.isEditable();
+		if (!this.isEditable()) throw new AssertionError();
 		this.borrowerServices.remove(service);
 		this.notifyObservers();
 	}
@@ -90,6 +90,10 @@ public class Trade implements IObservable {
 
 	public TradeState getState() {
 		return this.state;
+	}
+
+	void setState(TradeState state) {
+		this.state = state;
 	}
 
 	public boolean isEditable() {
