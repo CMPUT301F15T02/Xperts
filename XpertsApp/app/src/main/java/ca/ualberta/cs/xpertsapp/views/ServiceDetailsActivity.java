@@ -5,13 +5,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import ca.ualberta.cs.xpertsapp.R;
-import ca.ualberta.cs.xpertsapp.models.Service;
+import ca.ualberta.cs.xpertsapp.model.Service;
 
 
 public class ServiceDetailsActivity extends Activity {
-
-
-	private Service service;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +20,6 @@ public class ServiceDetailsActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 
-		service = (Service) getIntent().getExtras().getSerializable("SERVICE");
 
-		TextView name = (TextView) findViewById(R.id.detailsName);
-		TextView description = (TextView) findViewById(R.id.detailsDescription);
-
-		name.setText(service.getName());
-		description.setText(service.getDescription());
 	}
 }

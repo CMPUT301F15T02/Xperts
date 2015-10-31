@@ -1,9 +1,5 @@
 <resources>
     <string name="app_name">XpertsApp</string>
-<<<<<<< HEAD
-</resources>
-=======
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_browse_services">Services</string>
@@ -20,4 +16,4 @@
     <string name="search_hint">Search Services</string>
     <string name="title_activity_search_service">SearchServiceActivity</string>
 </resources>
->>>>>>> origin/hammad
+
