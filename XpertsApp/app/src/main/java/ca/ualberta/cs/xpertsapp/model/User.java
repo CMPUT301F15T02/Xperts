@@ -8,17 +8,19 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 
 public class User implements IObservable {
 	private String id;
-	private String name;
-	private String email;
+	private String name = "";
+	private String contactInfo = "";
 	private List<String> friends = new ArrayList<String>();
 	private List<String> services = new ArrayList<String>();
 	private List<String> trades = new ArrayList<String>();
 
-	User(String id, String name, String email) {
+	// Constructor
+
+	User(String id) {
 		this.id = id;
-		this.name = name;
-		this.email = email;
 	}
+
+	// Get/Set
 
 	public String getID() {
 		return this.id;
@@ -35,13 +37,13 @@ public class User implements IObservable {
 		}
 	}
 
-	public String getEmail() {
-		return this.email;
+	public String getContactInfo() {
+		return this.contactInfo;
 	}
 
-	public void setEmail(String email) {
+	public void setContactInfo(String contactInfo) {
 		if (this.isEditable()) {
-			this.email = email;
+			this.contactInfo = contactInfo;
 			this.notifyObservers();
 		}
 	}
@@ -98,18 +100,20 @@ public class User implements IObservable {
 		return this == UserManager.sharedManager().localUser();
 	}
 
-	/// Observable
-
+	// IObservable
 	private List<IObserver> observers = new ArrayList<IObserver>();
 
+	@Override
 	public void addObserver(IObserver observer) {
 		this.observers.add(observer);
 	}
 
+	@Override
 	public void removeObserver(IObserver observer) {
 		this.observers.remove(observer);
 	}
 
+	@Override
 	public void notifyObservers() {
 		for (IObserver observer : this.observers) {
 			observer.notify(this);
