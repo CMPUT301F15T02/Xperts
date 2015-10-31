@@ -12,6 +12,14 @@ public class ServiceManager implements IObserver {
 
 	private Map<String, Service> services = new HashMap<String, Service>();
 
+	public Service getService(String id) {
+		// If service is loaded
+		if (this.services.containsKey(id)) {
+			return this.services.get(id);
+		}
+		return null;
+	}
+
 	public List<Service> getServices() {
 		return new ArrayList<Service>(this.services.values());
 	}

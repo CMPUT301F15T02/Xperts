@@ -83,8 +83,7 @@ public class Service implements IObservable {
 	}
 
 	private User getOwner() {
-		// TO DO!!
-		return null;
+		return UserManager.sharedManager().getUser(this.owner);
 	}
 
 	public void setOwner(String owner) {
