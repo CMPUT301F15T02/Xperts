@@ -74,8 +74,6 @@ public class BrowseServicesActivity extends Activity{
             TextView test = (TextView) findViewById(R.id.testText);
 
             test.setText(query);
-
-
             //use the query to search your data somehow
         }
         //otherwise display all items
