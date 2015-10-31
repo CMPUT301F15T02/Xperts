@@ -19,7 +19,7 @@ public class IOManager {
 	private IOManager() {
 	}
 
-	public IOManager sharedManager() {
+	public static IOManager sharedManager() {
 		return IOManager.instance;
 	}
 }

@@ -49,7 +49,7 @@ public class UserManager implements IObserver {
 	private UserManager() {
 	}
 
-	public UserManager sharedManager() {
+	public static UserManager sharedManager() {
 		return UserManager.instance;
 	}
 
