@@ -13,7 +13,7 @@ public class Service implements IObservable {
 	private String id;
 	private String name = "";
 	private String description = "";
-	private String category = "";
+	private Category category = CategoryList.sharedCategoryList().otherCategory();
 	private List<Bitmap> pictures = new ArrayList<Bitmap>();
 	private boolean shareable = true;
 	private String owner = "";
@@ -31,11 +31,9 @@ public class Service implements IObservable {
 	}
 
 	public void setName(String name) {
-		if (this.isEditable()) {
-			this.name = name;
-			this.notifyObservers();
-		}
-
+		if (!this.isEditable()) throw new AssertionError();
+		this.name = name;
+		this.notifyObservers();
 	}
 
 	public String getDescription() {
@@ -43,21 +41,19 @@ public class Service implements IObservable {
 	}
 
 	public void setDescription(String description) {
-		if (this.isEditable()) {
-			this.description = description;
-			this.notifyObservers();
-		}
+		if (!this.isEditable()) throw new AssertionError();
+		this.description = description;
+		this.notifyObservers();
 	}
 
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
-		if (this.isEditable()) {
-			this.category = category;
-			this.notifyObservers();
-		}
+	public void setCategory(Category category) {
+		if (!this.isEditable()) throw new AssertionError();
+		this.category = category;
+		this.notifyObservers();
 	}
 
 	public List<Bitmap> getPictures() {
@@ -65,17 +61,15 @@ public class Service implements IObservable {
 	}
 
 	public void addPicture(Bitmap picture) {
-		if (this.isEditable()) {
-			pictures.add(picture);
-			this.notifyObservers();
-		}
+		if (!this.isEditable()) throw new AssertionError();
+		pictures.add(picture);
+		this.notifyObservers();
 	}
 
 	public void removePicture(Bitmap picture) {
-		if (this.isEditable()) {
-			pictures.remove(picture);
-			this.notifyObservers();
-		}
+		if (!this.isEditable()) throw new AssertionError();
+		pictures.remove(picture);
+		this.notifyObservers();
 	}
 
 	public boolean isShareable() {
@@ -83,10 +77,9 @@ public class Service implements IObservable {
 	}
 
 	public void setShareable(boolean shareable) {
-		if (this.isEditable()) {
-			this.shareable = shareable;
-			this.notifyObservers();
-		}
+		if (!this.isEditable()) throw new AssertionError();
+		this.shareable = shareable;
+		this.notifyObservers();
 	}
 
 	private User getOwner() {
@@ -95,15 +88,13 @@ public class Service implements IObservable {
 	}
 
 	public void setOwner(String owner) {
-		if (this.isEditable()) {
-			this.owner = owner;
-			this.notifyObservers();
-		}
+		if (!this.isEditable()) throw new AssertionError();
+		this.owner = owner;
+		this.notifyObservers();
 	}
 
 	private boolean isEditable() {
-		// TO DO!!
-		return true;
+		return this.getOwner() == UserManager.sharedManager().localUser();
 	}
 
 	private List<IObserver> observers = new ArrayList<IObserver>();
