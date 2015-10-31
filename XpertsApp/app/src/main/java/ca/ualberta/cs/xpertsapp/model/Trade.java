@@ -24,6 +24,8 @@ public class Trade implements IObservable {
 	Trade(String id, boolean isCounterOffer, String owner, String borrower) {
 		this.id = id;
 		this.isCounterOffer = isCounterOffer;
+		this.owner = owner;
+		this.borrower = borrower;
 	}
 
 	// Get/Set
@@ -94,6 +96,18 @@ public class Trade implements IObservable {
 		return this.getOwner() == UserManager.sharedManager().localUser();
 	}
 
+	public void accept() {
+		this.state.accept(this);
+	}
+
+	public void decline() {
+		this.state.decline(this);
+	}
+
+	public void cancel() {
+		this.state.cancel(this);
+	}
+
 	// IObservable
 	private List<IObserver> observers = new ArrayList<IObserver>();
 
@@ -111,7 +125,7 @@ public class Trade implements IObservable {
 	public void notifyObservers() {
 		this.lastUpdatedDate = new Date();
 		for (IObserver observer : this.observers) {
-			this.observers.notify();
+			observer.notify();
 		}
 	}
 }
