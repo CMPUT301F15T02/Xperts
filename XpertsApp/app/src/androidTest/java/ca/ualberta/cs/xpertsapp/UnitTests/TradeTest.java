@@ -1,7 +1,5 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import ca.ualberta.cs.xpertsapp.model.Constants;
@@ -10,6 +8,8 @@ import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.Trade;
 import ca.ualberta.cs.xpertsapp.model.TradeManager;
+import ca.ualberta.cs.xpertsapp.model.TradeStateAccepted;
+import ca.ualberta.cs.xpertsapp.model.TradeStateDeclined;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
@@ -123,15 +123,53 @@ public class TradeTest extends TestCase {
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
 	}
 
-//	public void test_04_03_01() {
-//		// TODO: Test accept and decline trades
-//		assertTrue(false);
-//	}
+	public void test_04_03_01() {
+		// Test accept and decline trades
+		User user = UserManager.sharedManager().localUser();
+		String trade1String = "" +
+				"{" +
+				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrowerServices\":[]," +
+				"\"id\":\"0001\"," +
+				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"owner\":\"1\"," +
+				"\"ownerServices\":[]," +
+				"\"proposedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"isCounterOffer\":false," +
+				"\"status\":0" +
+				"}";
+		String trade2String = "" +
+				"{" +
+				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrowerServices\":[]," +
+				"\"id\":\"0002\"," +
+				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"owner\":\"1\"," +
+				"\"ownerServices\":[]," +
+				"\"proposedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"isCounterOffer\":false," +
+				"\"status\":0" +
+				"}";
+		Trade trade1 = (new Gson()).fromJson(trade1String, Trade.class);
+		Trade trade2 = (new Gson()).fromJson(trade2String, Trade.class);
+		IOManager.sharedManager().storeData(trade1, Constants.serverTradeExtension() + trade1.getID());
+		IOManager.sharedManager().storeData(trade2, Constants.serverTradeExtension() + trade2.getID());
+		trade1 = TradeManager.sharedManager().getTrade(trade1.getID());
+		trade2 = TradeManager.sharedManager().getTrade(trade2.getID());
+		trade1.commit();
+		trade2.commit();
 
-//	public void test_04_04_01() {
-//		// TODO: Test offer counter trade when declining
-//		assertTrue(false);
-//	}
+		user.getTrades().get(0).accept();
+		user.getTrades().get(1).decline();
+
+		assertEquals(trade1.getState().getClass(), TradeStateAccepted.class);
+		assertEquals(trade2.getState().getClass(), TradeStateDeclined.class);
+
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade1.getID());
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade2.getID());
+	}
+
+	// 04.04.01 is not model
 
 	public void test_04_06_01() {
 		// Test delete trade when composing
@@ -164,14 +202,49 @@ public class TradeTest extends TestCase {
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());
 	}
 
-//	public void test_04_07_01() {
-//		// TODO: Test email both parties when accepting a trade
-//		assertTrue(false);
-//	}
+	// 04.07.01 is not model
 
 	// Also 04_09_01
-//	public void test_04_08_01() {
-//		// TODO: Test browse past and current trades involving me
-//		assertTrue(false);
-//	}
+	public void test_04_08_01() {
+		// Test browse past and current trades involving me
+		User user = UserManager.sharedManager().localUser();
+		String trade1String = "" +
+				"{" +
+				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrowerServices\":[]," +
+				"\"id\":\"0001\"," +
+				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"owner\":\"1\"," +
+				"\"ownerServices\":[]," +
+				"\"proposedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"isCounterOffer\":false," +
+				"\"status\":1" +
+				"}";
+		String trade2String = "" +
+				"{" +
+				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrowerServices\":[]," +
+				"\"id\":\"0002\"," +
+				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"owner\":\"1\"," +
+				"\"ownerServices\":[]," +
+				"\"proposedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"isCounterOffer\":false," +
+				"\"status\":0" +
+				"}";
+		Trade trade1 = (new Gson()).fromJson(trade1String, Trade.class);
+		Trade trade2 = (new Gson()).fromJson(trade2String, Trade.class);
+		IOManager.sharedManager().storeData(trade1, Constants.serverTradeExtension() + trade1.getID());
+		IOManager.sharedManager().storeData(trade2, Constants.serverTradeExtension() + trade2.getID());
+		trade1 = TradeManager.sharedManager().getTrade(trade1.getID());
+		trade2 = TradeManager.sharedManager().getTrade(trade2.getID());
+		trade1.commit();
+		trade2.commit();
+
+		assertEquals(user.getTrades().size(), 2);
+		assertEquals(user.newTrades(), 1);
+
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade1.getID());
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade2.getID());
+	}
 }
