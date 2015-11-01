@@ -1,11 +1,10 @@
 package ca.ualberta.cs.xpertsapp.model;
 
-import com.google.gson.Gson;
+import android.util.Log;
+
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,12 +58,17 @@ public class UserManager implements IObserver {
 
 	/**
 	 * Get a list of users sorted by match relevance
+	 *
 	 * @param meta What to search for
 	 * @return The list of matching users with the most relevant first
 	 */
 	public List<User> findUsers(String meta) {
-		// TODO:
-		return null;
+		List<SearchHit<User>> found = IOManager.sharedManager().searchData(Constants.serverUserExtension() + Constants.serverSearchExtension() + meta);
+		List<User> users = new ArrayList<User>();
+		for (SearchHit<User> user : found) {
+			users.add(user.getSource());
+		}
+		return users;
 	}
 
 	public void clearCache() {
@@ -87,5 +91,6 @@ public class UserManager implements IObserver {
 	@Override
 	public void notify(IObservable observable) {
 		// TODO:
+		IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getID());
 	}
 }

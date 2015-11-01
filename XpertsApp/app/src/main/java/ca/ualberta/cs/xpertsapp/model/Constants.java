@@ -8,6 +8,8 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
  * A class with only static methods which are used to retrieve constant strings
  */
 public class Constants {
+	public static boolean isTest = false;
+
 	/**
 	 * @return The string representing the devices UUID
 	 */
@@ -26,6 +28,9 @@ public class Constants {
 	 * @return The URL extension for Users
 	 */
 	public static String serverUserExtension() {
+		if (isTest) {
+			return "users_test/";
+		}
 		return "users/";
 	}
 
@@ -33,13 +38,27 @@ public class Constants {
 	 * @return The URL extension for Services
 	 */
 	public static String serverServiceExtension() {
+		if (isTest) {
+			return "services_test/";
+		}
 		return "services/";
 	}
+
 
 	/**
 	 * @return The URL extension for Trades
 	 */
 	public static String serverTradeExtension() {
+		if (isTest) {
+			return "trades_test/";
+		}
 		return "trades/";
+	}
+
+	/**
+	 * @return The URL extension for searching
+	 */
+	public static String serverSearchExtension() {
+		return "_search?q=";
 	}
 }

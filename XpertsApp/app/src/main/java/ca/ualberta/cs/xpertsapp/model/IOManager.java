@@ -14,8 +14,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
+import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
 /**
  * Manages loading and saving data from disk and the network
@@ -25,7 +30,7 @@ public class IOManager {
 		// TODO: LOOK LOCALLY
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
-		String loadedData = null;
+		String loadedData;
 		try {
 			HttpResponse response = httpClient.execute(httpGet);
 			loadedData = convertStreamToString(response.getEntity().getContent());
@@ -70,6 +75,33 @@ public class IOManager {
 			// TODO:
 			throw new RuntimeException(e);
 		}
+	}
+
+	public <T> List<SearchHit<T>> searchData(String searchMeta) {
+		// TODO: Search locally
+		HttpClient httpClient = new DefaultHttpClient();
+		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + searchMeta);
+		String loadedData;
+		try {
+			HttpResponse response = httpClient.execute(httpGet);
+			loadedData = convertStreamToString(response.getEntity().getContent());
+		} catch (Exception e) {
+			// TODO:
+			throw new RuntimeException(e);
+		}
+		if (loadedData.equals("")) {
+			// TODO: SHOULD NEVER HAPPEN
+		}
+		SearchResponse<T> loadedThings = (new Gson()).fromJson(loadedData, new TypeToken<SearchResponse<T>>() {
+		}.getType());
+		List<SearchHit<T>> hits = new ArrayList<SearchHit<T>>(loadedThings.getHits().getHits());
+		Collections.sort(hits, new Comparator<SearchHit<T>>() {
+			@Override
+			public int compare(SearchHit<T> lhs, SearchHit<T> rhs) {
+				return lhs.getScore().compareTo(rhs.getScore());
+			}
+		});
+		return hits;
 	}
 
 	// Helper
