@@ -1,7 +1,5 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import android.test.ActivityInstrumentationTestCase2;
-
 import com.google.gson.Gson;
 
 import java.util.List;
@@ -10,11 +8,10 @@ import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
-public class FriendsTest extends ActivityInstrumentationTestCase2 {
+public class FriendsTest extends TestCase {
 	public FriendsTest() {
-		super(MainActivity.class);
+		super();
 	}
 
 	private User friend1;
@@ -22,8 +19,7 @@ public class FriendsTest extends ActivityInstrumentationTestCase2 {
 
 	@Override
 	protected void setUp() throws Exception {
-		// Prepare some friends
-		Constants.isTest = true;
+		super.setUp();
 
 		String friend1String = "" +
 				"{" +
@@ -51,8 +47,6 @@ public class FriendsTest extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().storeData(friend2, Constants.serverUserExtension() + friend2.getID());
 		friend1 = UserManager.sharedManager().getUser(friend1.getID());
 		friend2 = UserManager.sharedManager().getUser(friend2.getID());
-
-		super.setUp();
 	}
 
 	@Override
@@ -61,10 +55,6 @@ public class FriendsTest extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getID());
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getID());
-
-		UserManager.sharedManager().clearCache();
-
-		Constants.isTest = false;
 
 		super.tearDown();
 	}

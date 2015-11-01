@@ -82,11 +82,11 @@ public class Service implements IObservable {
 		this.notifyObservers();
 	}
 
-	private User getOwner() {
+	public User getOwner() {
 		return UserManager.sharedManager().getUser(this.owner);
 	}
 
-	public void setOwner(String owner) {
+	void setOwner(String owner) {
 		if (!this.isEditable()) throw new AssertionError();
 		this.owner = owner;
 		this.notifyObservers();

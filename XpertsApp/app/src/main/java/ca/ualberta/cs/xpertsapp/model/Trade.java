@@ -49,12 +49,14 @@ public class Trade implements IObservable {
 
 	public void addOwnerService(String service) {
 		if (!this.isEditable()) throw new AssertionError();
+		if (ServiceManager.sharedManager().getService(service).getOwner() != this.getOwner()) throw new AssertionError();
 		this.ownerServices.add(service);
 		this.notifyObservers();
 	}
 
 	public void removeOwnerService(String service) {
 		if (!this.isEditable()) throw new AssertionError();
+		if (ServiceManager.sharedManager().getService(service).getOwner() != this.getOwner()) throw new AssertionError();
 		this.ownerServices.remove(service);
 		this.notifyObservers();
 	}
@@ -66,12 +68,14 @@ public class Trade implements IObservable {
 
 	public void addBorrowerService(String service) {
 		if (!this.isEditable()) throw new AssertionError();
+		if (ServiceManager.sharedManager().getService(service).getOwner() != this.getBorrower()) throw new AssertionError();
 		this.borrowerServices.add(service);
 		this.notifyObservers();
 	}
 
 	public void removeBorrowerService(String service) {
 		if (!this.isEditable()) throw new AssertionError();
+		if (ServiceManager.sharedManager().getService(service).getOwner() != this.getBorrower()) throw new AssertionError();
 		this.borrowerServices.remove(service);
 		this.notifyObservers();
 	}

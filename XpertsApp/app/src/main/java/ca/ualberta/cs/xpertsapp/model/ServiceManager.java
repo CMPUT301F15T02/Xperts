@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
@@ -27,6 +28,10 @@ public class ServiceManager implements IObserver {
 	private void addService(Service service) {
 		service.addObserver(this);
 		this.services.put(service.getID(), service);
+	}
+
+	public Service newService() {
+		return new Service(UUID.randomUUID().toString());
 	}
 
 	public void clearCache() {
