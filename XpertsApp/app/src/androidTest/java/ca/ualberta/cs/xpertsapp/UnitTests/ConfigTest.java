@@ -1,9 +1,5 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import android.test.ActivityInstrumentationTestCase2;
-
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
-
 public class ConfigTest extends TestCase {
 	public ConfigTest() {
 		super();

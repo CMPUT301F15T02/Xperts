@@ -1,15 +1,5 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import android.test.ActivityInstrumentationTestCase2;
-
-import junit.framework.Test;
-
-import ca.ualberta.cs.xpertsapp.model.Constants;
-import ca.ualberta.cs.xpertsapp.model.ServiceManager;
-import ca.ualberta.cs.xpertsapp.model.TradeManager;
-import ca.ualberta.cs.xpertsapp.model.UserManager;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
-
 public class SearchTest extends TestCase {
 	public SearchTest() {
 		super();

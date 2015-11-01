@@ -1,13 +1,11 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
 import java.util.List;
 
-import ca.ualberta.cs.xpertsapp.model.Category;
 import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
@@ -15,7 +13,6 @@ import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
 public class InventoryTest extends TestCase {
 	public InventoryTest() {
