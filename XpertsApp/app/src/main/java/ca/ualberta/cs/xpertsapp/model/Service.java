@@ -101,6 +101,9 @@ public class Service implements IObservable {
 
 	@Override
 	public void addObserver(IObserver observer) {
+		if (this.observers == null) {
+			this.observers = new ArrayList<IObserver>();
+		}
 		this.observers.add(observer);
 	}
 

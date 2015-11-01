@@ -1,7 +1,5 @@
 package ca.ualberta.cs.xpertsapp.model;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,7 +24,10 @@ import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
  * Manages loading and saving data from disk and the network
  */
 public class IOManager {
-	public <T> SearchHit<T> fetchData(String meta) {
+	// When writing to the server, we need to sleep to make sure the server can update before we fetch
+	private static final int sleepTime = 1;
+
+	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
 		// TODO: LOOK LOCALLY
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
@@ -41,8 +42,7 @@ public class IOManager {
 		if (loadedData.equals("")) {
 			// TODO: SHOULD NEVER HAPPEN
 		}
-		SearchHit<T> loadedThing = (new Gson()).fromJson(loadedData, new TypeToken<SearchHit<T>>() {
-		}.getType());
+		T loadedThing = (new Gson()).fromJson(loadedData, typeToken.getType());
 		return loadedThing;
 	}
 
@@ -55,7 +55,8 @@ public class IOManager {
 			addRequest.setHeader("Accept", "application/json");
 			HttpResponse response = httpClient.execute(addRequest);
 			String status = response.getStatusLine().toString();
-			Log.i("STATUS: ", status);
+//			Log.i("STATUS: ", status);
+			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
 		} catch (Exception e) {
 			// TODO:
 			throw new RuntimeException(e);
@@ -70,14 +71,15 @@ public class IOManager {
 			deleteRequest.setHeader("Accept", "application/json");
 			HttpResponse response = httpClient.execute(deleteRequest);
 			String status = response.getStatusLine().toString();
-			Log.i("Status: ", status);
+//			Log.i("Status: ", status);
+			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
 		} catch (Exception e) {
 			// TODO:
 			throw new RuntimeException(e);
 		}
 	}
 
-	public <T> List<SearchHit<T>> searchData(String searchMeta) {
+	public <T> List<SearchHit<T>> searchData(String searchMeta, TypeToken<SearchResponse<T>> typeToken) {
 		// TODO: Search locally
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + searchMeta);
@@ -92,8 +94,7 @@ public class IOManager {
 		if (loadedData.equals("")) {
 			// TODO: SHOULD NEVER HAPPEN
 		}
-		SearchResponse<T> loadedThings = (new Gson()).fromJson(loadedData, new TypeToken<SearchResponse<T>>() {
-		}.getType());
+		SearchResponse<T> loadedThings = (new Gson()).fromJson(loadedData, typeToken.getType());
 		List<SearchHit<T>> hits = new ArrayList<SearchHit<T>>(loadedThings.getHits().getHits());
 		Collections.sort(hits, new Comparator<SearchHit<T>>() {
 			@Override

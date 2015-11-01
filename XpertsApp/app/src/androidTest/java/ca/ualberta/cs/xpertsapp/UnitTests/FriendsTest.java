@@ -49,6 +49,8 @@ public class FriendsTest extends ActivityInstrumentationTestCase2 {
 		friend2 = (new Gson()).fromJson(friend2String, User.class);
 		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getID());
 		IOManager.sharedManager().storeData(friend2, Constants.serverUserExtension() + friend2.getID());
+		friend1 = UserManager.sharedManager().getUser(friend1.getID());
+		friend2 = UserManager.sharedManager().getUser(friend2.getID());
 
 		super.setUp();
 	}
@@ -58,7 +60,9 @@ public class FriendsTest extends ActivityInstrumentationTestCase2 {
 		// Cleanup
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getID());
-//		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getID());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getID());
+
+		UserManager.sharedManager().clearCache();
 
 		Constants.isTest = false;
 
@@ -66,39 +70,53 @@ public class FriendsTest extends ActivityInstrumentationTestCase2 {
 	}
 
 	// Also 02.02.01
-	/*public void test_02_01_01() {
+	public void test_02_01_01() {
 		// Test add friends by searching for username
 		User user = UserManager.sharedManager().localUser();
 		String friendSearchString = "name:Ron*";
 		List<User> results = UserManager.sharedManager().findUsers(friendSearchString);
-		assertTrue(results.size() == 1);
-		User soonFriend = results.get(0);
-		assertTrue(soonFriend == friend2);
-		user.addFriend(soonFriend.getID());
-		assertTrue(user.getFriends().size() == 1);
-		assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()), friend2);
-	}*/
+		assertEquals(results.size(), 1);
 
-	/*public void test_02_03_01() {
-		// TODO: Test remove friends
-		assertTrue(false);
-	}*/
+		User soonFriend = results.get(0);
+		assertEquals(soonFriend, friend2);
+
+		user.addFriend(soonFriend.getID());
+		assertEquals(user.getFriends().size(), 1);
+		assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()), friend2);
+	}
+
+	public void test_02_03_01() {
+		// Test remove friends
+		User user = UserManager.sharedManager().localUser();
+		user.addFriend(friend1.getID());
+		user.addFriend(friend2.getID());
+		assertEquals(user.getFriends().size(), 2);
+
+		user.removeFriend(friend1.getID());
+		assertEquals(user.getFriends().size(), 1);
+		assertEquals(user.getFriends().get(0), friend2);
+	}
 
 	public void test_02_04_01() {
 		// Test set contact info and location
 		User user = UserManager.sharedManager().localUser();
 
+		String newName = "Skrundz";
 		String newContactInfo = "somenewContactInfo";
 		String newLocation = "CANADA";
 
 		user.setContactInfo(newContactInfo);
 		user.setLocation(newLocation);
+		user.setName(newName);
 
 		UserManager.sharedManager().clearCache();
 		user = UserManager.sharedManager().localUser();
 
 		assertEquals(user.getContactInfo(), newContactInfo);
 		assertEquals(user.getLocation(), newLocation);
+		assertEquals(user.getName(), newName);
+
+		assertEquals(UserManager.sharedManager().getUsers().size(), 1);
 	}
 
 	// 02.05.01 is not model

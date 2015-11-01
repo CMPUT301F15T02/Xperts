@@ -1,9 +1,8 @@
 package ca.ualberta.cs.xpertsapp.model;
 
-import android.util.Log;
-
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +12,7 @@ import java.util.Map;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
+import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
 public class UserManager implements IObserver {
 	private Map<String, User> users = new HashMap<String, User>();
@@ -34,7 +34,8 @@ public class UserManager implements IObserver {
 		}
 		// TODO:
 		try {
-			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + id);
+			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + id, new TypeToken<SearchHit<User>>() {
+			});
 			if (loadedUser.isFound()) {
 				this.addUser(loadedUser.getSource());
 				return loadedUser.getSource();
@@ -63,10 +64,11 @@ public class UserManager implements IObserver {
 	 * @return The list of matching users with the most relevant first
 	 */
 	public List<User> findUsers(String meta) {
-		List<SearchHit<User>> found = IOManager.sharedManager().searchData(Constants.serverUserExtension() + Constants.serverSearchExtension() + meta);
+		List<SearchHit<User>> found = IOManager.sharedManager().searchData(Constants.serverUserExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<User>>() {
+		});
 		List<User> users = new ArrayList<User>();
 		for (SearchHit<User> user : found) {
-			users.add(user.getSource());
+			users.add(this.getUser(user.getSource().getID()));
 		}
 		return users;
 	}

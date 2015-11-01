@@ -58,8 +58,11 @@ public class User implements IObservable {
 	}
 
 	public List<User> getFriends() {
-		// TODO:
-		return null;
+		List<User> friends = new ArrayList<User>();
+		for (String friendID : this.friends) {
+			friends.add(UserManager.sharedManager().getUser(friendID));
+		}
+		return friends;
 	}
 
 	public void addFriend(String id) {
@@ -110,6 +113,9 @@ public class User implements IObservable {
 
 	@Override
 	public void addObserver(IObserver observer) {
+		if (this.observers == null) {
+			this.observers = new ArrayList<IObserver>();
+		}
 		this.observers.add(observer);
 	}
 
