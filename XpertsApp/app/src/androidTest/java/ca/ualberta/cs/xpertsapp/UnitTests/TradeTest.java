@@ -1,7 +1,5 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import android.test.ActivityInstrumentationTestCase2;
-
 import com.google.gson.Gson;
 
 import ca.ualberta.cs.xpertsapp.model.Constants;
@@ -12,7 +10,6 @@ import ca.ualberta.cs.xpertsapp.model.Trade;
 import ca.ualberta.cs.xpertsapp.model.TradeManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
 public class TradeTest extends TestCase {
 	public TradeTest() {
@@ -46,7 +43,7 @@ public class TradeTest extends TestCase {
 				"\"description\":\"\"," +
 				"\"id\":\"1\"," +
 				"\"name\":\"\"," +
-				"\"owner\":\"\"," +
+				"\"owner\":\"1\"," +
 				"\"pictures\":[]," +
 				"\"shareable\":true" +
 				"}";
@@ -69,15 +66,29 @@ public class TradeTest extends TestCase {
 	public void test_04_01_01() {
 		// TODO: Test offer trade to friend
 		User user = UserManager.sharedManager().localUser();
+		Service newService = ServiceManager.sharedManager().newService();
+		newService.setName("new service");
+		user.addService(newService);
+
 		user.addFriend(friend1.getID());
 		User myFriend = user.getFriends().get(0);
 
 
 		// Create a new trade
 		Trade newTrade = TradeManager.sharedManager().newTrade(myFriend.getID(), false);
-//		newTrade.addOwnerService();
+		newTrade.addOwnerService(newService.getID());
 		newTrade.addBorrowerService(service1.getID());
-		assertFalse(true);
+
+		newTrade.commit();
+		assertEquals(TradeManager.sharedManager().getTrades().size(), 1);
+		assertEquals(user.getTrades().size(), 1);
+		assertEquals(friend1.getTrades().size(), 1);
+
+		TradeManager.sharedManager().clearCache();
+		Trade oldTrade = TradeManager.sharedManager().getTrade(user.getTrades().get(0).getID());
+		assertEquals(oldTrade.getID(), newTrade.getID());
+
+		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());
 	}
 
 //	public void test_04_02_01() {
