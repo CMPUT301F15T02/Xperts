@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.model.Category;
+import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.Service;
@@ -116,20 +118,50 @@ public class InventoryTest extends TestCase {
 		assertEquals(friendServices.size(), 1);
 	}
 
-//	public void test_01_04_01() {
-//		// TODO: Test editing a service
-//		assertTrue(false);
-//	}
+	public void test_01_04_01() {
+		// TODO: Test editing a service
+		User user = UserManager.sharedManager().localUser();
+		Service newService = ServiceManager.sharedManager().newService();
+		newService.setName("some new service");
+		user.addService(newService);
 
-//	public void test_01_05_01() {
-//		// TODO: Test removing a service
-//		assertTrue(false);
-//	}
+		assertEquals(user.getServices().size(), 1);
+		Service newService2 = user.getServices().get(0);
+		assertEquals(newService, newService2);
 
-//	public void test_01_06_01() {
-//		// TODO: Test settings a category and make sure there are only 10
-//		assertTrue(false);
-//	}
+		String newName = "a differnnt name";
+		newService2.setName(newName);
+		assertEquals(newService.getName(), newName);
+
+		ServiceManager.sharedManager().clearCache();
+		Service newwerrService22222 = ServiceManager.sharedManager().getService(newService.getID());
+		assertEquals(newwerrService22222.getName(), newName);
+
+		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newwerrService22222.getID());
+	}
+
+	public void test_01_05_01() {
+		// Test removing a service
+		User user = UserManager.sharedManager().localUser();
+		Service newService = ServiceManager.sharedManager().newService();
+		newService.setName("some new service");
+		user.addService(newService);
+		assertEquals(user.getServices().size(), 1);
+
+		user.removeService(newService.getID());
+		assertEquals(user.getServices().size(), 0);
+		
+		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());
+	}
+
+	public void test_01_06_01() {
+		// Test settings a category and make sure there are only 10
+		Service newService = ServiceManager.sharedManager().newService();
+		newService.setCategory(CategoryList.sharedCategoryList().getCategories().get(3));
+
+		assertEquals(newService.getCategory(), CategoryList.sharedCategoryList().getCategories().get(3));
+		assertEquals(CategoryList.sharedCategoryList().getCategories().size(), 10);
+	}
 
 	// 01_07_01 is not model
 }
