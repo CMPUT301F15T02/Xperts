@@ -35,14 +35,12 @@ public class UserManager implements IObserver {
 		}
 		// TODO:
 		try {
-			String loadedData = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + id);
-			SearchHit<User> loadedUser = (new Gson()).fromJson(loadedData, new TypeToken<SearchHit<User>>() {
-			}.getType());
+			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + id);
 			if (loadedUser.isFound()) {
 				this.addUser(loadedUser.getSource());
 				return loadedUser.getSource();
 			} else {
-				User newUser = new User(Constants.deviceUUID());
+				User newUser = new User(id);
 				this.addUser(newUser);
 				return newUser;
 			}
@@ -59,6 +57,11 @@ public class UserManager implements IObserver {
 		return this.getUser(Constants.deviceUUID());
 	}
 
+	/**
+	 * Get a list of users sorted by match relevance
+	 * @param meta What to search for
+	 * @return The list of matching users with the most relevant first
+	 */
 	public List<User> findUsers(String meta) {
 		// TODO:
 		return null;

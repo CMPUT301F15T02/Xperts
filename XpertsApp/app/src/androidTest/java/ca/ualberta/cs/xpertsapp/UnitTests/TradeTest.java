@@ -1,8 +1,14 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import junit.framework.TestCase;
+import android.test.ActivityInstrumentationTestCase2;
 
-public class TradeTest extends TestCase {
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
+
+public class TradeTest extends ActivityInstrumentationTestCase2 {
+	public TradeTest() {
+		super(MainActivity.class);
+	}
+
 	public void test_04_01_01() {
 		// TODO: Test offer trade to friend
 		assertTrue(false);

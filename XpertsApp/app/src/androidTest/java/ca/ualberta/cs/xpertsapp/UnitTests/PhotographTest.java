@@ -1,8 +1,14 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import junit.framework.TestCase;
+import android.test.ActivityInstrumentationTestCase2;
 
-public class PhotographTest extends TestCase {
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
+
+public class PhotographTest extends ActivityInstrumentationTestCase2 {
+	public PhotographTest() {
+		super(MainActivity.class);
+	}
+
 	public void test_06_01_01() {
 		// TODO: Test attach photo
 		assertTrue(false);

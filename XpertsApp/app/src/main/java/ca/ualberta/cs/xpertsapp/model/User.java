@@ -106,7 +106,7 @@ public class User implements IObservable {
 	}
 
 	// IObservable
-	private List<IObserver> observers = new ArrayList<IObserver>();
+	private transient List<IObserver> observers = new ArrayList<IObserver>();
 
 	@Override
 	public void addObserver(IObserver observer) {

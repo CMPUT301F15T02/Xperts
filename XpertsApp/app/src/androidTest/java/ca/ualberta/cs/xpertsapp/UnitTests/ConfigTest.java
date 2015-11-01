@@ -1,8 +1,14 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import junit.framework.TestCase;
+import android.test.ActivityInstrumentationTestCase2;
 
-public class ConfigTest extends TestCase {
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
+
+public class ConfigTest extends ActivityInstrumentationTestCase2 {
+	public ConfigTest() {
+		super(MainActivity.class);
+	}
+
 	public void test_10_01_01() {
 		// TODO: Test toggle image download
 		assertTrue(false);

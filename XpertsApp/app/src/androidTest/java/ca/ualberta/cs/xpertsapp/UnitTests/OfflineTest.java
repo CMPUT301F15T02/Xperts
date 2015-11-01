@@ -1,8 +1,14 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import junit.framework.TestCase;
+import android.test.ActivityInstrumentationTestCase2;
 
-public class OfflineTest extends TestCase {
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
+
+public class OfflineTest extends ActivityInstrumentationTestCase2 {
+	public OfflineTest() {
+		super(MainActivity.class);
+	}
+
 	public void test_09_01_01() {
 		// TODO: Test add service while offline and push while online
 		assertTrue(false);

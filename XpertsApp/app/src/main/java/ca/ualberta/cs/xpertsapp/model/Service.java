@@ -96,7 +96,8 @@ public class Service implements IObservable {
 		return this.getOwner() == UserManager.sharedManager().localUser();
 	}
 
-	private List<IObserver> observers = new ArrayList<IObserver>();
+	// IObservable
+	private transient List<IObserver> observers = new ArrayList<IObserver>();
 
 	@Override
 	public void addObserver(IObserver observer) {
