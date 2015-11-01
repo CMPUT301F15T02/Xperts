@@ -9,7 +9,7 @@ public class AddServiceController {
     public Service service;
 
     public void addService(Service service) {
-        owner.addService("A");
+        owner.addService(service);
     }
 
     public void removeService(Service service) {

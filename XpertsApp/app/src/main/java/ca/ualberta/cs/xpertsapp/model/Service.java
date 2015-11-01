@@ -18,8 +18,9 @@ public class Service implements IObservable {
 	private boolean shareable = true;
 	private String owner = "";
 
-	Service(String id) {
+	Service(String id, String owner) {
 		this.id = id;
+		this.owner = owner;
 	}
 
 	public String getID() {

@@ -25,7 +25,7 @@ import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
  */
 public class IOManager {
 	// When writing to the server, we need to sleep to make sure the server can update before we fetch
-	private static final int sleepTime = 1;
+	private static final int sleepTime = 10;
 
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
 		// TODO: LOOK LOCALLY

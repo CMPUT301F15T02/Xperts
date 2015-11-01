@@ -65,32 +65,40 @@ public class User implements IObservable {
 		return friends;
 	}
 
-	public void addFriend(String id) {
+	public void addFriend(String friend) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.friends.add(id);
+		this.friends.add(friend);
 		this.notifyObservers();
 	}
 
-	public void removeFriend(String id) {
+	public void removeFriend(String friend) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.friends.remove(id);
+		this.friends.remove(friend);
 		this.notifyObservers();
 	}
 
 	public List<Service> getServices() {
-		// TODO:
-		return null;
+		List<Service> services = new ArrayList<Service>();
+		for (String service : this.services) {
+			Service s = ServiceManager.sharedManager().getService(service);
+			if (this.isEditable() || s.isShareable()) {
+				services.add(s);
+			}
+		}
+		return services;
 	}
 
-	public void addService(String id) {
+	public void addService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.services.add(id);
+		this.services.add(service.getID());
+		ServiceManager.sharedManager().addService(service);
+		ServiceManager.sharedManager().notify(service);
 		this.notifyObservers();
 	}
 
-	public void removeService(String id) {
+	public void removeService(String service) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.services.remove(id);
+		this.services.remove(service);
 		this.notifyObservers();
 	}
 
@@ -99,8 +107,8 @@ public class User implements IObservable {
 		return null;
 	}
 
-	public void addTrade(String id) {
-		this.trades.add(id);
+	public void addTrade(String trade) {
+		this.trades.add(trade);
 		this.notifyObservers();
 	}
 
