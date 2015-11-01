@@ -102,6 +102,16 @@ public class User implements IObservable {
 		this.notifyObservers();
 	}
 
+	public int newTrades() {
+		int count = 0;
+		for (Trade trade : this.getTrades()) {
+			if (trade.status == 0 && trade.getOwner() != this) {
+				++count;
+			}
+		}
+		return count;
+	}
+
 	public List<Trade> getTrades() {
 		List<Trade> trades = new ArrayList<Trade>();
 		for (String trade : this.trades) {

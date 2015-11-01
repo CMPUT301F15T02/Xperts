@@ -1,5 +1,7 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 
 import ca.ualberta.cs.xpertsapp.model.Constants;
@@ -63,8 +65,9 @@ public class TradeTest extends TestCase {
 		super.tearDown();
 	}
 
+	// Also 04.05.01
 	public void test_04_01_01() {
-		// TODO: Test offer trade to friend
+		// Test offer trade to friend
 		User user = UserManager.sharedManager().localUser();
 		Service newService = ServiceManager.sharedManager().newService();
 		newService.setName("new service");
@@ -76,9 +79,12 @@ public class TradeTest extends TestCase {
 
 		// Create a new trade
 		Trade newTrade = TradeManager.sharedManager().newTrade(myFriend.getID(), false);
+
+		// Edit the trade
 		newTrade.addOwnerService(newService.getID());
 		newTrade.addBorrowerService(service1.getID());
 
+		// Finalize it
 		newTrade.commit();
 		assertEquals(TradeManager.sharedManager().getTrades().size(), 1);
 		assertEquals(user.getTrades().size(), 1);
@@ -92,10 +98,30 @@ public class TradeTest extends TestCase {
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + newTrade.getID());
 	}
 
-//	public void test_04_02_01() {
-//		// TODO: Test get notified by a trade
-//		assertTrue(false);
-//	}
+	public void test_04_02_01() {
+		// Test get notified by a trade
+		User user = UserManager.sharedManager().localUser();
+		String tradeString = "" +
+				"{" +
+				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrowerServices\":[]," +
+				"\"id\":\"0001\"," +
+				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"owner\":\"1\"," +
+				"\"ownerServices\":[]," +
+				"\"proposedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
+				"\"isCounterOffer\":false," +
+				"\"status\":0" +
+				"}";
+		Trade trade = (new Gson()).fromJson(tradeString, Trade.class);
+		IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
+		trade = TradeManager.sharedManager().getTrade(trade.getID());
+		trade.commit();
+
+		assertEquals(user.newTrades(), 1);
+
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
+	}
 
 //	public void test_04_03_01() {
 //		// TODO: Test accept and decline trades
@@ -107,15 +133,36 @@ public class TradeTest extends TestCase {
 //		assertTrue(false);
 //	}
 
-//	public void test_04_05_01() {
-//		// TODO: Test editing the trade when composing one
-//		assertTrue(false);
-//	}
+	public void test_04_06_01() {
+		// Test delete trade when composing
+		User user = UserManager.sharedManager().localUser();
+		Service newService = ServiceManager.sharedManager().newService();
+		newService.setName("new service");
+		user.addService(newService);
 
-//	public void test_04_06_01() {
-//		// TODO: Test delete trade when composing
-//		assertTrue(false);
-//	}
+		user.addFriend(friend1.getID());
+		User myFriend = user.getFriends().get(0);
+
+
+		// Create a new trade
+		Trade newTrade = TradeManager.sharedManager().newTrade(myFriend.getID(), false);
+
+		// Edit the trade
+		newTrade.addOwnerService(newService.getID());
+		newTrade.addBorrowerService(service1.getID());
+
+		// Don't commit
+
+		assertEquals(TradeManager.sharedManager().getTrades().size(), 0);
+		assertEquals(user.getTrades().size(), 0);
+		assertEquals(friend1.getTrades().size(), 0);
+
+		TradeManager.sharedManager().clearCache();
+		Trade oldTrade = TradeManager.sharedManager().getTrade(newTrade.getID());
+		assertEquals(oldTrade, null);
+
+		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());
+	}
 
 //	public void test_04_07_01() {
 //		// TODO: Test email both parties when accepting a trade
