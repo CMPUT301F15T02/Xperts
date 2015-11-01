@@ -103,11 +103,14 @@ public class User implements IObservable {
 	}
 
 	public List<Trade> getTrades() {
-		// TODO:
-		return null;
+		List<Trade> trades = new ArrayList<Trade>();
+		for (String trade : this.trades) {
+			trades.add(TradeManager.sharedManager().getTrade(trade));
+		}
+		return trades;
 	}
 
-	public void addTrade(String trade) {
+	void addTrade(String trade) {
 		this.trades.add(trade);
 		this.notifyObservers();
 	}

@@ -17,7 +17,8 @@ public class Trade implements IObservable {
 	private List<String> ownerServices = new ArrayList<String>();
 	private final Date proposedDate = new Date();
 	private Date lastUpdatedDate = new Date();
-	private TradeState state = new TradeStatePending();
+	int status = 0;
+	private transient TradeState state = new TradeStatePending();
 
 	// Constructor
 
@@ -105,15 +106,61 @@ public class Trade implements IObservable {
 	}
 
 	public void accept() {
+		if (this.state == null) {
+			if (this.status == 0) {
+				this.state = new TradeStatePending();
+			} else if (this.status == 1) {
+				this.state = new TradeStateAccepted();
+			} else if (this.status == 2) {
+				this.state = new TradeStateCancelled();
+			} else if (this.status == 3) {
+				this.state = new TradeStateDeclined();
+			} else {
+				throw new RuntimeException("Invalid status");
+			}
+		}
 		this.state.accept(this);
 	}
 
 	public void decline() {
+		if (this.state == null) {
+			if (this.status == 0) {
+				this.state = new TradeStatePending();
+			} else if (this.status == 1) {
+				this.state = new TradeStateAccepted();
+			} else if (this.status == 2) {
+				this.state = new TradeStateCancelled();
+			} else if (this.status == 3) {
+				this.state = new TradeStateDeclined();
+			} else {
+				throw new RuntimeException("Invalid status");
+			}
+		}
 		this.state.decline(this);
 	}
 
 	public void cancel() {
+		if (this.state == null) {
+			if (this.status == 0) {
+				this.state = new TradeStatePending();
+			} else if (this.status == 1) {
+				this.state = new TradeStateAccepted();
+			} else if (this.status == 2) {
+				this.state = new TradeStateCancelled();
+			} else if (this.status == 3) {
+				this.state = new TradeStateDeclined();
+			} else {
+				throw new RuntimeException("Invalid status");
+			}
+		}
 		this.state.cancel(this);
+	}
+
+	public void commit() {
+		UserManager.sharedManager().getUser(this.owner).addTrade(this.getID());
+		UserManager.sharedManager().getUser(this.borrower).addTrade(this.getID());
+		TradeManager.sharedManager().addTrade(this);
+		this.notifyObservers();
 	}
 
 	// IObservable
@@ -127,7 +174,6 @@ public class Trade implements IObservable {
 		this.observers.add(observer);
 	}
 
-	@Override
 	public void removeObserver(IObserver observer) {
 		this.observers.remove(observer);
 	}
@@ -136,7 +182,9 @@ public class Trade implements IObservable {
 	public void notifyObservers() {
 		this.lastUpdatedDate = new Date();
 		for (IObserver observer : this.observers) {
-			observer.notify();
+			observer.notify(this);
 		}
 	}
+
+
 }
