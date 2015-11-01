@@ -89,6 +89,7 @@ public class TradeTest extends TestCase {
 		assertEquals(oldTrade.getID(), newTrade.getID());
 
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + newTrade.getID());
 	}
 
 //	public void test_04_02_01() {
