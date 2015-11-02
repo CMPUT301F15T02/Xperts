@@ -15,5 +15,6 @@
     <string name="action_categories">Categories</string>
     <string name="search_hint">Search Services</string>
     <string name="title_activity_search_service">SearchServiceActivity</string>
+    <string name="title_activity_edit_profile">Settings</string>
 </resources>
 
