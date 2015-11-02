@@ -116,7 +116,7 @@ public class InventoryTest extends TestCase {
 	}
 
 	public void test_01_04_01() {
-		// TODO: Test editing a service
+		// Test editing a service
 		User user = UserManager.sharedManager().localUser();
 		Service newService = ServiceManager.sharedManager().newService();
 		newService.setName("some new service");

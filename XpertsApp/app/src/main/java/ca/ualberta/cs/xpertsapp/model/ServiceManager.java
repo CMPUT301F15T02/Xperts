@@ -13,6 +13,7 @@ import java.util.UUID;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
+import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
 public class ServiceManager implements IObserver {
 
@@ -58,6 +59,28 @@ public class ServiceManager implements IObserver {
 
 	public void clearCache() {
 		this.services.clear();
+	}
+
+	public List<Service> findServices(String meta) {
+		List<SearchHit<Service>> found = IOManager.sharedManager().searchData(Constants.serverServiceExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<Service>>() {
+		});
+		List<Service> services = new ArrayList<Service>();
+		for (SearchHit<Service> service : found) {
+			services.add(this.getService(service.getSource().getID()));
+		}
+		return services;
+	}
+
+	public List<Service> findServicesOfFriends(String meta) {
+		List<SearchHit<Service>> found = IOManager.sharedManager().searchData(Constants.serverServiceExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<Service>>() {
+		});
+		List<Service> services = new ArrayList<Service>();
+		for (SearchHit<Service> service : found) {
+			if (UserManager.sharedManager().localUser().getFriends().contains(UserManager.sharedManager().getUser(service.getSource().getOwner().getID()))) {
+				services.add(this.getService(service.getSource().getID()));
+			}
+		}
+		return services;
 	}
 
 	// Singleton
