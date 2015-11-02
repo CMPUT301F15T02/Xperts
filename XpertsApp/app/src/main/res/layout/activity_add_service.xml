@@ -63,6 +63,7 @@
         android:text="Save"
         android:id="@+id/saveButon"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="saveService"/>
 
 </RelativeLayout>

@@ -67,6 +67,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.xpertsapp.views.ViewProfileActivity" />
         </activity>
+        <activity
+            android:name=".views.SearchUsersActivity"
+            android:label="@string/title_activity_search_users"
+            android:parentActivityName=".views.FriendsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.FriendsActivity" />
+        </activity>
     </application>
 
 </manifest>

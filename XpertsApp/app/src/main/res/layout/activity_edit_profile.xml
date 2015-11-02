@@ -74,4 +74,14 @@
         android:layout_below="@+id/locationEditText"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/saveButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:onClick="saveProfile"
+        />
+
 </RelativeLayout>

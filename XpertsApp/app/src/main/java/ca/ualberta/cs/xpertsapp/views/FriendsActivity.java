@@ -1,9 +1,11 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import ca.ualberta.cs.xpertsapp.R;
 
@@ -35,5 +37,10 @@ public class FriendsActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addFriend(View view) {
+        Intent intent = new Intent(this, SearchUsersActivity.class);
+        startActivity(intent);
     }
 }

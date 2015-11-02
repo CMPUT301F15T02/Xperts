@@ -1,6 +1,7 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +23,11 @@ public class AddServiceActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+	}
+
+	public void saveService(View view) {
+		Intent intent = new Intent(this, ViewProfileActivity.class);
+		startActivity(intent);
 	}
 }
 

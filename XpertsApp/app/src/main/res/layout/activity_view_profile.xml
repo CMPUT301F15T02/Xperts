@@ -14,7 +14,8 @@
         android:text="Add service"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="100dp"
+        android:onClick="addService"/>
 
     <ListView
         android:id="@+id/serviceList"
@@ -52,5 +53,16 @@
         android:id="@+id/profileCity"
         android:layout_below="@+id/profileEmail"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/editButton"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/add"
+        android:layout_alignBottom="@+id/profileEmail"
+        android:onClick="editProfile"
+        />
 
 </RelativeLayout>
