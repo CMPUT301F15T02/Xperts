@@ -1,20 +1,42 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.model.User;
 
 public class FriendsActivity extends Activity {
+    private ListView friendsList;
+    private FriendsActivity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
+
+        friendsList = (ListView) findViewById(R.id.listView);
+
+        friendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(activity, ViewProfileActivity.class);
+                User friend = (User) friendsList.getItemAtPosition(position);
+                intent.putExtra("id", friend.getID());
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -39,8 +61,20 @@ public class FriendsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    //http://stackoverflow.com/questions/18799216/how-to-make-a-edittext-box-in-a-dialog november 3, 2015
     public void addFriend(View view) {
-        Intent intent = new Intent(this, SearchUsersActivity.class);
-        startActivity(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        final EditText editText = new EditText(activity);
+        builder.setMessage("Enter Username");
+        builder.setView(editText);
+        builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String email = editText.getText().toString();
+                //TODO call to search for user from controller
+
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
