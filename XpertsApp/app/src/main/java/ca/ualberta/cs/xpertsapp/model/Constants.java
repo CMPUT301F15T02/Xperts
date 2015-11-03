@@ -8,6 +8,8 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
  * A class with only static methods which are used to retrieve constant strings
  */
 public class Constants {
+	public static boolean allowOnline = true;
+	public static boolean allowPhotoDownload = true;
 	public static boolean isTest = false;
 
 	/**
@@ -43,7 +45,6 @@ public class Constants {
 		}
 		return "services/";
 	}
-
 
 	/**
 	 * @return The URL extension for Trades

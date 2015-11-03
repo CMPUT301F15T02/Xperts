@@ -53,6 +53,9 @@ public class SearchTest extends TestCase {
 		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getID());
 		IOManager.sharedManager().storeData(service1, Constants.serverServiceExtension() + service1.getID());
 		friend1 = UserManager.sharedManager().getUser(friend1.getID());
+
+		User user = UserManager.sharedManager().localUser();
+		user.addFriend(friend1.getID());
 	}
 
 	@Override
@@ -68,7 +71,6 @@ public class SearchTest extends TestCase {
 	public void test_03_01_02() {
 		// Test search inventory of friends by category
 		User user = UserManager.sharedManager().localUser();
-		user.addFriend(friend1.getID());
 
 		List<Service> allOfFriendsServices = new ArrayList<Service>();
 		for (User friend : user.getFriends()) {
@@ -82,9 +84,8 @@ public class SearchTest extends TestCase {
 	public void test_03_01_03() {
 		// Test search inventory of friends by text
 		User user = UserManager.sharedManager().localUser();
-		user.addFriend(friend1.getID());
 
-		List<Service> friendsServices = ServiceManager.sharedManager().findServicesOfFriends("descrip*");
+		List<Service> friendsServices = ServiceManager.sharedManager().findServicesOfFriends("*descrip*");
 		assertEquals(friendsServices.size(), 1);
 		assertEquals(friendsServices.get(0).getID(), service1.getID());
 	}

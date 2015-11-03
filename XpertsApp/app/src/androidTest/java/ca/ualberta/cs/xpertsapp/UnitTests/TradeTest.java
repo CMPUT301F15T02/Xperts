@@ -54,6 +54,7 @@ public class TradeTest extends TestCase {
 		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getID());
 		IOManager.sharedManager().storeData(service1, Constants.serverServiceExtension() + service1.getID());
 		friend1 = UserManager.sharedManager().getUser(friend1.getID());
+		service1 = ServiceManager.sharedManager().getService(service1.getID());
 	}
 
 	@Override
