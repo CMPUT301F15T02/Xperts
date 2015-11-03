@@ -18,4 +18,9 @@ public class Category {
 		}
 		return o.getClass() == this.getClass() && this.name.equals(((Category) o).getName());
 	}
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }
