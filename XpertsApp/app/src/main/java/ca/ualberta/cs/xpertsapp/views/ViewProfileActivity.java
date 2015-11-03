@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+
 import ca.ualberta.cs.xpertsapp.R;
 
 public class ViewProfileActivity extends Activity {

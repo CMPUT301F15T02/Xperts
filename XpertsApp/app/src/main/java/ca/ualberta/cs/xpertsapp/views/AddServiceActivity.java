@@ -26,6 +26,10 @@ public class AddServiceActivity extends Activity {
 	}
 
 
+	public void saveService(View view) {
+		Intent intent = new Intent(this, ViewProfileActivity.class);
+		startActivity(intent);
+	}
 }
 
 
