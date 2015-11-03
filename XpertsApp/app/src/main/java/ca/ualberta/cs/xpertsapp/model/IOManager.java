@@ -25,7 +25,7 @@ import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
  */
 public class IOManager {
 	// When writing to the server, we need to sleep to make sure the server can update before we fetch
-	private static final int sleepTime = 10;
+	private static final int SLEEP_TIME = 10;
 
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
 		// TODO: LOOK LOCALLY
@@ -56,7 +56,7 @@ public class IOManager {
 			HttpResponse response = httpClient.execute(addRequest);
 			String status = response.getStatusLine().toString();
 //			Log.i("STATUS: ", status);
-			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
+			Thread.sleep(SLEEP_TIME); // Sleep for 10ms because we need to let the server update
 		} catch (Exception e) {
 			// TODO:
 			throw new RuntimeException(e);
@@ -72,7 +72,7 @@ public class IOManager {
 			HttpResponse response = httpClient.execute(deleteRequest);
 			String status = response.getStatusLine().toString();
 //			Log.i("Status: ", status);
-			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
+			Thread.sleep(SLEEP_TIME); // Sleep for 10ms because we need to let the server update
 		} catch (Exception e) {
 			// TODO:
 			throw new RuntimeException(e);
