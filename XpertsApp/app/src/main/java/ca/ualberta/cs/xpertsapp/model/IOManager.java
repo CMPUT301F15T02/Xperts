@@ -25,7 +25,7 @@ import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
  */
 public class IOManager {
 	// When writing to the server, we need to sleep to make sure the server can update before we fetch
-	private static final int sleepTime = 10;
+	private static final int sleepTime = 500;
 
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
 		// TODO: LOOK LOCALLY
@@ -36,7 +36,7 @@ public class IOManager {
 			HttpResponse response = httpClient.execute(httpGet);
 			loadedData = convertStreamToString(response.getEntity().getContent());
 		} catch (Exception e) {
-			// TODO:
+			// TODO: load localyl
 			throw new RuntimeException(e);
 		}
 		if (loadedData.equals("")) {
@@ -90,9 +90,6 @@ public class IOManager {
 		} catch (Exception e) {
 			// TODO:
 			throw new RuntimeException(e);
-		}
-		if (loadedData.equals("")) {
-			// TODO: SHOULD NEVER HAPPEN
 		}
 		SearchResponse<T> loadedThings = (new Gson()).fromJson(loadedData, typeToken.getType());
 		List<SearchHit<T>> hits = new ArrayList<SearchHit<T>>(loadedThings.getHits().getHits());

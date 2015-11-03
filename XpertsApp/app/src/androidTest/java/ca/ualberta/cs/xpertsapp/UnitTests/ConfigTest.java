@@ -22,10 +22,7 @@ public class ConfigTest extends TestCase {
 		super.tearDown();
 	}
 
-	public void test_10_01_01() {
-		// TODO: Test toggle image download
-		assertTrue(false);
-	}
+	// 10.01.01 is not model
 
 	public void test_10_02_01() {
 		// Test edit profile
