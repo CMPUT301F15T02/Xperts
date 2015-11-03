@@ -10,18 +10,19 @@ import android.widget.Button;
 
 import ca.ualberta.cs.xpertsapp.R;
 
-public class ViewProfileActivity extends Activity {
+public class EditProfileActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_profile);
+        setContentView(R.layout.activity_edit_profile);
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_view_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_edit_profile, menu);
         return true;
     }
 
@@ -40,13 +41,8 @@ public class ViewProfileActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void editProfile(View view) {
-        Intent intent = new Intent(this, EditProfileActivity.class);
-        startActivity(intent);
-    }
-
-    public void addService(View view) {
-        Intent intent = new Intent(this, AddServiceActivity.class);
+    public void saveProfile(View view) {
+        Intent intent = new Intent(this, ViewProfileActivity.class);
         startActivity(intent);
     }
 }

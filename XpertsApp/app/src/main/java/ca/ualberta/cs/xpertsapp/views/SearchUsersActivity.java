@@ -1,27 +1,24 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import ca.ualberta.cs.xpertsapp.R;
 
-public class ViewProfileActivity extends Activity {
+public class SearchUsersActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_profile);
+        setContentView(R.layout.activity_search_users);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_view_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_search_users, menu);
         return true;
     }
 
@@ -38,15 +35,5 @@ public class ViewProfileActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void editProfile(View view) {
-        Intent intent = new Intent(this, EditProfileActivity.class);
-        startActivity(intent);
-    }
-
-    public void addService(View view) {
-        Intent intent = new Intent(this, AddServiceActivity.class);
-        startActivity(intent);
     }
 }
