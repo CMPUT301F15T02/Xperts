@@ -41,6 +41,12 @@ public class MainActivity extends Activity {
         thread.start();
     }
 
+    // Button's function
+    public void viewProfile(View view) {
+        Intent intent = new Intent(MainActivity.this, ViewProfileActivity.class);
+        startActivity(intent);
+    }
+
     // If you need list all users
     class SearchThread extends Thread {
         private String search;

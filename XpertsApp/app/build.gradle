@@ -4,6 +4,7 @@ android {
     compileSdkVersion 18
     buildToolsVersion "22.0.1"
     defaultConfig {
+        // Espresso
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         applicationId "ca.ualberta.cs.xpertsapp"
@@ -24,7 +25,7 @@ android {
 
 dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
-    // for UI Test
+    // Espresso
     androidTestCompile 'com.android.support.test:runner:0.4'
     // Set this dependency to use JUnit 4 rules
     androidTestCompile 'com.android.support.test:rules:0.4'
