@@ -1,6 +1,3 @@
 .DS_Store
-
 XpertsApp/.idea
-
-
-XpertsApp/build/intermediates/gradle_project_sync_data.bin
+XpertsApp/build/

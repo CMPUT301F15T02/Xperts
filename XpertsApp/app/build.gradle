@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "ca.ualberta.cs.xpertsapp"
         minSdkVersion 18
-        targetSdkVersion 21
+        targetSdkVersion 18
         versionCode 1
         versionName "1.0"
     }
@@ -21,5 +21,12 @@ android {
 }
 
 dependencies {
+<<<<<<< HEAD
     compile 'com.google.code.gson:gson:2.3.1'
 }
+=======
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.android.support:support-v4:22.2.1+'
+    compile 'com.android.support.test:testing-support-lib:0.1'
+}
+>>>>>>> hammad

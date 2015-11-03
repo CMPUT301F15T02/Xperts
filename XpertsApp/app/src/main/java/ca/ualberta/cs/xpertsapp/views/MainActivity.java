@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import ca.ualberta.cs.xpertsapp.R;
+<<<<<<< HEAD
 import ca.ualberta.cs.xpertsapp.datamanagers.IOManager;
 import ca.ualberta.cs.xpertsapp.models.User;
 import ca.ualberta.cs.xpertsapp.models.Users;
@@ -18,10 +20,16 @@ public class MainActivity extends Activity {
     private User user;
     private Users users;
 
+=======
+
+public class MainActivity extends Activity {
+
+>>>>>>> hammad
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
     }
 
     // Button's function
@@ -91,14 +99,36 @@ public class MainActivity extends Activity {
         @Override
         public void run() {
             ioManager.addUserToServer(user);
+=======
 
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        Button MyProfileBtn = (Button) findViewById(R.id.MyProfileBtn);
+        MyProfileBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ViewProfileActivity.class));
             }
-        }
+        });
+
+        Button BrowseBtn = (Button) findViewById(R.id.BrowseBtn);
+        BrowseBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BrowseServicesActivity.class));
+            }
+        });
+
+        Button TradesBtn = (Button) findViewById(R.id.TradesBtn);
+        TradesBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TradesActivity.class));
+            }
+        });
+>>>>>>> hammad
+
+        Button FriendsBtn = (Button) findViewById(R.id.FriendsBtn);
+        FriendsBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FriendsActivity.class));
+            }
+        });
     }
 
 

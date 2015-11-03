@@ -1,13 +1,21 @@
 package ca.ualberta.cs.xpertsapp.InventoryTests;
 
-import android.app.Application;
-import android.test.ApplicationTestCase;
+import android.app.Instrumentation;
+import android.test.ActivityInstrumentationTestCase2;
+import android.widget.Button;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- */
-public class ViewInventoryTest extends ApplicationTestCase<Application> {
-    public ViewInventoryTest() {
-        super(Application.class);
-    }
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
+import ca.ualberta.cs.xpertsapp.views.ViewProfileActivity;
+
+public class ViewInventoryTest extends ActivityInstrumentationTestCase2 {
+	public ViewInventoryTest() {
+		super(MainActivity.class);
+	}
+
+	/**
+	 * US01.02.01
+	 */
+	public void test_ViewInventory() {
+
+	}
 }
