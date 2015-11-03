@@ -44,7 +44,7 @@ public class EditProfileTest extends ActivityInstrumentationTestCase2<EditProfil
                 .perform(typeText("newEmail"), closeSoftKeyboard());
         onView(withId(R.id.saveButton)).perform(click());
 
-        // Check that user's name was changed
+        // Check that user's email was changed
         users = new IOManager(mActivity).loadFromFile();
         user = users.get(0);
 
