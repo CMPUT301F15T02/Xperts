@@ -1,4 +1,4 @@
-package ca.ualberta.cs.xpertsapp.inventory;
+package ca.ualberta.cs.xpertsapp.InventoryTests;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
