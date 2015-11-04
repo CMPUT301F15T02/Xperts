@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
 
 public class ServiceDetailsActivity extends Activity {
@@ -32,6 +34,17 @@ public class ServiceDetailsActivity extends Activity {
 		category = (TextView) findViewById(R.id.categoryTextView);
 		description = (TextView) findViewById(R.id.longDescriptionTextView);
 		editButton = (Button) findViewById(R.id.editButton);
+		Intent intent = getIntent();
+		String Service_id = intent.getStringExtra(Constants.IntentServiceName);
+		Service service = ServiceManager.sharedManager().getService(Service_id);
+		theTitle.setText(service.getName());
+		if (service.isShareable())
+			{isPublic.setText(Constants.Shareable);}
+		else
+			{isPublic.setText(Constants.notShareable);}
+		category.setText(service.getCategory().toString());
+		description.setText(service.getDescription());
+
  	}
 
 	@Override

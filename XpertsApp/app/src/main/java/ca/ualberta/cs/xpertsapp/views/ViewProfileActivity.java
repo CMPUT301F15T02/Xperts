@@ -19,6 +19,7 @@ import java.util.List;
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
+import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.User;
 
@@ -43,8 +44,10 @@ public class ViewProfileActivity extends Activity {
 
         serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(activity, AddServiceActivity.class);
+                Intent intent = new Intent(activity, ServiceDetailsActivity.class);
+                intent.putExtra(Constants.IntentServiceName,serviceListAdapter.getItem(position).getID());
                 startActivity(intent);
+
             }
         });
     }

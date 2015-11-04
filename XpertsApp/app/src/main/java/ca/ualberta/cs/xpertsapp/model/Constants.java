@@ -15,6 +15,11 @@ public class Constants {
 	public static final String EMAIL_KEY = "email";
 	public static final String LOGGED_IN = "loggedIn";
 
+	public static final String IntentServiceName = "Intent_Service_Name";
+
+	public static final String Shareable = "Public";
+	public static final String notShareable = "Private";
+
 	/**
 	 * @return The base URL of the server
 	 */

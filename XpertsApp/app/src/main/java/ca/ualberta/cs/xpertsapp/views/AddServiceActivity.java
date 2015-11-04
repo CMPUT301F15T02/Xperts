@@ -67,6 +67,7 @@ public class AddServiceActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "Runtime error",
 					Toast.LENGTH_LONG).show();
 		}
+		finish();
 		//Intent intent = new Intent(this, ViewProfileActivity.class);
 		//startActivity(intent);
 	}

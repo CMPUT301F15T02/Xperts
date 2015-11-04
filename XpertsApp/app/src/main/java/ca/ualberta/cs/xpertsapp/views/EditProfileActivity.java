@@ -42,7 +42,8 @@ public class EditProfileActivity extends Activity {
     }
 
     public void saveProfile(View view) {
-        Intent intent = new Intent(this, ViewProfileActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, ViewProfileActivity.class);
+        //startActivity(intent);
+        finish();
     }
 }
