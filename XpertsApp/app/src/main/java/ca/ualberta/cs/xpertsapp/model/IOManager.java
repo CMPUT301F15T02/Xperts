@@ -46,6 +46,8 @@ public class IOManager {
 			return response;
 		}
 
+
+
 	}
 
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
@@ -75,7 +77,7 @@ public class IOManager {
 			HttpResponse response = new AsyncRequest().execute(addRequest).get();
 			String status = response.getStatusLine().toString();
 //			Log.i("STATUS: ", status);
-			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
+//			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
 		} catch (Exception e) {
 			// TODO:
 			throw new RuntimeException(e);
@@ -91,7 +93,7 @@ public class IOManager {
 			HttpResponse response = new AsyncRequest().execute(deleteRequest).get();
 			String status = response.getStatusLine().toString();
 //			Log.i("Status: ", status);
-			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
+//			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
 		} catch (Exception e) {
 			// TODO:
 			throw new RuntimeException(e);
