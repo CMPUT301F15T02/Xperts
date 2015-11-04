@@ -36,6 +36,8 @@ public class User implements IObservable {
 	 * @return the users name
 	 */
 	public String getName() {
+		if (this.name.equals(""))
+			return this.getEmail();
 		return this.name;
 	}
 

@@ -19,5 +19,9 @@
     <string name="title_activity_search_users">SearchUsersActivity</string>
     <string name="title_activity_friend_profile">FriendProfileActivity</string>
     <string name="todo">To Do</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="string_email">email</string>
+    <string name="btn_login_text">LOGIN</string>
+    <string name="btn_logout_text">Logout</string>
 </resources>
 

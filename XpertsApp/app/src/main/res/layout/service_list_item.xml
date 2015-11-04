@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/service_list_image"
+        android:src="@mipmap/ic_launcher"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView android:id="@+id/service_list_name"
+        android:text="Service Name"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/service_list_image"
+        android:textIsSelectable="false"
+        android:textColor="@color/blue" />
+
+    <TextView android:id="@+id/service_list_owner"
+        android:text="by: Owner Name"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_toEndOf="@+id/service_list_image"
+        android:layout_below="@+id/service_list_name"
+        android:textColor="@color/grey" />
+
+    <TextView
+        android:id="@+id/service_list_category"
+        android:text="Category"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey"
+        android:layout_alignBottom="@+id/service_list_owner"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

@@ -3,11 +3,13 @@ package ca.ualberta.cs.xpertsapp.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 
 
@@ -21,11 +23,19 @@ public class MainActivity extends Activity {
     public Button getTradesBtn() {return TradesBtn;};
     private Button FriendsBtn;
     public Button getFriendsBtn() {return FriendsBtn;};
+    private Button LogoutBtn;
+    public Button getLogoutBtn() {
+        return LogoutBtn;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        MyApplication.logout();
+
+        MyApplication.loginCheck();
 
         MyProfileBtn = (Button) findViewById(R.id.MyProfileBtn);
         MyProfileBtn.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +64,15 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, FriendsActivity.class));
             }
         });
+
+        LogoutBtn = (Button) findViewById(R.id.btn_logout);
+        LogoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyApplication.logout();
+            }
+        });
+
     }
 
 

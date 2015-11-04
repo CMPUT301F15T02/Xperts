@@ -1,9 +1,11 @@
 package ca.ualberta.cs.xpertsapp.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CategoryList {
+
 	private static String[] categoryNames = {
 			"ACCOUNTING",
 			"CONSTRUCTION",

@@ -93,10 +93,6 @@ public class ViewFriendProfileTest extends ActivityInstrumentationTestCase2 {
         User user = UserManager.sharedManager().localUser();
         user.addFriend(friend1);
         assertEquals(user.getFriends().size(), 1);
-
-
-
-
     }
 
 

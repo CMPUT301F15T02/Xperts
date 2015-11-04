@@ -36,6 +36,7 @@ public class UserManager implements IObserver {
 	private void addUser(User user) {
 		user.addObserver(this);
 		this.users.put(user.getEmail(), user);
+		this.notify(user);
 	}
 
 	/**
@@ -43,6 +44,9 @@ public class UserManager implements IObserver {
 	 * @return The User with that email or null
 	 */
 	public User getUser(String email) {
+		if (email == null) {
+			return null;
+		}
 		// If we have the user loaded
 		if (this.users.containsKey(email)) {
 			return this.users.get(email);
@@ -70,31 +74,21 @@ public class UserManager implements IObserver {
 	 * @return The User that is currently signed in or null
 	 */
 	public User localUser() {
-		String email = MyApplication.getPreferences().getString("email", null);
-		if (email == null) {
-			return null;
-		}
-		User user = this.getUser(email);
-		if (user == null) {
-			user = this.registerUser(email);
-		}
-		return user;
+		return MyApplication.getLocalUser();
 	}
 
 	/**
 	 * @param email The email to register the user as
-	 * @return The registered user or null if the email is taken
+	 * @return The registered user
 	 */
 	public User registerUser(String email) {
 		User foundUser = this.getUser(email);
 		if (foundUser == null) {
 			User newUser = new User(email);
 			this.addUser(newUser);
-			// Save the email to the settings
-			MyApplication.getPreferences().edit().putString("email", email).apply();
-			return newUser;
+			return this.getUser(email);
 		}
-		return null;
+		return foundUser;
 	}
 
 	/**

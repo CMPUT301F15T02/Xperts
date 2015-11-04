@@ -5,24 +5,38 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
 import ca.ualberta.cs.xpertsapp.model.Category;
 import ca.ualberta.cs.xpertsapp.model.CategoryList;
+import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.ServiceManager;
+import ca.ualberta.cs.xpertsapp.model.User;
 
 public class BrowseServicesActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
     Spinner categorySpinner;
     List<Category> categories;
-    ArrayAdapter<Category> categoryAdapter;
+    ArrayAdapter<String> categoryAdapter;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,14 +81,29 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse_services);
 
+        ListView serviceList = (ListView) findViewById(R.id.serviceList);
+//        List<Service> services = ServiceManager.sharedManager().getServices();
+
+        List<Service> services = new ArrayList<Service>();
+        User user = MyApplication.getLocalUser();
+
+        for (User friend : user.getFriends()) {
+            services.addAll(friend.getServices());
+        }
+
+        serviceList.setAdapter(new ServiceListAdapter(this, services));
 
         categories = CategoryList.sharedCategoryList().getCategories();
-        Category all = new Category("All Categories");
-        categories.add(0, all);
+
+        List<String> CategoryNames = new ArrayList<String>();
+        CategoryNames.add("All Categories");
+        for(Category c: categories){
+            CategoryNames.add(c.toString());
+        }
 
         // Taken from: http://stackoverflow.com/questions/9863378/how-to-hide-one-item-in-an-android-spinner
-        categoryAdapter = new ArrayAdapter<Category>(getApplicationContext(),
-                        android.R.layout.simple_spinner_dropdown_item,categories);
+        categoryAdapter = new ArrayAdapter<String>(getApplicationContext(),
+                        android.R.layout.simple_spinner_dropdown_item, CategoryNames);
 
         handleIntent(getIntent());
     }
@@ -105,12 +134,19 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        Toast.makeText(getApplicationContext(), "You selected : " + categories.get(pos), Toast.LENGTH_SHORT).show();
+
+        Category selected = null;
+        if (pos > 0) {
+            selected = categories.get(pos - 1);
+        }
+        Toast.makeText(getApplicationContext(), "You selected : " + selected, Toast.LENGTH_SHORT).show();
+
         // TODO: Update view with selected category
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 
 }

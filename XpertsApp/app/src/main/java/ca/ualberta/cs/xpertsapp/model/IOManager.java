@@ -1,5 +1,7 @@
 package ca.ualberta.cs.xpertsapp.model;
 
+import android.os.AsyncTask;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -8,6 +10,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -27,13 +30,30 @@ public class IOManager {
 	// When writing to the server, we need to sleep to make sure the server can update before we fetch
 	private static final int sleepTime = 500;
 
+	/**
+	 * Does Network Requests Asynchronously
+	 */
+	private class AsyncRequest extends AsyncTask<HttpUriRequest, Void, HttpResponse> {
+
+		protected HttpResponse doInBackground(HttpUriRequest... request) {
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpResponse response;
+			try {
+				response = httpClient.execute(request[0]);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			return response;
+		}
+
+	}
+
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
 		// TODO: LOOK LOCALLY
-		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
 		String loadedData;
 		try {
-			HttpResponse response = httpClient.execute(httpGet);
+			HttpResponse response = new AsyncRequest().execute(httpGet).get();
 			loadedData = convertStreamToString(response.getEntity().getContent());
 		} catch (Exception e) {
 			// TODO: load localyl
@@ -42,8 +62,7 @@ public class IOManager {
 		if (loadedData.equals("")) {
 			// TODO: SHOULD NEVER HAPPEN
 		}
-		T loadedThing = (new Gson()).fromJson(loadedData, typeToken.getType());
-		return loadedThing;
+		return (new Gson()).fromJson(loadedData, typeToken.getType());
 	}
 
 	public <T> void storeData(T data, String meta) {
@@ -53,7 +72,7 @@ public class IOManager {
 			HttpPost addRequest = new HttpPost(Constants.serverBaseURL() + meta);
 			addRequest.setEntity(new StringEntity((new Gson()).toJson(data)));
 			addRequest.setHeader("Accept", "application/json");
-			HttpResponse response = httpClient.execute(addRequest);
+			HttpResponse response = new AsyncRequest().execute(addRequest).get();
 			String status = response.getStatusLine().toString();
 //			Log.i("STATUS: ", status);
 			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
@@ -69,7 +88,7 @@ public class IOManager {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpDelete deleteRequest = new HttpDelete(Constants.serverBaseURL() + meta);
 			deleteRequest.setHeader("Accept", "application/json");
-			HttpResponse response = httpClient.execute(deleteRequest);
+			HttpResponse response = new AsyncRequest().execute(deleteRequest).get();
 			String status = response.getStatusLine().toString();
 //			Log.i("Status: ", status);
 			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
@@ -85,7 +104,7 @@ public class IOManager {
 		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + searchMeta);
 		String loadedData;
 		try {
-			HttpResponse response = httpClient.execute(httpGet);
+			HttpResponse response = new AsyncRequest().execute(httpGet).get();
 			loadedData = convertStreamToString(response.getEntity().getContent());
 		} catch (Exception e) {
 			// TODO:
