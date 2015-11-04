@@ -90,6 +90,8 @@ public class UserManager implements IObserver {
 		if (foundUser == null) {
 			User newUser = new User(email);
 			this.addUser(newUser);
+			// Save the email to the settings
+			MyApplication.getPreferences().edit().putString("email", email).apply();
 			return newUser;
 		}
 		return null;
