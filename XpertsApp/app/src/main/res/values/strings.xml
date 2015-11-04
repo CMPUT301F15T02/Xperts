@@ -17,6 +17,10 @@
     <string name="title_activity_search_service">SearchServiceActivity</string>
     <string name="title_activity_edit_profile">Settings</string>
     <string name="title_activity_search_users">SearchUsersActivity</string>
+<<<<<<< Updated upstream
     <string name="title_activity_friend_profile">FriendProfileActivity</string>
+=======
+    <string name="todo">To Do</string>
+>>>>>>> Stashed changes
 </resources>
 

@@ -7,12 +7,12 @@ import android.view.MenuItem;
 
 import ca.ualberta.cs.xpertsapp.R;
 
-public class TradesActivity extends Activity {
+public class TradeListActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trades);
+        setContentView(R.layout.activity_trade_list);
     }
 
     @Override
