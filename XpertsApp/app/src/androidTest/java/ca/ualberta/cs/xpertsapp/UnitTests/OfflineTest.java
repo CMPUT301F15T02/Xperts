@@ -44,8 +44,7 @@ public class OfflineTest extends TestCase {
 		assertEquals(null, nullService);
 
 		// Push the changes
-		// TODO: THIS BREAKS COMPILE THIGNS
-		//IOManager.sharedManager().pushChanges();
+//		IOManager.sharedManager().pushChanges();
 		Service theService = ServiceManager.sharedManager().getService(newService.getID());
 
 		assertEquals(newService, theService);

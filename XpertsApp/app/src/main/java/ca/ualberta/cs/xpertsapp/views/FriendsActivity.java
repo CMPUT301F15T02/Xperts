@@ -37,7 +37,7 @@ public class FriendsActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(activity, FriendProfileActivity.class);
                 User friend = (User) friendsList.getItemAtPosition(position);
-                intent.putExtra("id", friend.getID());
+                intent.putExtra("id", friend.getEmail());
                 startActivity(intent);
             }
         });

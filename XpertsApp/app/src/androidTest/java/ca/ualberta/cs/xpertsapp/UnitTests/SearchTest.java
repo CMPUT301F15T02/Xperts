@@ -50,19 +50,19 @@ public class SearchTest extends TestCase {
 				"}";
 		friend1 = (new Gson()).fromJson(friend1String, User.class);
 		service1 = (new Gson()).fromJson(service1String, Service.class);
-		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getID());
+		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().storeData(service1, Constants.serverServiceExtension() + service1.getID());
-		friend1 = UserManager.sharedManager().getUser(friend1.getID());
+		friend1 = UserManager.sharedManager().getUser(friend1.getEmail());
 
 		User user = UserManager.sharedManager().localUser();
-		user.addFriend(friend1.getID());
+		user.addFriend(friend1);
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getID());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service1.getID());
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getID());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
 
 		super.tearDown();
 	}

@@ -8,6 +8,9 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.interfaces.TradeState;
 
+/**
+ * Represents a Trade between two Users
+ */
 public class Trade implements IObservable {
 	private String id;
 	private boolean isCounterOffer;
@@ -31,68 +34,107 @@ public class Trade implements IObservable {
 
 	// Get/Set
 
+	/**
+	 * @return The Trades id
+	 */
 	public String getID() {
 		return this.id;
 	}
 
+	/**
+	 * @return The User who created the trade
+	 */
 	public User getOwner() {
 		return UserManager.sharedManager().getUser(this.owner);
 	}
 
+	/**
+	 * @return The User who is receiving the trade
+	 */
 	public User getBorrower() {
 		return UserManager.sharedManager().getUser(this.borrower);
 	}
 
+	/**
+	 * @return The list of services the Initiator wants to trade away
+	 */
 	public List<Service> getOwnerServices() {
 		// TODO:
 		return null;
 	}
 
-	public void addOwnerService(String service) {
+	/**
+	 * @param service The service to trade away
+	 */
+	public void addOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (ServiceManager.sharedManager().getService(service).getOwner() != this.getOwner()) throw new AssertionError();
-		this.ownerServices.add(service);
+		if (service.getOwner() != this.getOwner()) throw new AssertionError();
+		this.ownerServices.add(service.getID());
 		this.notifyObservers();
 	}
 
-	public void removeOwnerService(String service) {
+	/**
+	 * @param service The service not to trade
+	 */
+	public void removeOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (ServiceManager.sharedManager().getService(service).getOwner() != this.getOwner()) throw new AssertionError();
-		this.ownerServices.remove(service);
+		if (service.getOwner() != this.getOwner()) throw new AssertionError();
+		this.ownerServices.remove(service.getID());
 		this.notifyObservers();
 	}
 
+	/**
+	 * @return The services the initiator wants
+	 */
 	public List<Service> getBorrowerServices() {
 		// TODO:
 		return null;
 	}
 
-	public void addBorrowerService(String service) {
+	/**
+	 * @param service The service to add
+	 */
+	public void addBorrowerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (ServiceManager.sharedManager().getService(service).getOwner() != this.getBorrower()) throw new AssertionError();
-		this.borrowerServices.add(service);
+		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
+		this.borrowerServices.add(service.getID());
 		this.notifyObservers();
 	}
 
-	public void removeBorrowerService(String service) {
+	/**
+	 * @param service The service to remove
+	 */
+	public void removeBorrowerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (ServiceManager.sharedManager().getService(service).getOwner() != this.getBorrower()) throw new AssertionError();
-		this.borrowerServices.remove(service);
+		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
+		this.borrowerServices.remove(service.getID());
 		this.notifyObservers();
 	}
 
+	/**
+	 * @return the date the trade was created
+	 */
 	public Date getProposedDate() {
 		return this.proposedDate;
 	}
 
+	/**
+	 * @return the date the trade was last modified
+	 */
 	public Date getLastUpdatedDate() {
 		return this.lastUpdatedDate;
 	}
 
+	/**
+	 * @return if the trade is a counter
+	 */
 	public boolean isCounterOffer() {
 		return this.isCounterOffer;
 	}
 
+	/**
+	 * @return the state of the trade
+	 */
 	public TradeState getState() {
 		return this.state;
 	}
@@ -105,6 +147,9 @@ public class Trade implements IObservable {
 		return this.getOwner() == UserManager.sharedManager().localUser();
 	}
 
+	/**
+	 * The user wants to accept the incoming trade
+	 */
 	public void accept() {
 		if (this.state == null) {
 			if (this.status == 0) {
@@ -122,6 +167,9 @@ public class Trade implements IObservable {
 		this.state.accept(this);
 	}
 
+	/**
+	 * The user wants to decline the incoming trade
+	 */
 	public void decline() {
 		if (this.state == null) {
 			if (this.status == 0) {
@@ -139,6 +187,9 @@ public class Trade implements IObservable {
 		this.state.decline(this);
 	}
 
+	/**
+	 * The sender wants to cancel the outgoing trade
+	 */
 	public void cancel() {
 		if (this.state == null) {
 			if (this.status == 0) {
@@ -156,9 +207,12 @@ public class Trade implements IObservable {
 		this.state.cancel(this);
 	}
 
+	/**
+	 * The trade parameters are set up and the trade should be sent
+	 */
 	public void commit() {
-		UserManager.sharedManager().getUser(this.owner).addTrade(this.getID());
-		UserManager.sharedManager().getUser(this.borrower).addTrade(this.getID());
+		UserManager.sharedManager().getUser(this.owner).addTrade(this);
+		UserManager.sharedManager().getUser(this.borrower).addTrade(this);
 		TradeManager.sharedManager().addTrade(this);
 		this.notifyObservers();
 	}

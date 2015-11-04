@@ -2,6 +2,7 @@ package ca.ualberta.cs.xpertsapp.UnitTests;
 
 import android.test.ActivityInstrumentationTestCase2;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.TradeManager;
@@ -17,6 +18,8 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 	protected void setUp() throws Exception {
 		// Prepare
 		Constants.isTest = true;
+
+		MyApplication.getPreferences().edit().putString("email", "test@email").apply();
 
 		super.setUp();
 	}

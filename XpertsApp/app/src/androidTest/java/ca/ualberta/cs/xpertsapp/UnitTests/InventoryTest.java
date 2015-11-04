@@ -68,21 +68,21 @@ public class InventoryTest extends TestCase {
 		friend1 = (new Gson()).fromJson(friend1String, User.class);
 		service1 = (new Gson()).fromJson(service1String, Service.class);
 		service2 = (new Gson()).fromJson(service2String, Service.class);
-		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getID());
+		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().storeData(service1, Constants.serverServiceExtension() + service1.getID());
 		IOManager.sharedManager().storeData(service2, Constants.serverServiceExtension() + service2.getID());
-		friend1 = UserManager.sharedManager().getUser(friend1.getID());
+		friend1 = UserManager.sharedManager().getUser(friend1.getEmail());
 		service1 = ServiceManager.sharedManager().getService(service1.getID());
 		service2 = ServiceManager.sharedManager().getService(service2.getID());
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getID());
-		Log.i("?>???????", service1.getID().toString());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
+		Log.i("?>???????", service1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service2.getID());
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getID());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
 
 		super.tearDown();
 	}

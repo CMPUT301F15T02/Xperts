@@ -9,38 +9,53 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
+/**
+ * Manages the loaded users to allow circular references without getting stuck in a loading loop
+ */
 public class UserManager implements IObserver {
 	private Map<String, User> users = new HashMap<String, User>();
 
 	// Get/Set
+
+	/**
+	 * @return A List of loaded Users
+	 */
 	public List<User> getUsers() {
 		return new ArrayList<User>(this.users.values());
 	}
 
+	/**
+	 * @param user Registers this as an observer on User and adds it to the List
+	 */
 	private void addUser(User user) {
 		user.addObserver(this);
-		this.users.put(user.getID(), user);
+		this.users.put(user.getEmail(), user);
 	}
 
-	public User getUser(String id) {
+	/**
+	 * @param email The email of the user
+	 * @return The User with that email or null
+	 */
+	public User getUser(String email) {
 		// If we have the user loaded
-		if (this.users.containsKey(id)) {
-			return this.users.get(id);
+		if (this.users.containsKey(email)) {
+			return this.users.get(email);
 		}
-		// TODO:
+		// TODO: Only return a user if one existed
 		try {
-			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + id, new TypeToken<SearchHit<User>>() {
+			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + email, new TypeToken<SearchHit<User>>() {
 			});
 			if (loadedUser.isFound()) {
 				this.addUser(loadedUser.getSource());
 				return loadedUser.getSource();
 			} else {
-				User newUser = new User(id);
+				User newUser = new User(email);
 				this.addUser(newUser);
 				return newUser;
 			}
@@ -53,12 +68,35 @@ public class UserManager implements IObserver {
 		}
 	}
 
+	/**
+	 * @return The User that is currently signed in or null
+	 */
 	public User localUser() {
-		return this.getUser(Constants.deviceUUID());
+		String email = MyApplication.getPreferences().getString("email", null);
+		if (email == null) {
+			return null;
+		}
+		return this.getUser(email);
+	}
+
+	/**
+	 * @param email The email to register the user as
+	 * @return The registered user or null if the email is taken
+	 */
+	public User registerUser(String email) {
+		User foundUser = this.getUser(email);
+		if (foundUser == null) {
+			User newUser = new User(email);
+			this.addUser(newUser);
+			return newUser;
+		}
+		return null;
 	}
 
 	/**
 	 * Get a list of users sorted by match relevance
+	 * <p/>
+	 * Uses the url [...]/_search?q='%s'
 	 *
 	 * @param meta What to search for
 	 * @return The list of matching users with the most relevant first
@@ -68,11 +106,14 @@ public class UserManager implements IObserver {
 		});
 		List<User> users = new ArrayList<User>();
 		for (SearchHit<User> user : found) {
-			users.add(this.getUser(user.getSource().getID()));
+			users.add(this.getUser(user.getSource().getEmail()));
 		}
 		return users;
 	}
 
+	/**
+	 * Clears the local cache of loaded users
+	 */
 	public void clearCache() {
 		this.users.clear();
 		this.localUser();
@@ -93,6 +134,6 @@ public class UserManager implements IObserver {
 	@Override
 	public void notify(IObservable observable) {
 		// TODO:
-		IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getID());
+		IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
 	}
 }

@@ -51,17 +51,17 @@ public class TradeTest extends TestCase {
 				"}";
 		friend1 = (new Gson()).fromJson(friend1String, User.class);
 		service1 = (new Gson()).fromJson(service1String, Service.class);
-		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getID());
+		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().storeData(service1, Constants.serverServiceExtension() + service1.getID());
-		friend1 = UserManager.sharedManager().getUser(friend1.getID());
+		friend1 = UserManager.sharedManager().getUser(friend1.getEmail());
 		service1 = ServiceManager.sharedManager().getService(service1.getID());
 	}
 
 	@Override
 	protected void tearDown() throws Exception {
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getID());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service1.getID());
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getID());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
 
 		super.tearDown();
 	}
@@ -74,16 +74,16 @@ public class TradeTest extends TestCase {
 		newService.setName("new service");
 		user.addService(newService);
 
-		user.addFriend(friend1.getID());
+		user.addFriend(friend1);
 		User myFriend = user.getFriends().get(0);
 
 
 		// Create a new trade
-		Trade newTrade = TradeManager.sharedManager().newTrade(myFriend.getID(), false);
+		Trade newTrade = TradeManager.sharedManager().newTrade(myFriend, false);
 
 		// Edit the trade
-		newTrade.addOwnerService(newService.getID());
-		newTrade.addBorrowerService(service1.getID());
+		newTrade.addOwnerService(newService);
+		newTrade.addBorrowerService(service1);
 
 		// Finalize it
 		newTrade.commit();
@@ -104,7 +104,7 @@ public class TradeTest extends TestCase {
 		User user = UserManager.sharedManager().localUser();
 		String tradeString = "" +
 				"{" +
-				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrower\":\"" + user.getEmail() + "\"," +
 				"\"borrowerServices\":[]," +
 				"\"id\":\"0001\"," +
 				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
@@ -129,7 +129,7 @@ public class TradeTest extends TestCase {
 		User user = UserManager.sharedManager().localUser();
 		String trade1String = "" +
 				"{" +
-				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrower\":\"" + user.getEmail() + "\"," +
 				"\"borrowerServices\":[]," +
 				"\"id\":\"0001\"," +
 				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
@@ -141,7 +141,7 @@ public class TradeTest extends TestCase {
 				"}";
 		String trade2String = "" +
 				"{" +
-				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrower\":\"" + user.getEmail() + "\"," +
 				"\"borrowerServices\":[]," +
 				"\"id\":\"0002\"," +
 				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
@@ -179,16 +179,16 @@ public class TradeTest extends TestCase {
 		newService.setName("new service");
 		user.addService(newService);
 
-		user.addFriend(friend1.getID());
+		user.addFriend(friend1);
 		User myFriend = user.getFriends().get(0);
 
 
 		// Create a new trade
-		Trade newTrade = TradeManager.sharedManager().newTrade(myFriend.getID(), false);
+		Trade newTrade = TradeManager.sharedManager().newTrade(myFriend, false);
 
 		// Edit the trade
-		newTrade.addOwnerService(newService.getID());
-		newTrade.addBorrowerService(service1.getID());
+		newTrade.addOwnerService(newService);
+		newTrade.addBorrowerService(service1);
 
 		// Don't commit
 
@@ -211,7 +211,7 @@ public class TradeTest extends TestCase {
 		User user = UserManager.sharedManager().localUser();
 		String trade1String = "" +
 				"{" +
-				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrower\":\"" + user.getEmail() + "\"," +
 				"\"borrowerServices\":[]," +
 				"\"id\":\"0001\"," +
 				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
@@ -223,7 +223,7 @@ public class TradeTest extends TestCase {
 				"}";
 		String trade2String = "" +
 				"{" +
-				"\"borrower\":\"" + user.getID() + "\"," +
+				"\"borrower\":\"" + user.getEmail() + "\"," +
 				"\"borrowerServices\":[]," +
 				"\"id\":\"0002\"," +
 				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +

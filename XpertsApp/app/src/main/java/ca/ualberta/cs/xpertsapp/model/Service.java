@@ -8,8 +8,10 @@ import java.util.List;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 
+/**
+ * Represents a Service
+ */
 public class Service implements IObservable {
-
 	private String id;
 	private String name = "";
 	private String description = "";
@@ -23,74 +25,107 @@ public class Service implements IObservable {
 		this.owner = owner;
 	}
 
+	/**
+	 * @return the id of the service
+	 */
 	public String getID() {
 		return id;
 	}
 
+	/**
+	 * @return the name of the service
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name the new name of the service
+	 */
 	public void setName(String name) {
 		if (!this.isEditable()) throw new AssertionError();
 		this.name = name;
 		this.notifyObservers();
 	}
 
+	/**
+	 * @return the description of the service
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * @param description the new descripion of the service
+	 */
 	public void setDescription(String description) {
 		if (!this.isEditable()) throw new AssertionError();
 		this.description = description;
 		this.notifyObservers();
 	}
 
+	/**
+	 * @return the category of the service
+	 */
 	public Category getCategory() {
 		return category;
 	}
 
+	/**
+	 * @param category the new category of the service
+	 */
 	public void setCategory(Category category) {
 		if (!this.isEditable()) throw new AssertionError();
 		this.category = category;
 		this.notifyObservers();
 	}
 
+	/**
+	 * @return the list of images
+	 */
 	public List<Bitmap> getPictures() {
 		return pictures;
 	}
 
+	/**
+	 * @param picture the image to add
+	 */
 	public void addPicture(Bitmap picture) {
 		if (!this.isEditable()) throw new AssertionError();
 		pictures.add(picture);
 		this.notifyObservers();
 	}
 
+	/**
+	 * @param picture the image to remove
+	 */
 	public void removePicture(Bitmap picture) {
 		if (!this.isEditable()) throw new AssertionError();
 		pictures.remove(picture);
 		this.notifyObservers();
 	}
 
+	/**
+	 * @return whether or not the service can be seen by others
+	 */
 	public boolean isShareable() {
 		return shareable;
 	}
 
+	/**
+	 * @param shareable toggle sharing
+	 */
 	public void setShareable(boolean shareable) {
 		if (!this.isEditable()) throw new AssertionError();
 		this.shareable = shareable;
 		this.notifyObservers();
 	}
 
+	/**
+	 * @return the owner of the service
+	 */
 	public User getOwner() {
 		return UserManager.sharedManager().getUser(this.owner);
-	}
-
-	void setOwner(String owner) {
-		if (!this.isEditable()) throw new AssertionError();
-		this.owner = owner;
-		this.notifyObservers();
 	}
 
 	private boolean isEditable() {

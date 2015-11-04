@@ -22,12 +22,12 @@ public class ProfileController {
     public void addFriend(String email){
         User user = UserManager.sharedManager().localUser();
         User friend = searchUsers(email);
-        user.addFriend(friend.getID());
+        user.addFriend(friend);
     }
     //deletes friend from local user
     public void deleteFriend(User friend) {
         User user = UserManager.sharedManager().localUser();
-        user.removeFriend(friend.getID());
+        user.removeFriend(friend);
     }
     //TODO figure out what this is for
     public User getUser(String id) {

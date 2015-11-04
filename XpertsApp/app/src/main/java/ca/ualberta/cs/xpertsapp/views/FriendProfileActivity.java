@@ -34,7 +34,7 @@ public class FriendProfileActivity extends Activity {
         //print user's info to screen
         //TODO test this - need another user
         name.setText(friend.getName());
-        email.setText(friend.getContactInfo());
+        email.setText(friend.getEmail());
         location.setText(friend.getLocation());
     }
 

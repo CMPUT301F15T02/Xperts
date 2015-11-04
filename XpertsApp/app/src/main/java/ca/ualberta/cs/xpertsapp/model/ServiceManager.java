@@ -15,10 +15,17 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
+/**
+ * Manages services
+ */
 public class ServiceManager implements IObserver {
 
 	private Map<String, Service> services = new HashMap<String, Service>();
 
+	/**
+	 * @param id the id of the service to look for
+	 * @return the service or null if it doesn't exist
+	 */
 	public Service getService(String id) {
 		// If service is loaded
 		if (this.services.containsKey(id)) {
@@ -44,6 +51,9 @@ public class ServiceManager implements IObserver {
 		}
 	}
 
+	/**
+	 * @return the list of loaded services
+	 */
 	public List<Service> getServices() {
 		return new ArrayList<Service>(this.services.values());
 	}
@@ -53,14 +63,24 @@ public class ServiceManager implements IObserver {
 		this.services.put(service.getID(), service);
 	}
 
+	/**
+	 * @return create a new service attached to the local user
+	 */
 	public Service newService() {
-		return new Service(UUID.randomUUID().toString(), UserManager.sharedManager().localUser().getID());
+		return new Service(UUID.randomUUID().toString(), UserManager.sharedManager().localUser().getEmail());
 	}
 
+	/**
+	 * clear the loaded services
+	 */
 	public void clearCache() {
 		this.services.clear();
 	}
 
+	/**
+	 * @param meta the meta to search for
+	 * @return the list of found services
+	 */
 	public List<Service> findServices(String meta) {
 		List<SearchHit<Service>> found = IOManager.sharedManager().searchData(Constants.serverServiceExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<Service>>() {
 		});
@@ -71,12 +91,16 @@ public class ServiceManager implements IObserver {
 		return services;
 	}
 
+	/**
+	 * @param meta the meta to search for
+	 * @return the list of services that belong to friends of local user
+	 */
 	public List<Service> findServicesOfFriends(String meta) {
 		List<SearchHit<Service>> found = IOManager.sharedManager().searchData(Constants.serverServiceExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<Service>>() {
 		});
 		List<Service> services = new ArrayList<Service>();
 		for (SearchHit<Service> service : found) {
-			if (UserManager.sharedManager().localUser().getFriends().contains(UserManager.sharedManager().getUser(service.getSource().getOwner().getID()))) {
+			if (UserManager.sharedManager().localUser().getFriends().contains(UserManager.sharedManager().getUser(service.getSource().getOwner().getEmail()))) {
 				services.add(this.getService(service.getSource().getID()));
 			}
 		}

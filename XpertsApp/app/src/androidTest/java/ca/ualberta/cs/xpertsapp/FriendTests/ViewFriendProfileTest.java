@@ -62,18 +62,18 @@ public class ViewFriendProfileTest extends ActivityInstrumentationTestCase2 {
                 "}";
         friend1 = (new Gson()).fromJson(friend1String, User.class);
         friend2 = (new Gson()).fromJson(friend2String, User.class);
-        IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getID());
-        IOManager.sharedManager().storeData(friend2, Constants.serverUserExtension() + friend2.getID());
-        friend1 = UserManager.sharedManager().getUser(friend1.getID());
-        friend2 = UserManager.sharedManager().getUser(friend2.getID());
+        IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getEmail());
+        IOManager.sharedManager().storeData(friend2, Constants.serverUserExtension() + friend2.getEmail());
+        friend1 = UserManager.sharedManager().getUser(friend1.getEmail());
+        friend2 = UserManager.sharedManager().getUser(friend2.getEmail());
     }
 
     @Override
     protected void tearDown() throws Exception {
         // Cleanup
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getID());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getID());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getID());
+        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
+        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getEmail());
+        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
 
         super.tearDown();
     }
@@ -91,7 +91,7 @@ public class ViewFriendProfileTest extends ActivityInstrumentationTestCase2 {
         //display the profile
         // Test add friends by searching for username
         User user = UserManager.sharedManager().localUser();
-        user.addFriend(friend1.getID());
+        user.addFriend(friend1);
         assertEquals(user.getFriends().size(), 1);
 
 

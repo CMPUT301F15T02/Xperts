@@ -49,18 +49,18 @@ public class ProfileControllerTest extends TestCase {
                 "}";
         friend1 = (new Gson()).fromJson(friend1String, User.class);
         friend2 = (new Gson()).fromJson(friend2String, User.class);
-        IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getID());
-        IOManager.sharedManager().storeData(friend2, Constants.serverUserExtension() + friend2.getID());
-        friend1 = UserManager.sharedManager().getUser(friend1.getID());
-        friend2 = UserManager.sharedManager().getUser(friend2.getID());
+        IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getEmail());
+        IOManager.sharedManager().storeData(friend2, Constants.serverUserExtension() + friend2.getEmail());
+        friend1 = UserManager.sharedManager().getUser(friend1.getEmail());
+        friend2 = UserManager.sharedManager().getUser(friend2.getEmail());
     }
 
     @Override
     protected void tearDown() throws Exception {
         // Cleanup
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getID());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getID());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getID());
+        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
+        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getEmail());
+        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
 
         super.tearDown();
     }
@@ -71,7 +71,7 @@ public class ProfileControllerTest extends TestCase {
         String email = "email1@u.ca";
         ProfileController pc = new ProfileController();
         User friend = pc.searchUsers(email);
-        assertEquals(email, friend.getContactInfo());
+        assertEquals(email, friend.getEmail());
     }
 
     public void testAddFriend() {
@@ -81,7 +81,7 @@ public class ProfileControllerTest extends TestCase {
         ProfileController pc = new ProfileController();
         assertEquals(user.getFriends().size() ==0, true);
         pc.addFriend(email);
-        assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()), friend1);
+        assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getEmail()), friend1);
     }
 
     public void testDeleteFriend() {
@@ -90,9 +90,9 @@ public class ProfileControllerTest extends TestCase {
         String email = "email1@u.ca";
         ProfileController pc = new ProfileController();
         pc.addFriend(email);
-        assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()), friend1);
+        assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getEmail()), friend1);
         assertEquals(user.getFriends().size() == 1, true);
-        pc.deleteFriend(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()));
+        pc.deleteFriend(UserManager.sharedManager().getUser(user.getFriends().get(0).getEmail()));
         assertEquals(user.getFriends().size() == 0, true);
     }
 
@@ -102,7 +102,7 @@ public class ProfileControllerTest extends TestCase {
         String id = "1";
         ProfileController pc = new ProfileController();
         User friend = pc.getUser(id);
-        assertEquals(id, friend.getID());
+        assertEquals(id, friend.getEmail());
         assertEquals(friend.getLocation(), "British");
     }
 }

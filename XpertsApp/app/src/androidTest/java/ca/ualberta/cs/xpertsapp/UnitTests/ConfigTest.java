@@ -17,7 +17,7 @@ public class ConfigTest extends TestCase {
 
 	@Override
 	protected void tearDown() throws Exception {
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getID());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
 
 		super.tearDown();
 	}
@@ -33,12 +33,10 @@ public class ConfigTest extends TestCase {
 		String newContact = "2390832490838042";
 		user.setName(newName);
 		user.setLocation(newLocation);
-		user.setContactInfo(newContact);
 
 		UserManager.sharedManager().clearCache();
 		user = UserManager.sharedManager().localUser();
 		assertEquals(user.getName(), newName);
 		assertEquals(user.getLocation(), newLocation);
-		assertEquals(user.getContactInfo(), newContact);
 	}
 }

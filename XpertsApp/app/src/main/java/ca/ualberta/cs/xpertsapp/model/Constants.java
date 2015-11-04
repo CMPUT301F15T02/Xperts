@@ -13,13 +13,6 @@ public class Constants {
 	public static boolean isTest = false;
 
 	/**
-	 * @return The string representing the devices UUID
-	 */
-	public static String deviceUUID() {
-		return Secure.getString(MyApplication.getAppContext().getContentResolver(), Secure.ANDROID_ID);
-	}
-
-	/**
 	 * @return The base URL of the server
 	 */
 	public static String serverBaseURL() {
