@@ -154,4 +154,8 @@ public class Service implements IObservable {
 			observer.notify(this);
 		}
 	}
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }
