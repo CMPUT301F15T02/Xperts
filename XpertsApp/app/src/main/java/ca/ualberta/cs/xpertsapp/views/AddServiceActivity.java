@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -30,12 +31,15 @@ public class AddServiceActivity extends Activity {
 	public CheckBox getPrivate() {return Private;};
 	private CategoryList CL;
 	public CategoryList getCL() {return CL;};
+	private Button SaveButton;
+	public Button getSaveButton() {return SaveButton;};
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_service);
+		SaveButton = (Button) findViewById(R.id.saveButon);
 		Categories = (Spinner) findViewById(R.id.spinner);
 		Title =(EditText) findViewById(R.id.editText);
 		Description = (EditText) findViewById(R.id.editText2);

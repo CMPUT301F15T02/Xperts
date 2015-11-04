@@ -6,11 +6,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 
 import ca.ualberta.cs.xpertsapp.R;
 
 public class ViewProfileActivity extends Activity {
+    private Button editProfile;
+    public Button getEditProfile() {return editProfile;};
+    private Button addService;
+    public Button getAddService() {return addService;};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
