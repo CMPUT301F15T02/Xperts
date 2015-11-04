@@ -55,9 +55,7 @@ public class UserManager implements IObserver {
 				this.addUser(loadedUser.getSource());
 				return loadedUser.getSource();
 			} else {
-				User newUser = new User(email);
-				this.addUser(newUser);
-				return newUser;
+				return null;
 			}
 		} catch (JsonIOException e) {
 			throw new RuntimeException(e);

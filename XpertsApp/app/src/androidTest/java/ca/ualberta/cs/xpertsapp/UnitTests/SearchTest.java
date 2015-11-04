@@ -26,9 +26,8 @@ public class SearchTest extends TestCase {
 
 		String friend1String = "" +
 				"{" +
-				"\"contactInfo\":\"email1@u.ca\"," +
 				"\"friends\":[]," +
-				"\"id\":\"1\"," +
+				"\"email\":\"1\"," +
 				"\"location\":\"British\"," +
 				"\"name\":\"The Clown Guy\"," +
 				"\"services\":[1]," +

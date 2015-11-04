@@ -17,9 +17,15 @@ public class MyApplication extends Application {
 		MyApplication.preferences = MyApplication.context.getSharedPreferences("XpertsPreferences", Context.MODE_PRIVATE);
 	}
 
+	/**
+	 * @return The application context
+	 */
 	public static Context getAppContext() {
 		return MyApplication.context;
 	}
 
+	/**
+	 * @return The shared preferences
+	 */
 	public static SharedPreferences getPreferences() { return MyApplication.preferences; }
 }
