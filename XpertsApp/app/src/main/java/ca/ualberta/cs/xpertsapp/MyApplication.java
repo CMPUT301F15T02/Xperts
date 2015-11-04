@@ -102,5 +102,4 @@ public class MyApplication extends Application {
 		login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		MyApplication.context.startActivity(login);
 	}
-
 }

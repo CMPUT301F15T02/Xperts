@@ -19,7 +19,7 @@ public class User implements IObservable {
 
 	// Constructor
 
-	User(String email) {
+	protected User(String email) {
 		this.email = email;
 	}
 

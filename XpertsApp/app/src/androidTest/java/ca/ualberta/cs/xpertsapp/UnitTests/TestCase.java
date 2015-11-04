@@ -29,7 +29,6 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		pref.edit().apply();
 		UserManager.sharedManager().registerUser(testEmail);
 
-
 		super.setUp();
 	}
 

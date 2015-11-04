@@ -39,7 +39,7 @@ public class FriendsTest extends TestCase {
 	public void test_02_01_01() {
 		// Test add friends by searching for username
 		User user = UserManager.sharedManager().localUser();
-		String friendSearchString = "name:Ron*";
+		String friendSearchString = "email1*";
 		List<User> results = UserManager.sharedManager().findUsers(friendSearchString);
 		assertEquals(results.size(), 1);
 
