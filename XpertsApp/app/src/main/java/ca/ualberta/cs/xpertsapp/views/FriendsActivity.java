@@ -12,13 +12,18 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.security.InvalidParameterException;
 
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.ProfileController;
 import ca.ualberta.cs.xpertsapp.model.User;
 
 public class FriendsActivity extends Activity {
     private ListView friendsList;
     private FriendsActivity activity = this;
+    private ProfileController pc = new ProfileController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +70,23 @@ public class FriendsActivity extends Activity {
     public void addFriend(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final EditText editText = new EditText(activity);
-        builder.setMessage("Enter Username");
+        builder.setMessage("Enter Email");
         builder.setView(editText);
         builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String email = editText.getText().toString();
                 //TODO call to search for user from controller
+                try {
+                    pc.addFriend(email);
+                } catch (InvalidParameterException e) {
+                    //TODO no user with that email exists
+                    Context context = getApplicationContext();
+                    CharSequence text = "No user with that email exists!";
+                    int duration = Toast.LENGTH_SHORT;
 
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
         AlertDialog alertDialog = builder.create();
