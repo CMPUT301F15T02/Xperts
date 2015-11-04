@@ -4,6 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Constants;
+import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.TradeManager;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
@@ -30,6 +31,10 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		UserManager.sharedManager().clearCache();
 		ServiceManager.sharedManager().clearCache();
 		TradeManager.sharedManager().clearCache();
+
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension());
+		IOManager.sharedManager().deleteData(Constants.serverServiceExtension());
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
 
 		Constants.isTest = false;
 
