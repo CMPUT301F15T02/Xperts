@@ -36,7 +36,7 @@ public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
 
         public void testAddService(){
                 setActivityInitialTouchMode(true);
-                //Navigate from Main me
+                //Navigate from Main menu
                 MainActivity activity = (MainActivity) getActivity();
                 profileButton = activity.getMyProfileBtn();
                 activity.runOnUiThread(new Runnable() {

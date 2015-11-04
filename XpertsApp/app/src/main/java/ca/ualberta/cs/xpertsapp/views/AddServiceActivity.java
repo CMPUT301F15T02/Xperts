@@ -16,7 +16,9 @@ import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
 import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Category;
+import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
 
 public class AddServiceActivity extends Activity {
@@ -33,11 +35,13 @@ public class AddServiceActivity extends Activity {
 	public CategoryList getCL() {return CL;};
 	private Button SaveButton;
 	public Button getSaveButton() {return SaveButton;};
+	private Intent intent;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_add_service);
 		SaveButton = (Button) findViewById(R.id.saveButon);
 		Categories = (Spinner) findViewById(R.id.spinner);
@@ -48,6 +52,18 @@ public class AddServiceActivity extends Activity {
 		//Category.setAdapter();
 		ArrayAdapter<Category> categoryarrayadapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item,getCL().getCategories());
 		Categories.setAdapter(categoryarrayadapter);
+		intent = getIntent();
+		if (intent.getStringExtra(Constants.IntentServiceName)!= null){
+			String Service_id = intent.getStringExtra(Constants.IntentServiceName);
+			Service service = ServiceManager.sharedManager().getService(Service_id);
+			Title.setText(service.getName());
+			Description.setText(service.getDescription());
+			if (service.isShareable()){
+				Private.setChecked(false);
+			} else {
+				Private.setChecked(true);
+			}
+		}
 
 	}
 
@@ -60,14 +76,26 @@ public class AddServiceActivity extends Activity {
 	public void saveService(View view) {
 		int index =  getCategories().getSelectedItemPosition();
 		Category category = CL.getCategories().get(index);
-		try {
-			asc.addService(gettheTitle(), getDescription(), category, getPrivate(), getCL());
+		if (intent.getStringExtra(Constants.IntentServiceName)== null){
+			try {
+				asc.addService(gettheTitle(), getDescription(), category, getPrivate(), getCL());
+			}
+			catch (RuntimeException e){
+				Toast.makeText(getApplicationContext(), "Runtime error",
+						Toast.LENGTH_LONG).show();
+			}
 		}
-		catch (RuntimeException e){
-			Toast.makeText(getApplicationContext(), "Runtime error",
-					Toast.LENGTH_LONG).show();
+		else{
+			try{
+				asc.editService(gettheTitle(), getDescription(), category, getPrivate(), getCL(),intent.getStringExtra(Constants.IntentServiceName));
+			}
+			catch (RuntimeException e){
+				Toast.makeText(getApplicationContext(), "Runtime error",
+						Toast.LENGTH_LONG).show();
+			}
 		}
 		finish();
+		setResult(RESULT_OK);
 		//Intent intent = new Intent(this, ViewProfileActivity.class);
 		//startActivity(intent);
 	}

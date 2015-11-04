@@ -40,6 +40,24 @@ public class AddServiceController {
 
     }
 
+    public void editService(EditText title, EditText description, Category category,CheckBox isprivate, CategoryList CL, String serviceID) {
+
+        String Title = title.getText().toString();
+        String Description = description.getText().toString();
+
+        Boolean shareable;
+        if (isprivate.isChecked()) {
+            shareable = Boolean.FALSE;
+        } else {
+            shareable = Boolean.TRUE;
+        }
+        Service newService = ServiceManager.sharedManager().getService(serviceID);
+        newService.setName(Title);
+        newService.setDescription(Description);
+        newService.setCategory(category);
+        newService.setShareable(shareable);
+    }
+
 }
 
 

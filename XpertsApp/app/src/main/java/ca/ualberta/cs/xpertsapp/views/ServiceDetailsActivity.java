@@ -24,6 +24,7 @@ public class ServiceDetailsActivity extends Activity {
 	public TextView getDescription() {return description;};
 	private Button editButton;
 	public Button getEditButton() {return editButton;};
+	private Intent intent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class ServiceDetailsActivity extends Activity {
 		category = (TextView) findViewById(R.id.categoryTextView);
 		description = (TextView) findViewById(R.id.longDescriptionTextView);
 		editButton = (Button) findViewById(R.id.editButton);
-		Intent intent = getIntent();
+		intent = getIntent();
 		String Service_id = intent.getStringExtra(Constants.IntentServiceName);
 		Service service = ServiceManager.sharedManager().getService(Service_id);
 		theTitle.setText(service.getName());
@@ -44,18 +45,37 @@ public class ServiceDetailsActivity extends Activity {
 			{isPublic.setText(Constants.notShareable);}
 		category.setText(service.getCategory().toString());
 		description.setText(service.getDescription());
+		Notified();
 
  	}
+	public void Notified(){
+		String Service_id = intent.getStringExtra(Constants.IntentServiceName);
+		Service service = ServiceManager.sharedManager().getService(Service_id);
+		theTitle.setText(service.getName());
+		if (service.isShareable())
+		{isPublic.setText(Constants.Shareable);}
+		else
+		{isPublic.setText(Constants.notShareable);}
+		category.setText(service.getCategory().toString());
+		description.setText(service.getDescription());
+	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 
+	}
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == RESULT_OK) {
+
+		}
 	}
 
 	public void editService(View view) {
-		Intent intent = new Intent(this, AddServiceActivity.class);
-		startActivity(intent);
+		Intent intent2 = new Intent(this, AddServiceActivity.class);
+		intent2.putExtra(Constants.IntentServiceName,intent.getStringExtra(Constants.IntentServiceName));
+		startActivityForResult(intent2,1);
 	}
 }
