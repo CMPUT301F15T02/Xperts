@@ -11,26 +11,18 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
  */
 public class ProfileController {
     //searches all users for user with this email
-    public User searchUsers(String email) throws InvalidParameterException {
+    public User searchUsers(String email){
         String friendSearchString = "contactInfo:"+email;
         List<User> results = UserManager.sharedManager().findUsers(friendSearchString);
-        if (results.size() != 1) {
-            throw new InvalidParameterException();
-        }
         User soonFriend = results.get(0);
         return soonFriend;
     }
 
     //needs to throw exception if friend not found
-    public void addFriend(String email) throws InvalidParameterException{
+    public void addFriend(String email){
         User user = UserManager.sharedManager().localUser();
-        try {
-            User friend = searchUsers(email);
-            user.addFriend(friend.getID());
-        }
-        catch (InvalidParameterException e) {
-            throw new InvalidParameterException();
-        }
+        User friend = searchUsers(email);
+        user.addFriend(friend.getID());
     }
 
     public void deleteFriend() {

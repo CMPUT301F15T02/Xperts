@@ -75,15 +75,14 @@ public class FriendsActivity extends Activity {
         builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String email = editText.getText().toString();
-                //TODO call to search for user from controller
+                //call to search for user from controller
                 try {
                     pc.addFriend(email);
-                } catch (InvalidParameterException e) {
-                    //TODO no user with that email exists
+                } catch (RuntimeException e) {
+                    //no user with that email exists
                     Context context = getApplicationContext();
                     CharSequence text = "No user with that email exists!";
                     int duration = Toast.LENGTH_SHORT;
-
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
