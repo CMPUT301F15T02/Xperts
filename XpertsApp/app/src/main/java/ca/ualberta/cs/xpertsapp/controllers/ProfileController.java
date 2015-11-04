@@ -18,17 +18,18 @@ public class ProfileController {
         return soonFriend;
     }
 
-    //needs to throw exception if friend not found
+    //adds friend to local user
     public void addFriend(String email){
         User user = UserManager.sharedManager().localUser();
         User friend = searchUsers(email);
         user.addFriend(friend.getID());
     }
-
-    public void deleteFriend() {
-
+    //deletes friend from local user
+    public void deleteFriend(User friend) {
+        User user = UserManager.sharedManager().localUser();
+        user.removeFriend(friend.getID());
     }
-
+    //TODO figure out what this is for
     public User getUser(String email) {
         return null;
     }

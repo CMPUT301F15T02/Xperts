@@ -84,4 +84,16 @@ public class ProfileControllerTest extends TestCase {
         pc.addFriend(email);
         assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()), friend1);
     }
+
+    public void testDeleteFriend() {
+        // Test delete friend
+        User user = UserManager.sharedManager().localUser();
+        String email = "email1@u.ca";
+        ProfileController pc = new ProfileController();
+        pc.addFriend(email);
+        assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()), friend1);
+        assertEquals(user.getFriends().size() == 1, true);
+        pc.deleteFriend(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()));
+        assertEquals(user.getFriends().size() == 0, true);
+    }
 }
