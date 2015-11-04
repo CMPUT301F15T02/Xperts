@@ -18,6 +18,7 @@ import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.User;
 
@@ -28,8 +29,8 @@ public class ViewProfileActivity extends Activity {
     public Button getAddService() {return addService;};
     private ListView serviceList;
     public ListView getServiceList() {return serviceList;};
-    private ArrayAdapter<Service> serviceArrayAdapter;
     private ViewProfileActivity activity = this;
+    private ServiceListAdapter serviceListAdapter;
 
 
     @Override
@@ -60,8 +61,8 @@ public class ViewProfileActivity extends Activity {
         super.onStart();
         User user = MyApplication.getLocalUser();
         List<Service> Services = user.getServices();
-        serviceArrayAdapter = new ArrayAdapter<Service>(this, R.layout.placeholderlistitem,Services);
-        serviceList.setAdapter(serviceArrayAdapter);
+        serviceListAdapter = new ServiceListAdapter(this,Services);
+        serviceList.setAdapter(serviceListAdapter);
     }
 
     @Override
