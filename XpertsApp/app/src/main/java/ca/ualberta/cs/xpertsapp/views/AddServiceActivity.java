@@ -69,6 +69,3 @@ public class AddServiceActivity extends Activity {
 
 
 }
-
-
-
