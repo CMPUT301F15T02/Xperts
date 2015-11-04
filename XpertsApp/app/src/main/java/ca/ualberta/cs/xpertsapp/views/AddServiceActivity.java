@@ -9,27 +9,40 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
 import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Category;
 import ca.ualberta.cs.xpertsapp.model.Service;
 
 
 public class AddServiceActivity extends Activity {
+	private AddServiceController asc = new AddServiceController();
+	private Spinner Categories;
+	public Spinner getCategories() {return Categories;};
+	private EditText Title;
+	public EditText gettheTitle() {return Title;};
+	private EditText Description;
+	public EditText getDescription() {return Description;};
+	private CheckBox Private;
+	public CheckBox getPrivate() {return Private;};
+	private CategoryList CL;
+	public CategoryList getCL() {return CL;};
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_service);
-		EditText Title =(EditText) findViewById(R.id.editText);
-		EditText Description = (EditText) findViewById(R.id.editText2);
-		Spinner Categories = (Spinner) findViewById(R.id.spinner);
-		CheckBox Private = (CheckBox) findViewById(R.id.checkBox);
-		CategoryList CL = CategoryList.sharedCategoryList();
+		Categories = (Spinner) findViewById(R.id.spinner);
+		Title =(EditText) findViewById(R.id.editText);
+		Description = (EditText) findViewById(R.id.editText2);
+		Private = (CheckBox) findViewById(R.id.checkBox);
+		CL = CategoryList.sharedCategoryList();
 		//Category.setAdapter();
-		ArrayAdapter<Category>  categoryarrayadapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item,CL.getCategories());
+		ArrayAdapter<Category> categoryarrayadapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item,getCL().getCategories());
 		Categories.setAdapter(categoryarrayadapter);
 
 	}
@@ -41,9 +54,17 @@ public class AddServiceActivity extends Activity {
 
 
 	public void saveService(View view) {
-		//EditText title =
-		Intent intent = new Intent(this, ViewProfileActivity.class);
-		startActivity(intent);
+		int index =  getCategories().getSelectedItemPosition();
+		Category category = CL.getCategories().get(index);
+		try {
+			asc.addService(gettheTitle(), getDescription(), category, getPrivate(), getCL());
+		}
+		catch (RuntimeException e){
+			Toast.makeText(getApplicationContext(), "Runtime error",
+					Toast.LENGTH_LONG).show();
+		}
+		//Intent intent = new Intent(this, ViewProfileActivity.class);
+		//startActivity(intent);
 	}
 
 
