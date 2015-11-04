@@ -35,7 +35,7 @@ public class FriendsActivity extends Activity {
         friendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(activity, ViewProfileActivity.class);
+                Intent intent = new Intent(activity, FriendProfileActivity.class);
                 User friend = (User) friendsList.getItemAtPosition(position);
                 intent.putExtra("id", friend.getID());
                 startActivity(intent);

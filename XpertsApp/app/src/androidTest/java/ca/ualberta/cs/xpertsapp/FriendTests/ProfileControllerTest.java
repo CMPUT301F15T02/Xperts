@@ -66,13 +66,12 @@ public class ProfileControllerTest extends TestCase {
     }
 
     public void testSearchUsers() {
-        // Test search for user in all users
+        // Test search for user in all users using email
         User user = UserManager.sharedManager().localUser();
         String email = "email1@u.ca";
         ProfileController pc = new ProfileController();
         User friend = pc.searchUsers(email);
         assertEquals(email, friend.getContactInfo());
-        //assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()), friend1);
     }
 
     public void testAddFriend() {
@@ -95,5 +94,15 @@ public class ProfileControllerTest extends TestCase {
         assertEquals(user.getFriends().size() == 1, true);
         pc.deleteFriend(UserManager.sharedManager().getUser(user.getFriends().get(0).getID()));
         assertEquals(user.getFriends().size() == 0, true);
+    }
+
+    public void testGetUser() {
+        // Test get user from id
+        User user = UserManager.sharedManager().localUser();
+        String id = "1";
+        ProfileController pc = new ProfileController();
+        User friend = pc.getUser(id);
+        assertEquals(id, friend.getID());
+        assertEquals(friend.getLocation(), "British");
     }
 }

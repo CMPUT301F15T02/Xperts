@@ -30,7 +30,10 @@ public class ProfileController {
         user.removeFriend(friend.getID());
     }
     //TODO figure out what this is for
-    public User getUser(String email) {
-        return null;
+    public User getUser(String id) {
+        String friendSearchString = "id:"+id;
+        List<User> results = UserManager.sharedManager().findUsers(friendSearchString);
+        User friend = results.get(0);
+        return friend;
     }
 }
