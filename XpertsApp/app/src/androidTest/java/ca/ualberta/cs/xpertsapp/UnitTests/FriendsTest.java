@@ -21,32 +21,8 @@ public class FriendsTest extends TestCase {
 	protected void setUp() throws Exception {
 		super.setUp();
 
-		String friend1String = "" +
-				"{" +
-				"\"contactInfo\":\"email1@u.ca\"," +
-				"\"friends\":[]," +
-				"\"id\":\"1\"," +
-				"\"location\":\"British\"," +
-				"\"name\":\"The Clown Guy\"," +
-				"\"services\":[]," +
-				"\"trades\":[]" +
-				"}";
-		String friend2String = "" +
-				"{" +
-				"\"contactInfo\":\"Don't contact me pl0x.\"," +
-				"\"friends\":[]," +
-				"\"id\":\"2\"," +
-				"\"location\":\"Canada\"," +
-				"\"name\":\"Ronald\"," +
-				"\"services\":[]," +
-				"\"trades\":[]" +
-				"}";
-		friend1 = (new Gson()).fromJson(friend1String, User.class);
-		friend2 = (new Gson()).fromJson(friend2String, User.class);
-		IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getEmail());
-		IOManager.sharedManager().storeData(friend2, Constants.serverUserExtension() + friend2.getEmail());
-		friend1 = UserManager.sharedManager().getUser(friend1.getEmail());
-		friend2 = UserManager.sharedManager().getUser(friend2.getEmail());
+		friend1 = UserManager.sharedManager().registerUser("email1@u.ca");
+		friend2 = UserManager.sharedManager().registerUser("email2@u.ca");
 	}
 
 	@Override

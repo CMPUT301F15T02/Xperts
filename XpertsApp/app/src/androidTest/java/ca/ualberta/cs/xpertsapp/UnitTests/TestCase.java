@@ -1,5 +1,6 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
+import android.content.SharedPreferences;
 import android.test.ActivityInstrumentationTestCase2;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
@@ -15,12 +16,19 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		super(MainActivity.class);
 	}
 
+	final String testEmail = "test@email.com";
+	private static SharedPreferences pref;
 	@Override
 	protected void setUp() throws Exception {
 		// Prepare
 		Constants.isTest = true;
 
-		MyApplication.login("test@email.com");
+		pref = MyApplication.getContext().getSharedPreferences(Constants.PREF_FILE, 0);
+		pref.edit().putString(Constants.EMAIL_KEY, testEmail);
+		pref.edit().putBoolean(Constants.LOGGED_IN, true);
+		pref.edit().apply();
+		UserManager.sharedManager().registerUser(testEmail);
+
 
 		super.setUp();
 	}
@@ -35,6 +43,9 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension());
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
+
+		pref.edit().clear();
+		pref.edit().apply();
 
 		Constants.isTest = false;
 

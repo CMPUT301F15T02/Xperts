@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 import ca.ualberta.cs.xpertsapp.views.LoginActivity;
@@ -17,9 +18,9 @@ public class MyApplication extends Application {
 	private static SharedPreferences preferences;
 	private static SharedPreferences.Editor editor;
 
-	private static final String FILE_NAME = "XpertsPreferences";
-	public static final String EMAIL_KEY = "email";
-	public static final String LOGGED_IN = "loggedIn";
+	private static final String FILE_NAME = Constants.PREF_FILE;
+	public static final String EMAIL_KEY = Constants.EMAIL_KEY;
+	public static final String LOGGED_IN = Constants.LOGGED_IN;
 	int PRIVATE_MODE = 0;
 
 	public void onCreate() {
@@ -85,9 +86,11 @@ public class MyApplication extends Application {
 	 * Logs the user out and displays login screen
 	 */
 	public static void logout(){
-		MyApplication.editor.clear();
-		MyApplication.editor.commit();
-		loginScreen();
+		if(!MyApplication.preferences.getBoolean(LOGGED_IN, false)){
+			MyApplication.editor.clear();
+			MyApplication.editor.commit();
+			loginScreen();
+		}
 	}
 
 	/**

@@ -11,6 +11,9 @@ public class Constants {
 	public static boolean allowOnline = true;
 	public static boolean allowPhotoDownload = true;
 	public static boolean isTest = false;
+	public static final String PREF_FILE = "XpertsPreferences";
+	public static final String EMAIL_KEY = "email";
+	public static final String LOGGED_IN = "loggedIn";
 
 	/**
 	 * @return The base URL of the server
