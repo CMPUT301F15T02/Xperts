@@ -74,7 +74,11 @@ public class UserManager implements IObserver {
 		if (email == null) {
 			return null;
 		}
-		return this.getUser(email);
+		User user = this.getUser(email);
+		if (user == null) {
+			user = this.registerUser(email);
+		}
+		return user;
 	}
 
 	/**

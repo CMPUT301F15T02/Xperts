@@ -20,7 +20,6 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		Constants.isTest = true;
 
 		MyApplication.getPreferences().edit().putString("email", "test@email").apply();
-		UserManager.sharedManager().registerUser("test@email");
 
 		super.setUp();
 	}
