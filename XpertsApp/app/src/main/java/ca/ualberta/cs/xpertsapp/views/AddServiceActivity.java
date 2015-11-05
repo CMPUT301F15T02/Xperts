@@ -24,17 +24,17 @@ import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 public class AddServiceActivity extends Activity {
 	private AddServiceController asc = new AddServiceController();
 	private Spinner Categories;
-	public Spinner getCategories() {return Categories;};
+	public Spinner getCategories() {return Categories;}
 	private EditText Title;
-	public EditText gettheTitle() {return Title;};
+	public EditText gettheTitle() {return Title;}
 	private EditText Description;
-	public EditText getDescription() {return Description;};
+	public EditText getDescription() {return Description;}
 	private CheckBox Private;
-	public CheckBox getPrivate() {return Private;};
+	public CheckBox getPrivate() {return Private;}
 	private CategoryList CL;
-	public CategoryList getCL() {return CL;};
+	public CategoryList getCL() {return CL;}
 	private Button SaveButton;
-	public Button getSaveButton() {return SaveButton;};
+	public Button getSaveButton() {return SaveButton;}
 	private Intent intent;
 
 
@@ -45,7 +45,7 @@ public class AddServiceActivity extends Activity {
 		setContentView(R.layout.activity_add_service);
 		SaveButton = (Button) findViewById(R.id.saveButon);
 		Categories = (Spinner) findViewById(R.id.spinner);
-		Title =(EditText) findViewById(R.id.editText);
+		Title = (EditText) findViewById(R.id.editText);
 		Description = (EditText) findViewById(R.id.editText2);
 		Private = (CheckBox) findViewById(R.id.checkBox);
 		CL = CategoryList.sharedCategoryList();
@@ -71,7 +71,6 @@ public class AddServiceActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 	}
-
 
 	public void saveService(View view) {
 		int index =  getCategories().getSelectedItemPosition();

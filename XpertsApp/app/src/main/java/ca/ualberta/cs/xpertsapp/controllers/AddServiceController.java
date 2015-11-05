@@ -23,7 +23,6 @@ public class AddServiceController {
         String Title = title.getText().toString();
         String Description = description.getText().toString();
 
-
         Boolean shareable;
         if (isprivate.isChecked()){
             shareable = Boolean.FALSE;
@@ -38,7 +37,6 @@ public class AddServiceController {
         newService.setShareable(shareable);
         User user = MyApplication.getLocalUser();
         user.addService(newService);
-
     }
 
     public void editService(EditText title, EditText description, Category category,CheckBox isprivate, CategoryList CL, String serviceID) {
@@ -52,6 +50,7 @@ public class AddServiceController {
         } else {
             shareable = Boolean.TRUE;
         }
+
         Service newService = ServiceManager.sharedManager().getService(serviceID);
         newService.setName(Title);
         newService.setDescription(Description);
@@ -60,5 +59,3 @@ public class AddServiceController {
     }
 
 }
-
-
