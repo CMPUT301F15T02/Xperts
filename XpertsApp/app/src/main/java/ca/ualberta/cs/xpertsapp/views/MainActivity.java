@@ -12,8 +12,6 @@ import android.widget.Button;
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 
-
-
 public class MainActivity extends Activity {
     private Button MyProfileBtn;
     public Button getMyProfileBtn() {return MyProfileBtn;};
