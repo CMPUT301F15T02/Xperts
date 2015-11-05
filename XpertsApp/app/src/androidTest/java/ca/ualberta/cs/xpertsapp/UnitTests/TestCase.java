@@ -25,33 +25,20 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 	}
 
 	static final String testLocalEmail = "test@email.com";
-
-
 	protected static SharedPreferences pref;
 
-	@BeforeClass
-	public static void setPref() {
-		pref = MyApplication.getContext().getSharedPreferences(Constants.PREF_FILE, 0);
-		pref.edit().putString(Constants.EMAIL_KEY, testLocalEmail);
-		pref.edit().putBoolean(Constants.LOGGED_IN, true);
-		pref.edit().apply();
-		UserManager.sharedManager().registerUser(testLocalEmail);
-	}
 
-	@AfterClass
-	public static void delPref() {
-		pref.edit().clear();
-		pref.edit().apply();
-		UserManager.sharedManager().registerUser(testLocalEmail);
-	}
 
 	@Override
 	protected void setUp() throws Exception {
-		// Prepare
-		Constants.isTest = true;
-//		createMockData();
-
 		super.setUp();
+
+		Constants.isTest = true;
+
+		MyApplication.logout();
+		MyApplication.login(testLocalEmail);
+
+		UserManager.sharedManager().registerUser(testLocalEmail);
 	}
 
 	@Override
@@ -66,7 +53,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
 
 		Constants.isTest = false;
-
+		MyApplication.logout();
 		super.tearDown();
 	}
 
