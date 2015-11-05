@@ -1,4 +1,4 @@
-package ca.ualberta.cs.xpertsapp.InventoryTests;
+package ca.ualberta.cs.xpertsapp.BrowseTests;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
@@ -11,7 +11,7 @@ import ca.ualberta.cs.xpertsapp.views.AddServiceActivity;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 import ca.ualberta.cs.xpertsapp.views.ViewProfileActivity;
 
-public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
+public class BrowseServicesTest extends ActivityInstrumentationTestCase2 {
         private AddServiceController asc = new AddServiceController();
         private Spinner Categories;
         private EditText Title;
@@ -22,7 +22,7 @@ public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
         private Button addServiceButton;
 
 
-        public AddInventoryServiceTest() {
+        public BrowseServicesTest() {
                 super(MainActivity.class);
 
         }

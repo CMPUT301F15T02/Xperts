@@ -19,6 +19,7 @@ public class Constants {
 
 	public static final String Shareable = "Public";
 	public static final String notShareable = "Private";
+	public static String testEmail = "test@email.com";
 
 	/**
 	 * @return The base URL of the server

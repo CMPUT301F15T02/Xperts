@@ -24,7 +24,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		super(MainActivity.class);
 	}
 
-	static final String testLocalEmail = "test@email.com";
+	static final String testLocalEmail =  Constants.testEmail;
 	protected static SharedPreferences pref;
 
 
@@ -35,10 +35,10 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 
 		Constants.isTest = true;
 
-		MyApplication.logout();
-		MyApplication.login(testLocalEmail);
+//		MyApplication.logout();
+//		MyApplication.login(testLocalEmail);
 
-		UserManager.sharedManager().registerUser(testLocalEmail);
+//		UserManager.sharedManager().registerUser(testLocalEmail);
 	}
 
 	@Override
@@ -53,7 +53,6 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
 
 		Constants.isTest = false;
-		MyApplication.logout();
 		super.tearDown();
 	}
 

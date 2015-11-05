@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.model.Constants;
 
 public class MainActivity extends Activity {
     private Button MyProfileBtn;
@@ -31,7 +32,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        MyApplication.logout();
 
         MyApplication.loginCheck();
 

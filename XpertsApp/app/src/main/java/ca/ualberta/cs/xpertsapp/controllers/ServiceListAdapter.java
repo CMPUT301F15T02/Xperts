@@ -7,19 +7,24 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.model.Category;
+import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.User;
 
 /**
  * Created by hammadjutt on 2015-11-03.
  */
 public class ServiceListAdapter extends BaseAdapter {
 
-    Context context;
-    List<Service> serviceData;
-    private static LayoutInflater inflater = null;
+    public List<Service> serviceData;
+    private Context context;
+    private LayoutInflater inflater;
 
     public ServiceListAdapter(Context context, List<Service> services) {
         // TODO Auto-generated constructor stub
@@ -27,6 +32,12 @@ public class ServiceListAdapter extends BaseAdapter {
         this.serviceData = services;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void updateServiceList(List<Service> services) {
+        serviceData.clear();
+        serviceData.addAll(services);
+        this.notifyDataSetChanged();
     }
 
     @Override
