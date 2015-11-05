@@ -26,13 +26,12 @@ public class AddServiceController {
         newService.setDescription(description.getText().toString());
         newService.setCategory(category);
         newService.setShareable(isPrivate.isChecked() ? Boolean.FALSE : Boolean.TRUE);
-        User user = MyApplication.getLocalUser();
-        user.addService(newService);
+        MyApplication.getLocalUser().addService(newService);
     }
 
-    public void editService(EditText title, EditText description, Category category,CheckBox isPrivate, CategoryList CL, String serviceID) {
+    public void editService(EditText title, EditText description, Category category,CheckBox isPrivate, CategoryList CL, String id) {
 
-        Service editedService = ServiceManager.sharedManager().getService(serviceID);
+        Service editedService = ServiceManager.sharedManager().getService(id);
         editedService.setName(title.getText().toString());
         editedService.setDescription(description.getText().toString());
         editedService.setCategory(category);
@@ -41,9 +40,8 @@ public class AddServiceController {
 
     public void deleteService(String id) {
 
-        ServiceManager.sharedManager().deleteService(id);
-        User user = MyApplication.getLocalUser();
-        user.removeService(id);
+        Service deletedService = ServiceManager.sharedManager().getService(id);
+        MyApplication.getLocalUser().removeService(deletedService);
     }
 
 }

@@ -98,6 +98,9 @@ public class FriendProfileActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * The method that's called when press delete button
+     */
     public void deleteFriend(View view) {
         //delete the friend
         pc.deleteFriend(friend);

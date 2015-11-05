@@ -9,37 +9,45 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.EditProfileController;
+import ca.ualberta.cs.xpertsapp.model.User;
 
 public class EditProfileActivity extends Activity {
 
-    private EditText Email;
-    private EditText Name;
-    private EditText Location;
+    private EditText email;
+    private EditText name;
+    private EditText location;
     private Intent intent;
 
     public EditText getEmail() {
-        return Email;
+        return email;
     }
 
     public EditText getName() {
-        return Name;
+        return name;
     }
 
     public EditText getLocation() {
-        return Location;
+        return location;
     }
+
+    private EditProfileController epc = new EditProfileController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_edit_profile);
-        Email = (EditText) findViewById(R.id.emailEditText);
-        Name = (EditText) findViewById(R.id.nameEditText);
-        Location = (EditText) findViewById(R.id.locationEditText);
-
+        email = (EditText) findViewById(R.id.emailEditText);
+        name = (EditText) findViewById(R.id.nameEditText);
+        location = (EditText) findViewById(R.id.locationEditText);
+        User user = MyApplication.getLocalUser();
         intent = getIntent();
+        email.setText(user.getEmail());
+        name.setText(user.getName());
+        location.setText(user.getLocation());
     }
 
     @Override
@@ -65,8 +73,10 @@ public class EditProfileActivity extends Activity {
     }
 
     public void saveProfile(View view) {
-        //Intent intent = new Intent(this, ViewProfileActivity.class);
-        //startActivity(intent);
+        epc.editProfile(email,name,location);
+
+        Intent intent = new Intent(this, ViewProfileActivity.class);
+        startActivity(intent);
         finish();
     }
 }
