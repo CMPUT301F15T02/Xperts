@@ -93,11 +93,8 @@ public class AddServiceActivity extends Activity {
 						Toast.LENGTH_LONG).show();
 			}
 		}
-		finish();
 		setResult(RESULT_OK);
-		//Intent intent = new Intent(this, ViewProfileActivity.class);
-		//startActivity(intent);
+		Intent intent = new Intent(this, ViewProfileActivity.class);
+		startActivity(intent);
 	}
-
-
 }

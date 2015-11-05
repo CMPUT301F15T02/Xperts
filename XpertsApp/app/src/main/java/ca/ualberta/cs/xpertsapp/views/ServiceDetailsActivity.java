@@ -15,15 +15,15 @@ import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
 public class ServiceDetailsActivity extends Activity {
 	private TextView theTitle;
-	public TextView getTheTitle() {return theTitle;};
+	public TextView getTheTitle() {return theTitle;}
 	private TextView isPublic;
-	public TextView getIsPublic() {return isPublic;};
+	public TextView getIsPublic() {return isPublic;}
 	private TextView category;
-	public TextView getCategory() {return category;};
+	public TextView getCategory() {return category;}
 	private TextView description;
-	public TextView getDescription() {return description;};
+	public TextView getDescription() {return description;}
 	private Button editButton;
-	public Button getEditButton() {return editButton;};
+	public Button getEditButton() {return editButton;}
 	private Intent intent;
 
 	@Override
