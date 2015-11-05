@@ -20,13 +20,12 @@ import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
-
 public class AddServiceActivity extends Activity {
 	private AddServiceController asc = new AddServiceController();
 	private Spinner Categories;
 	public Spinner getCategories() {return Categories;}
 	private EditText Title;
-	public EditText gettheTitle() {return Title;}
+	public EditText getTheTitle() {return Title;}
 	private EditText Description;
 	public EditText getDescription() {return Description;}
 	private CheckBox Private;
@@ -36,7 +35,6 @@ public class AddServiceActivity extends Activity {
 	private Button SaveButton;
 	public Button getSaveButton() {return SaveButton;}
 	private Intent intent;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +75,7 @@ public class AddServiceActivity extends Activity {
 		Category category = CL.getCategories().get(index);
 		if (intent.getStringExtra(Constants.IntentServiceName)== null){
 			try {
-				asc.addService(gettheTitle(), getDescription(), category, getPrivate(), getCL());
+				asc.addService(getTheTitle(), getDescription(), category, getPrivate(), getCL());
 			}
 			catch (RuntimeException e){
 				Toast.makeText(getApplicationContext(), "Runtime error",
@@ -86,7 +84,7 @@ public class AddServiceActivity extends Activity {
 		}
 		else{
 			try{
-				asc.editService(gettheTitle(), getDescription(), category, getPrivate(), getCL(),intent.getStringExtra(Constants.IntentServiceName));
+				asc.editService(getTheTitle(), getDescription(), category, getPrivate(), getCL(),intent.getStringExtra(Constants.IntentServiceName));
 			}
 			catch (RuntimeException e){
 				Toast.makeText(getApplicationContext(), "Runtime error",
