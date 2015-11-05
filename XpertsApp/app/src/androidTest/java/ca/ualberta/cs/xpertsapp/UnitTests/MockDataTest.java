@@ -15,6 +15,13 @@ public class MockDataTest extends TestCase {
 		super();
 	}
 
+	final String testEmail1 = "david@xperts.com";
+	final String testEmail2 = "seann@xperts.com";
+	final String testEmail3 = "kathleen@xperts.com";
+	final String testEmail4 = "huy@xperts.com";
+	final String testEmail5 = "justin@xperts.com";
+	final String testEmail6 = "hammad@xperts.com";
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();

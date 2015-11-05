@@ -77,7 +77,7 @@ public class FriendsActivity extends Activity {
                 String email = editText.getText().toString();
                 //call to search for user from controller
                 //try {
-                    pc.searchUsers(email);
+                    pc.addFriend(email);
                     //TODO update list view with friend
                //} catch (RuntimeException e) {
                     //no user with that email exists

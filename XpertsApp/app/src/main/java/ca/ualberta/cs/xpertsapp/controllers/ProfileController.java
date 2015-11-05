@@ -13,7 +13,7 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
 public class ProfileController {
     //searches all users for user with this email
     public User searchUsers(String email){
-        String friendSearchString = "contactInfo:"+email;
+        String friendSearchString = "email:"+email;
         List<User> results = UserManager.sharedManager().findUsers(friendSearchString);
         User soonFriend = results.get(0);
         return soonFriend;
@@ -22,7 +22,7 @@ public class ProfileController {
     //adds friend to local user
     public void addFriend(String email){
         User user = MyApplication.getLocalUser();
-        User friend = searchUsers(email);
+        User friend = UserManager.sharedManager().getUser(email);
         user.addFriend(friend);
     }
     //deletes friend from local user
