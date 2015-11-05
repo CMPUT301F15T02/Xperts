@@ -21,9 +21,9 @@ public class FriendsTest extends TestCase {
 	final String testEmail4 = "huy@xperts.com";
 	final String testEmail5 = "justin@xperts.com";
 	final String testEmail6 = "hammad@xperts.com";
-	User u1;
-	User u2;
-	User u3;
+	private User u1;
+	private User u2;
+	private User u3;
 
 	@Override
 	protected void setUp() throws Exception {
