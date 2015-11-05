@@ -3,6 +3,7 @@ package ca.ualberta.cs.xpertsapp.controllers;
 import java.security.InvalidParameterException;
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
@@ -20,13 +21,13 @@ public class ProfileController {
 
     //adds friend to local user
     public void addFriend(String email){
-        User user = UserManager.sharedManager().localUser();
+        User user = MyApplication.getLocalUser();
         User friend = searchUsers(email);
         user.addFriend(friend);
     }
     //deletes friend from local user
     public void deleteFriend(User friend) {
-        User user = UserManager.sharedManager().localUser();
+        User user = MyApplication.getLocalUser();
         user.removeFriend(friend);
     }
     //TODO figure out what this is for

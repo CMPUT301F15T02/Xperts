@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
@@ -68,7 +69,7 @@ public class TradeManager implements IObserver {
 	 * @return an empty trade that should be modified then committed
 	 */
 	public Trade newTrade(User borrower, boolean isCounter) {
-		Trade trade = new Trade(UUID.randomUUID().toString(), isCounter, UserManager.sharedManager().localUser().getEmail(), borrower.getEmail());
+		Trade trade = new Trade(UUID.randomUUID().toString(), isCounter, MyApplication.getLocalUser().getEmail(), borrower.getEmail());
 		return trade;
 	}
 

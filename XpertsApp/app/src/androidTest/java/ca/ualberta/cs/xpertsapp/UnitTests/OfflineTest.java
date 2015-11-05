@@ -3,6 +3,7 @@ package ca.ualberta.cs.xpertsapp.UnitTests;
 import android.content.Context;
 import android.net.wifi.WifiManager;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.Service;
@@ -22,7 +23,7 @@ public class OfflineTest extends TestCase {
 
 	@Override
 	protected void tearDown() throws Exception {
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().toString());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().toString());
 
 		super.tearDown();
 	}
@@ -34,7 +35,7 @@ public class OfflineTest extends TestCase {
 		// Create a new service
 		Service newService = ServiceManager.sharedManager().newService();
 		newService.setName("Some new offline service");
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		user.addService(newService);
 
 		// Enable online

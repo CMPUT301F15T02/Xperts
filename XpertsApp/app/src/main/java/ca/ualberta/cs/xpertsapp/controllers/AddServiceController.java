@@ -8,6 +8,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Category;
 import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Service;
@@ -35,7 +36,7 @@ public class AddServiceController {
         newService.setDescription(Description);
         newService.setCategory(category);
         newService.setShareable(shareable);
-        User user = UserManager.sharedManager().localUser();
+        User user = MyApplication.getLocalUser();
         user.addService(newService);
 
     }

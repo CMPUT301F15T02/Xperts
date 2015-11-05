@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
@@ -81,7 +82,7 @@ public class InventoryTest extends TestCase {
 		Log.i("?>???????", service1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service2.getID());
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
 		super.tearDown();
 	}
@@ -90,7 +91,7 @@ public class InventoryTest extends TestCase {
 	// Also 01.02.01
 	public void test_01_01_01() {
 		// Test adding a service
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
 		newService.setName("some new service");
 		user.addService(newService);
@@ -116,7 +117,7 @@ public class InventoryTest extends TestCase {
 
 	public void test_01_04_01() {
 		// Test editing a service
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
 		newService.setName("some new service");
 		user.addService(newService);
@@ -138,7 +139,7 @@ public class InventoryTest extends TestCase {
 
 	public void test_01_05_01() {
 		// Test removing a service
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
 		newService.setName("some new service");
 		user.addService(newService);

@@ -14,9 +14,4 @@ public class TestUser extends User {
 //		IOManager.sharedManager().storeData(this, Constants.serverUserExtension() + email);
 	}
 
-	@Override
-	protected boolean isEditable() {
-		return true;
-	}
-
 }

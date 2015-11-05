@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.Service;
@@ -53,7 +54,7 @@ public class SearchTest extends TestCase {
 		IOManager.sharedManager().storeData(service1, Constants.serverServiceExtension() + service1.getID());
 		friend1 = UserManager.sharedManager().getUser(friend1.getEmail());
 
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		user.addFriend(friend1);
 	}
 
@@ -61,7 +62,7 @@ public class SearchTest extends TestCase {
 	protected void tearDown() throws Exception {
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service1.getID());
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
 		super.tearDown();
 	}
@@ -69,7 +70,7 @@ public class SearchTest extends TestCase {
 	// Also 03_01_01
 	public void test_03_01_02() {
 		// Test search inventory of friends by category
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 
 		List<Service> allOfFriendsServices = new ArrayList<Service>();
 		for (User friend : user.getFriends()) {
@@ -82,7 +83,7 @@ public class SearchTest extends TestCase {
 	// Also 03_01_01
 	public void test_03_01_03() {
 		// Test search inventory of friends by text
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 
 		List<Service> friendsServices = ServiceManager.sharedManager().findServicesOfFriends("*descrip*");
 		assertEquals(friendsServices.size(), 1);

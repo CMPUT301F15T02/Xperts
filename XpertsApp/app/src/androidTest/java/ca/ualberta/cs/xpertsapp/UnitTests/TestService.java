@@ -17,9 +17,4 @@ public class TestService extends Service {
 		this.setShareable(shareable);
 //		IOManager.sharedManager().storeData(this, Constants.serverServiceExtension() + this.getID());
 	}
-
-	@Override
-	protected boolean isEditable() {
-		return true;
-	}
 }

@@ -3,6 +3,7 @@ package ca.ualberta.cs.xpertsapp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 
@@ -115,6 +116,9 @@ public class User implements IObservable {
 	public void addService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
 		this.services.add(service.getID());
+		if(!service.getOwner().equals(this)){
+			service.setOwner(this.email);
+		}
 		ServiceManager.sharedManager().addService(service);
 		ServiceManager.sharedManager().notify(service);
 		this.notifyObservers();
@@ -162,7 +166,7 @@ public class User implements IObservable {
 	}
 
 	protected boolean isEditable() {
-		return this == UserManager.sharedManager().localUser();
+		return Constants.isTest || this == MyApplication.getLocalUser();
 	}
 
 	// IObservable

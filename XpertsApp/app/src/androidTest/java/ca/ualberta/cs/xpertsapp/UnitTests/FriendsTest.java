@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
@@ -30,7 +31,7 @@ public class FriendsTest extends TestCase {
 		// Cleanup
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getEmail());
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
 		super.tearDown();
 	}
@@ -38,7 +39,7 @@ public class FriendsTest extends TestCase {
 	// Also 02.02.01
 	public void test_02_01_01() {
 		// Test add friends by searching for username
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		String friendSearchString = "email1*";
 		List<User> results = UserManager.sharedManager().findUsers(friendSearchString);
 		assertEquals(results.size(), 1);
@@ -53,7 +54,7 @@ public class FriendsTest extends TestCase {
 
 	public void test_02_03_01() {
 		// Test remove friends
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		user.addFriend(friend1);
 		user.addFriend(friend2);
 		assertEquals(user.getFriends().size(), 2);
@@ -65,7 +66,7 @@ public class FriendsTest extends TestCase {
 
 	public void test_02_04_01() {
 		// Test set contact info and location
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 
 		String newName = "Skrundz";
 		String newLocation = "CANADA";
@@ -74,7 +75,7 @@ public class FriendsTest extends TestCase {
 		user.setName(newName);
 
 		UserManager.sharedManager().clearCache();
-		user = UserManager.sharedManager().localUser();
+		user = MyApplication.getLocalUser();
 
 		assertEquals(user.getLocation(), newLocation);
 		assertEquals(user.getName(), newName);

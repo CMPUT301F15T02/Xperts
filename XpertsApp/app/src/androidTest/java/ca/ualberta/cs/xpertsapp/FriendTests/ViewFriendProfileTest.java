@@ -13,6 +13,7 @@ import junit.framework.TestCase;
 
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
@@ -73,7 +74,7 @@ public class ViewFriendProfileTest extends ActivityInstrumentationTestCase2 {
         // Cleanup
         IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
         IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getEmail());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
+        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
         super.tearDown();
     }
@@ -90,7 +91,7 @@ public class ViewFriendProfileTest extends ActivityInstrumentationTestCase2 {
         //click on the friend
         //display the profile
         // Test add friends by searching for username
-        User user = UserManager.sharedManager().localUser();
+        User user = MyApplication.getLocalUser();
         user.addFriend(friend1);
         assertEquals(user.getFriends().size(), 1);
     }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 
@@ -23,6 +24,18 @@ public class Service implements IObservable {
 	protected Service(String id, String owner) {
 		this.id = id;
 		this.owner = owner;
+	}
+
+	protected Service(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param email of the owner
+	 */
+	public void setOwner(String email) {
+		if (!this.isEditable()) throw new AssertionError();
+		this.owner = email;
 	}
 
 	/**
@@ -129,7 +142,7 @@ public class Service implements IObservable {
 	}
 
 	protected boolean isEditable() {
-		return this.getOwner() == UserManager.sharedManager().localUser();
+		return Constants.isTest || this.getOwner() == MyApplication.getLocalUser();
 	}
 
 	// IObservable

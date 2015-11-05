@@ -2,6 +2,7 @@ package ca.ualberta.cs.xpertsapp.UnitTests;
 
 import com.google.gson.Gson;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.Service;
@@ -60,7 +61,7 @@ public class TradeTest extends TestCase {
 	protected void tearDown() throws Exception {
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service1.getID());
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
 		super.tearDown();
 	}
@@ -68,7 +69,7 @@ public class TradeTest extends TestCase {
 	// Also 04.05.01
 	public void test_04_01_01() {
 		// Test offer trade to friend
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
 		newService.setName("new service");
 		user.addService(newService);
@@ -100,7 +101,7 @@ public class TradeTest extends TestCase {
 
 	public void test_04_02_01() {
 		// Test get notified by a trade
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		String tradeString = "" +
 				"{" +
 				"\"borrower\":\"" + user.getEmail() + "\"," +
@@ -125,7 +126,7 @@ public class TradeTest extends TestCase {
 
 	public void test_04_03_01() {
 		// Test accept and decline trades
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		String trade1String = "" +
 				"{" +
 				"\"borrower\":\"" + user.getEmail() + "\"," +
@@ -173,7 +174,7 @@ public class TradeTest extends TestCase {
 
 	public void test_04_06_01() {
 		// Test delete trade when composing
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
 		newService.setName("new service");
 		user.addService(newService);
@@ -207,7 +208,7 @@ public class TradeTest extends TestCase {
 	// Also 04_09_01
 	public void test_04_08_01() {
 		// Test browse past and current trades involving me
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 		String trade1String = "" +
 				"{" +
 				"\"borrower\":\"" + user.getEmail() + "\"," +

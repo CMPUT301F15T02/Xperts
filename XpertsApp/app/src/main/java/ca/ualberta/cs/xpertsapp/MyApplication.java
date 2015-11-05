@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.widget.Toast;
 
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.User;
@@ -86,11 +87,10 @@ public class MyApplication extends Application {
 	 * Logs the user out and displays login screen
 	 */
 	public static void logout(){
-		if(!MyApplication.preferences.getBoolean(LOGGED_IN, false)){
-			MyApplication.editor.clear();
-			MyApplication.editor.commit();
-			loginScreen();
-		}
+		MyApplication.editor.clear();
+		MyApplication.editor.commit();
+		loginScreen();
+		Toast.makeText(MyApplication.getContext(), "Already Logged Out", Toast.LENGTH_SHORT).show();
 	}
 
 	/**

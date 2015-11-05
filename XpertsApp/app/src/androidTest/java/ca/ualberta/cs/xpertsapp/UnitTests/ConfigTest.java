@@ -1,5 +1,6 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
@@ -17,7 +18,7 @@ public class ConfigTest extends TestCase {
 
 	@Override
 	protected void tearDown() throws Exception {
-		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
+		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
 		super.tearDown();
 	}
@@ -26,7 +27,7 @@ public class ConfigTest extends TestCase {
 
 	public void test_10_02_01() {
 		// Test edit profile
-		User user = UserManager.sharedManager().localUser();
+		User user = MyApplication.getLocalUser();
 
 		String newName = "Some user's name";
 		String newLocation = "canada";
@@ -35,7 +36,7 @@ public class ConfigTest extends TestCase {
 		user.setLocation(newLocation);
 
 		UserManager.sharedManager().clearCache();
-		user = UserManager.sharedManager().localUser();
+		user = MyApplication.getLocalUser();
 		assertEquals(user.getName(), newName);
 		assertEquals(user.getLocation(), newLocation);
 	}

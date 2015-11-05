@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.interfaces.TradeState;
@@ -144,7 +145,7 @@ public class Trade implements IObservable {
 	}
 
 	private boolean isEditable() {
-		return this.getOwner() == UserManager.sharedManager().localUser();
+		return this.getOwner() == MyApplication.getLocalUser();
 	}
 
 	/**

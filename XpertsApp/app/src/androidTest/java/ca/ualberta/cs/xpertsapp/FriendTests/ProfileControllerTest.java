@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
 import ca.ualberta.cs.xpertsapp.controllers.ProfileController;
 import ca.ualberta.cs.xpertsapp.model.Constants;
@@ -60,14 +61,14 @@ public class ProfileControllerTest extends TestCase {
         // Cleanup
         IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
         IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getEmail());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + UserManager.sharedManager().localUser().getEmail());
+        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
         super.tearDown();
     }
 
     public void testSearchUsers() {
         // Test search for user in all users using email
-        User user = UserManager.sharedManager().localUser();
+        User user = MyApplication.getLocalUser();
         String email = "email1@u.ca";
         ProfileController pc = new ProfileController();
         User friend = pc.searchUsers(email);
@@ -76,7 +77,7 @@ public class ProfileControllerTest extends TestCase {
 
     public void testAddFriend() {
         // Test add friends by searching for email
-        User user = UserManager.sharedManager().localUser();
+        User user = MyApplication.getLocalUser();
         String email = "email1@u.ca";
         ProfileController pc = new ProfileController();
         assertEquals(user.getFriends().size() ==0, true);
@@ -86,7 +87,7 @@ public class ProfileControllerTest extends TestCase {
 
     public void testDeleteFriend() {
         // Test delete friend
-        User user = UserManager.sharedManager().localUser();
+        User user = MyApplication.getLocalUser();
         String email = "email1@u.ca";
         ProfileController pc = new ProfileController();
         pc.addFriend(email);
@@ -98,7 +99,7 @@ public class ProfileControllerTest extends TestCase {
 
     public void testGetUser() {
         // Test get user from id
-        User user = UserManager.sharedManager().localUser();
+        User user = MyApplication.getLocalUser();
         String id = "1";
         ProfileController pc = new ProfileController();
         User friend = pc.getUser(id);

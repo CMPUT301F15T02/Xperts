@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
@@ -67,8 +68,9 @@ public class ServiceManager implements IObserver {
 	 * @return create a new service attached to the local user
 	 */
 	public Service newService() {
-		return new Service(UUID.randomUUID().toString(), UserManager.sharedManager().localUser().getEmail());
+		return new Service(UUID.randomUUID().toString(), MyApplication.getLocalUser().getEmail());
 	}
+
 
 	/**
 	 * clear the loaded services
@@ -100,7 +102,7 @@ public class ServiceManager implements IObserver {
 		});
 		List<Service> services = new ArrayList<Service>();
 		for (SearchHit<Service> service : found) {
-			if (UserManager.sharedManager().localUser().getFriends().contains(UserManager.sharedManager().getUser(service.getSource().getOwner().getEmail()))) {
+			if (MyApplication.getLocalUser().getFriends().contains(UserManager.sharedManager().getUser(service.getSource().getOwner().getEmail()))) {
 				services.add(this.getService(service.getSource().getID()));
 			}
 		}
