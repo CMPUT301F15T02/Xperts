@@ -73,7 +73,8 @@ public class ServiceDetailsActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
-
+			// I'm pretty sure we need to call notified here
+			//Notified();
 		}
 	}
 
