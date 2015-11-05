@@ -128,7 +128,7 @@ public class Service implements IObservable {
 		return UserManager.sharedManager().getUser(this.owner);
 	}
 
-	private boolean isEditable() {
+	protected boolean isEditable() {
 		return this.getOwner() == UserManager.sharedManager().localUser();
 	}
 

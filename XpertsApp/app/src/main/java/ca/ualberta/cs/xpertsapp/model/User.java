@@ -161,7 +161,7 @@ public class User implements IObservable {
 		this.notifyObservers();
 	}
 
-	private boolean isEditable() {
+	protected boolean isEditable() {
 		return this == UserManager.sharedManager().localUser();
 	}
 

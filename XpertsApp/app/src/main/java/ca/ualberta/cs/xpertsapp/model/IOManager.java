@@ -1,6 +1,7 @@
 package ca.ualberta.cs.xpertsapp.model;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -76,7 +77,7 @@ public class IOManager {
 			addRequest.setHeader("Accept", "application/json");
 			HttpResponse response = new AsyncRequest().execute(addRequest).get();
 			String status = response.getStatusLine().toString();
-//			Log.i("STATUS: ", status);
+			Log.i("STATUS: ", status);
 //			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
 		} catch (Exception e) {
 			// TODO:
