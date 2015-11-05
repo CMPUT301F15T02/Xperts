@@ -58,4 +58,8 @@ public class AddServiceController {
         newService.setShareable(shareable);
     }
 
+    public void deleteService() {
+
+    }
+
 }

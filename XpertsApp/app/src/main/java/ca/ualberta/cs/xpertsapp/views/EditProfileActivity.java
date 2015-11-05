@@ -7,16 +7,38 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import ca.ualberta.cs.xpertsapp.R;
 
 public class EditProfileActivity extends Activity {
 
+    private EditText Email;
+    private EditText Name;
+    private EditText Location;
+
+    public EditText getEmail() {
+        return Email;
+    }
+
+    public EditText getName() {
+        return Name;
+    }
+
+    public EditText getLocation() {
+        return Location;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_profile);
 
+        setContentView(R.layout.activity_edit_profile);
+        Email = (EditText) findViewById(R.id.emailEditText);
+        Name = (EditText) findViewById(R.id.nameEditText);
+        Location = (EditText) findViewById(R.id.locationEditText);
+
+        
     }
 
     @Override
