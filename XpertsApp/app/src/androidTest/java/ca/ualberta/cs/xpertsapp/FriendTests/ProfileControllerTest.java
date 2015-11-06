@@ -21,89 +21,59 @@ public class ProfileControllerTest extends TestCase {
         super();
     }
 
-    private User friend1;
-    private User friend2;
+    final String testEmail1 = "david@xperts.com";
+    final String testEmail2 = "seann@xperts.com";
+    final String testEmail3 = "kathleen@xperts.com";
+    final String testEmail4 = "huy@xperts.com";
+    final String testEmail5 = "justin@xperts.com";
+    final String testEmail6 = "hammad@xperts.com";
+    private User u1;
+    private User u2;
+    private User u3;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        u1 = newTestUser(testEmail1,"David Skrundz","Calgary");
+        u2 = newTestUser(testEmail2, "Seann Murdock", "Vancouver");
+        u3 = newTestUser(testEmail3, "Kathleen Baker", "Toronto");
 
-        String friend1String = "" +
-                "{" +
-                "\"contactInfo\":\"email1@u.ca\"," +
-                "\"friends\":[]," +
-                "\"id\":\"1\"," +
-                "\"location\":\"British\"," +
-                "\"name\":\"The Clown Guy\"," +
-                "\"services\":[]," +
-                "\"trades\":[]" +
-                "}";
-        String friend2String = "" +
-                "{" +
-                "\"contactInfo\":\"Don't contact me pl0x.\"," +
-                "\"friends\":[]," +
-                "\"id\":\"2\"," +
-                "\"location\":\"Canada\"," +
-                "\"name\":\"Ronald\"," +
-                "\"services\":[]," +
-                "\"trades\":[]" +
-                "}";
-        friend1 = (new Gson()).fromJson(friend1String, User.class);
-        friend2 = (new Gson()).fromJson(friend2String, User.class);
-        IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getEmail());
-        IOManager.sharedManager().storeData(friend2, Constants.serverUserExtension() + friend2.getEmail());
-        friend1 = UserManager.sharedManager().getUser(friend1.getEmail());
-        friend2 = UserManager.sharedManager().getUser(friend2.getEmail());
     }
 
     @Override
     protected void tearDown() throws Exception {
-        // Cleanup
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getEmail());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
-
         super.tearDown();
-    }
-
-    public void testSearchUsers() {
-        // Test search for user in all users using email
-        User user = MyApplication.getLocalUser();
-        String email = "email1@u.ca";
-        ProfileController pc = new ProfileController();
-        User friend = pc.searchUsers(email);
-        assertEquals(email, friend.getEmail());
     }
 
     public void testAddFriend() {
         // Test add friends by searching for email
         User user = MyApplication.getLocalUser();
         String email = "email1@u.ca";
+        //should not exist
         ProfileController pc = new ProfileController();
+        assertEquals(user.getFriends().size() == 0, true);
+        User friend = pc.addFriend(email);
+        assertEquals(friend, null);
         assertEquals(user.getFriends().size() ==0, true);
-        pc.addFriend(email);
-        assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getEmail()), friend1);
+        String email2= "kathleen@xperts.com";
+        //should exist
+        friend = pc.addFriend(email2);
+        assertEquals(user.getFriends().contains(u3),true);
+        assertEquals(u3.getFriends().contains(user),true);
     }
 
     public void testDeleteFriend() {
         // Test delete friend
         User user = MyApplication.getLocalUser();
-        String email = "email1@u.ca";
+        String email = "david@xperts.com";
         ProfileController pc = new ProfileController();
-        pc.addFriend(email);
-        assertEquals(UserManager.sharedManager().getUser(user.getFriends().get(0).getEmail()), friend1);
+        User friend = pc.addFriend(email);
+        assertEquals(user.getFriends().contains(u1),true);
+        assertEquals(u1.getFriends().contains(user),true);
+        assertEquals(user.getFriends().contains(u3),false);
         assertEquals(user.getFriends().size() == 1, true);
-        pc.deleteFriend(UserManager.sharedManager().getUser(user.getFriends().get(0).getEmail()));
+        pc.deleteFriend(friend);
         assertEquals(user.getFriends().size() == 0, true);
-    }
-
-    public void testGetUser() {
-        // Test get user from id
-        User user = MyApplication.getLocalUser();
-        String id = "1";
-        ProfileController pc = new ProfileController();
-        User friend = pc.getUser(id);
-        assertEquals(id, friend.getEmail());
-        assertEquals(friend.getLocation(), "British");
+        assertEquals(friend.getFriends().size() == 0, true);
     }
 }

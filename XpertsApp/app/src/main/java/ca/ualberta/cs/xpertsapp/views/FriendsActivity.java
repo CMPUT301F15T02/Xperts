@@ -37,7 +37,7 @@ public class FriendsActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(activity, FriendProfileActivity.class);
                 User friend = (User) friendsList.getItemAtPosition(position);
-                intent.putExtra("id", friend.getEmail());
+                intent.putExtra("email", friend.getEmail());
                 startActivity(intent);
             }
         });
@@ -76,17 +76,22 @@ public class FriendsActivity extends Activity {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String email = editText.getText().toString();
                 //call to search for user from controller
-                //try {
-                    pc.addFriend(email);
+                User friend = pc.addFriend(email);
+                if (friend == null) {
                     //TODO update list view with friend
-               //} catch (RuntimeException e) {
                     //no user with that email exists
                     Context context = getApplicationContext();
                     CharSequence text = "No user with that email exists!";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
-               //}
+                } else {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Friend added";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
         AlertDialog alertDialog = builder.create();

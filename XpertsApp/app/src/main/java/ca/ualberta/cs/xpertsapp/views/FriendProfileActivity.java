@@ -13,6 +13,7 @@ import android.widget.TextView;
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.ProfileController;
 import ca.ualberta.cs.xpertsapp.model.User;
+import ca.ualberta.cs.xpertsapp.model.UserManager;
 
 public class FriendProfileActivity extends Activity {
     private ProfileController pc = new ProfileController();
@@ -28,8 +29,8 @@ public class FriendProfileActivity extends Activity {
         setContentView(R.layout.activity_friend_profile);
         Intent intent = getIntent();
 
-        String id = intent.getStringExtra("id");
-        friend = pc.getUser(id);
+        String userEmail = intent.getStringExtra("email");
+        friend = UserManager.sharedManager().getUser(userEmail);
 
         //print user's info to screen
         //TODO test this - need another user
