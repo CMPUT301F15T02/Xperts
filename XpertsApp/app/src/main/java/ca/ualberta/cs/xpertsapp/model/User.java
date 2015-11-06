@@ -82,7 +82,7 @@ public class User implements IObservable {
 	 * @param friend The new friend
 	 */
 	public void addFriend(User friend) {
-		if (!this.isEditable()) throw new AssertionError();
+		//if (!this.isEditable()) throw new AssertionError();
 		this.friends.add(friend.getEmail());
 		this.notifyObservers();
 	}
@@ -91,7 +91,7 @@ public class User implements IObservable {
 	 * @param friend The old friend
 	 */
 	public void removeFriend(User friend) {
-		if (!this.isEditable()) throw new AssertionError();
+		//if (!this.isEditable()) throw new AssertionError();
 		this.friends.remove(friend.getEmail());
 		this.notifyObservers();
 	}

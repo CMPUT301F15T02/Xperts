@@ -15,15 +15,22 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.security.InvalidParameterException;
+import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.FriendsListAdapter;
 import ca.ualberta.cs.xpertsapp.controllers.ProfileController;
+import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.User;
+import ca.ualberta.cs.xpertsapp.model.UserManager;
 
 public class FriendsActivity extends Activity {
     private ListView friendsList;
     private FriendsActivity activity = this;
     private ProfileController pc = new ProfileController();
+    public ListView getFriendsList() {return friendsList;};
+    private FriendsListAdapter friendsListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +43,10 @@ public class FriendsActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(activity, FriendProfileActivity.class);
-                User friend = (User) friendsList.getItemAtPosition(position);
-                intent.putExtra("email", friend.getEmail());
+                intent.putExtra("INTENT_EMAIL",friendsListAdapter.getItem(position).getEmail());
                 startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -49,6 +54,15 @@ public class FriendsActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_friends, menu);
         return true;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        User user = MyApplication.getLocalUser();
+        List<User> Friends = user.getFriends();
+        friendsListAdapter = new FriendsListAdapter(this,Friends);
+        friendsList.setAdapter(friendsListAdapter);
     }
 
     @Override
@@ -86,6 +100,7 @@ public class FriendsActivity extends Activity {
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 } else {
+                    friendsListAdapter.updateFriendsList(MyApplication.getLocalUser().getFriends());
                     Context context = getApplicationContext();
                     CharSequence text = "Friend added";
                     int duration = Toast.LENGTH_SHORT;

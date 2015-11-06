@@ -32,7 +32,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="email@domain.com"
         android:id="@+id/friendEmail"
-        android:layout_below="@+id/profileName"
+        android:layout_above="@+id/friendCity"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -41,7 +41,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="city"
         android:id="@+id/friendCity"
-        android:layout_below="@+id/profileEmail"
+        android:layout_below="@+id/deleteButton"
         android:layout_centerHorizontal="true" />
 
     <Button

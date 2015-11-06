@@ -18,25 +18,30 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
 public class FriendProfileActivity extends Activity {
     private ProfileController pc = new ProfileController();
     private User friend;
-    private TextView name = (TextView) findViewById(R.id.friendName);
-    private TextView email = (TextView) findViewById(R.id.friendEmail);
-    private TextView location = (TextView) findViewById(R.id.friendCity);
+    private TextView name;
+    private TextView email;
+    private TextView location;
+    private Intent intent;
     private ListView services; //?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_profile);
-        Intent intent = getIntent();
+        intent = getIntent();
 
-        String userEmail = intent.getStringExtra("email");
+        name = (TextView) findViewById(R.id.friendName);
+        email = (TextView) findViewById(R.id.friendEmail);
+        location = (TextView) findViewById(R.id.friendCity);
+
+
+        String userEmail = intent.getStringExtra("INTENT_EMAIL");
         friend = UserManager.sharedManager().getUser(userEmail);
-
         //print user's info to screen
         //TODO test this - need another user
-        name.setText(friend.getName());
-        email.setText(friend.getEmail());
-        location.setText(friend.getLocation());
+        name.setText(friend.getName().toString());
+        email.setText(friend.getEmail().toString());
+        location.setText(friend.getLocation().toString());
     }
 
     @Override
