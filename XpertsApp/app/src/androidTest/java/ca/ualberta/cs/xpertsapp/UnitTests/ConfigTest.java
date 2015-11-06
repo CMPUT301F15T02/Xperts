@@ -1,9 +1,12 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Switch;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
+import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
@@ -67,16 +70,29 @@ public class ConfigTest extends ActivityInstrumentationTestCase2 {
 
 	public void test_10_02_01() {
 		// Test edit profile
-		User user = MyApplication.getLocalUser();
+		final EditProfileActivity mActivity = (EditProfileActivity) getActivity();
+		final EditText email = mActivity.getEmail();
+		final EditText name = mActivity.getName();
+		final EditText location = mActivity.getLocation();
+		final Button saveButton = mActivity.getSaveButton();
 
-		String newName = "Some user's name";
-		String newLocation = "canada";
+		final String newName = "Some user's name";
+		final String newLocation = "canada";
 		String newContact = "2390832490838042";
-		user.setName(newName);
-		user.setLocation(newLocation);
+
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				name.setText(newName);
+				location.setText(newLocation);
+				saveButton.performClick();
+			}
+		});
+
+		getInstrumentation().waitForIdleSync();
 
 		UserManager.sharedManager().clearCache();
-		user = MyApplication.getLocalUser();
+		User user = MyApplication.getLocalUser();
 		assertEquals(user.getName(), newName);
 		assertEquals(user.getLocation(), newLocation);
 	}

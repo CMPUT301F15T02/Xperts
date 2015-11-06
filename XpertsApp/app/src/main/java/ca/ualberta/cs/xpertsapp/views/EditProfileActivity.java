@@ -23,6 +23,7 @@ public class EditProfileActivity extends Activity {
     private EditText name;
     private EditText location;
     private Switch switch1;
+    private Button saveButton;
 
     private Intent intent;
 
@@ -42,6 +43,10 @@ public class EditProfileActivity extends Activity {
         return switch1;
     }
 
+    public Button getSaveButton() {
+        return saveButton;
+    }
+
     private EditProfileController epc = new EditProfileController();
 
     @Override
@@ -53,6 +58,7 @@ public class EditProfileActivity extends Activity {
         name = (EditText) findViewById(R.id.nameEditText);
         location = (EditText) findViewById(R.id.locationEditText);
         switch1 = (Switch) findViewById(R.id.switch1);
+        saveButton = (Button) findViewById(R.id.saveButton);
 
         intent = getIntent();
 

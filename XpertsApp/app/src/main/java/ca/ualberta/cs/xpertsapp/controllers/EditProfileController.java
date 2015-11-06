@@ -10,7 +10,15 @@ public class EditProfileController {
 	//can you edit email?
 	public void editProfile(EditText email, EditText name, EditText location) {
 		User user = MyApplication.getLocalUser();
-		user.setName(name.getText().toString());
-		user.setLocation(location.getText().toString());
+		String newEmail = email.getText().toString();
+		String newName = name.getText().toString();
+		String newLocation = location.getText().toString();
+
+		if (newName.length() > 0) {
+			user.setName(newName);
+		}
+		if (newLocation.length() > 0) {
+			user.setLocation(newLocation);
+		}
 	}
 }
