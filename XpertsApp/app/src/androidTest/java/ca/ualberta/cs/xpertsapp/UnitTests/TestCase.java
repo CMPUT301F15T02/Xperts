@@ -1,10 +1,8 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.test.ActivityInstrumentationTestCase2;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 
 import java.util.List;
 
@@ -26,8 +24,6 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 
 	static final String testLocalEmail =  Constants.testEmail;
 	protected static SharedPreferences pref;
-
-
 
 	@Override
 	protected void setUp() throws Exception {

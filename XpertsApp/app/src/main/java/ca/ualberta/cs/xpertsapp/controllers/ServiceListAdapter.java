@@ -17,9 +17,7 @@ import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.User;
 
-/**
- * Created by hammadjutt on 2015-11-03.
- */
+
 public class ServiceListAdapter extends BaseAdapter {
 
     public List<Service> serviceData;

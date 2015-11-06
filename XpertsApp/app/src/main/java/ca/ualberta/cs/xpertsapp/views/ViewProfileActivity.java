@@ -34,10 +34,21 @@ public class ViewProfileActivity extends Activity {
     private ViewProfileActivity activity = this;
     private ServiceListAdapter serviceListAdapter;
 
-
     private TextView name;
     private TextView email;
     private TextView location;
+
+    public TextView getName() {
+        return name;
+    }
+
+    public TextView getEmail() {
+        return email;
+    }
+
+    public TextView getLocation() {
+        return location;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

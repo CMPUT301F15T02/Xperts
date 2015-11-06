@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -32,11 +33,33 @@ public class FriendsActivity extends Activity {
     public ListView getFriendsList() {return friendsList;};
     private FriendsListAdapter friendsListAdapter;
 
+    // For UI Test
+    private Button buttonAddFriend;
+    private EditText editTextEmail;
+    private AlertDialog alertDialog;
+
+    public Button getButtonAddFriend() {
+        return buttonAddFriend;
+    }
+
+    public EditText getEditTextEmail() {
+        return editTextEmail;
+    }
+
+    public AlertDialog getAlertDialog() {
+        return alertDialog;
+    }
+
+    public FriendsListAdapter getFriendsListAdapter() {
+        return friendsListAdapter;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
+        buttonAddFriend = (Button) findViewById(R.id.button);
         friendsList = (ListView) findViewById(R.id.listView);
 
         friendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,6 +82,7 @@ public class FriendsActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        UserManager.sharedManager().clearCache();
         User user = MyApplication.getLocalUser();
         List<User> Friends = user.getFriends();
         friendsListAdapter = new FriendsListAdapter(this,Friends);
@@ -88,12 +112,12 @@ public class FriendsActivity extends Activity {
      */
     public void addFriend(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        final EditText editText = new EditText(activity);
+        editTextEmail = new EditText(activity);
         builder.setMessage("Enter Email");
-        builder.setView(editText);
+        builder.setView(editTextEmail);
         builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                String email = editText.getText().toString();
+                String email = editTextEmail.getText().toString();
                 //call to search for user from controller
                 User friend = pc.addFriend(email);
                 if (friend == null) {
@@ -114,7 +138,7 @@ public class FriendsActivity extends Activity {
                 }
             }
         });
-        AlertDialog alertDialog = builder.create();
+        alertDialog = builder.create();
         alertDialog.show();
     }
 }

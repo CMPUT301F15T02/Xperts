@@ -13,6 +13,7 @@ import android.widget.Switch;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+
 import ca.ualberta.cs.xpertsapp.controllers.EditProfileController;
 import ca.ualberta.cs.xpertsapp.model.User;
 
@@ -21,7 +22,9 @@ public class EditProfileActivity extends Activity {
     private EditText email;
     private EditText name;
     private EditText location;
-    private Switch downloads;
+    private Switch switch1;
+    private Button saveButton;
+
     private Intent intent;
 
     public EditText getEmail() {
@@ -36,30 +39,41 @@ public class EditProfileActivity extends Activity {
         return location;
     }
 
+    public Switch getSwitch1() {
+        return switch1;
+    }
+
+    public Button getSaveButton() {
+        return saveButton;
+    }
+
     private EditProfileController epc = new EditProfileController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_edit_profile);
+
         email = (EditText) findViewById(R.id.emailEditText);
         name = (EditText) findViewById(R.id.nameEditText);
         location = (EditText) findViewById(R.id.locationEditText);
-        downloads = (Switch) findViewById(R.id.switch1);
-        User user = MyApplication.getLocalUser();
-        intent = getIntent();
-        email.setText(user.getEmail());
-        name.setText(user.getName());
-        location.setText(user.getLocation());
+        switch1 = (Switch) findViewById(R.id.switch1);
+        saveButton = (Button) findViewById(R.id.saveButton);
 
-        downloads.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        intent = getIntent();
+
+        // Listen on toggle switch
+        final User user = MyApplication.getLocalUser();
+        switch1 = (Switch) findViewById(R.id.switch1);
+        switch1.setChecked(user.getToggleEnabled());
+
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    //enable photo downloads
+            public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+                if (switch1.isChecked()) {
+                    user.setToggleEnabled(true);
                 } else {
-                    //disable photo downloads
+                    user.setToggleEnabled(false);
                 }
             }
         });

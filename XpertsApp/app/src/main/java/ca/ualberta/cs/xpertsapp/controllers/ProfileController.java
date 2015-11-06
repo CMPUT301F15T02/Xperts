@@ -12,9 +12,9 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
  * Controller for adding and removing friends
  */
 public class ProfileController {
-    //adds friend to local user unless user doesn't exist, then returns null
     //should probably be an exception
     /**
+     * adds friend to local user unless user doesn't exist, then returns null
      * @param email the email of the user to add
      * @return the users added or null if user not found
      */
@@ -30,7 +30,6 @@ public class ProfileController {
             return null;
         }
         user.addFriend(friend);
-        friend.addFriend(user);
         return friend;
     }
     /**
@@ -40,6 +39,5 @@ public class ProfileController {
     public void deleteFriend(User friend) {
         User user = MyApplication.getLocalUser();
         user.removeFriend(friend);
-        friend.removeFriend(user);
     }
 }

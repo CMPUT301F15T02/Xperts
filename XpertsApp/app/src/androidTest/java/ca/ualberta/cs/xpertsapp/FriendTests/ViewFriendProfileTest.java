@@ -9,16 +9,19 @@ import android.widget.Button;
 
 import com.google.gson.Gson;
 
-import junit.framework.TestCase;
+import junit.framework.Test;
 
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
+import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
+import ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity;
 import ca.ualberta.cs.xpertsapp.views.FriendsActivity;
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
 /**
  * Created by kmbaker on 11/3/15.
@@ -28,54 +31,30 @@ import ca.ualberta.cs.xpertsapp.views.FriendsActivity;
 
 //TODO this doesn't test anything
 
-public class ViewFriendProfileTest extends ActivityInstrumentationTestCase2 {
+public class ViewFriendProfileTest extends TestCase {
+
+    private Button friendsButton;
+    FriendsActivity friendsActivity;
+    Instrumentation.ActivityMonitor monitor;
+
 
     public ViewFriendProfileTest() {
-        super(FriendsActivity.class);
+        super();
     }
 
     private User friend1;
-    private User friend2;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        friend1 = newTestUser("a@ualberta.ca","Matt Damon", "outer space");
+        monitor = getInstrumentation().addMonitor(FriendsActivity.class.getName(), null, false);
 
-        String friend1String = "" +
-                "{" +
-                "\"contactInfo\":\"a@ualberta.ca\"," +
-                "\"friends\":[]," +
-                "\"id\":\"50\"," +
-                "\"location\":\"outer space\"," +
-                "\"name\":\"Matt Damon\"," +
-                "\"services\":[]," +
-                "\"trades\":[]" +
-                "}";
-        String friend2String = "" +
-                "{" +
-                "\"contactInfo\":\"b@ualberta.ca\"," +
-                "\"friends\":[]," +
-                "\"id\":\"51\"," +
-                "\"location\":\"Canada\"," +
-                "\"name\":\"Joe\"," +
-                "\"services\":[]," +
-                "\"trades\":[]" +
-                "}";
-        friend1 = (new Gson()).fromJson(friend1String, User.class);
-        friend2 = (new Gson()).fromJson(friend2String, User.class);
-        IOManager.sharedManager().storeData(friend1, Constants.serverUserExtension() + friend1.getEmail());
-        IOManager.sharedManager().storeData(friend2, Constants.serverUserExtension() + friend2.getEmail());
-        friend1 = UserManager.sharedManager().getUser(friend1.getEmail());
-        friend2 = UserManager.sharedManager().getUser(friend2.getEmail());
     }
 
     @Override
     protected void tearDown() throws Exception {
-        // Cleanup
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend2.getEmail());
-        IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
-
+        getInstrumentation().removeMonitor(monitor);
         super.tearDown();
     }
 
@@ -85,7 +64,19 @@ public class ViewFriendProfileTest extends ActivityInstrumentationTestCase2 {
 
     public void testViewFriend() {
         //starts FriendsActivity
-        FriendsActivity activity = (FriendsActivity) getActivity();
+        MainActivity activity = (MainActivity) getActivity();
+        friendsButton = activity.getFriendsBtn();
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                friendsButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync(); // makes sure that all the threads finish
+
+        friendsActivity = (FriendsActivity) getInstrumentation().waitForMonitorWithTimeout(monitor, 5000);
+        assertNotNull(friendsActivity);
+
         //reset app to a known state
         //need to add a friend to user
         //click on the friend
@@ -94,6 +85,7 @@ public class ViewFriendProfileTest extends ActivityInstrumentationTestCase2 {
         User user = MyApplication.getLocalUser();
         user.addFriend(friend1);
         assertEquals(user.getFriends().size(), 1);
+        friendsActivity.finish();
     }
 
 

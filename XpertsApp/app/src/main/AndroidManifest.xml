@@ -25,7 +25,9 @@
         <activity
             android:name=".views.BrowseServicesActivity"
             android:label="@string/title_activity_browse_services"
-            android:parentActivityName=".views.MainActivity" >
+            android:parentActivityName=".views.MainActivity"
+            android:launchMode="singleTop">
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
