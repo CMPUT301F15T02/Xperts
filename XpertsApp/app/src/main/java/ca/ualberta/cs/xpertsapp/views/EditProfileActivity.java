@@ -16,6 +16,7 @@ public class EditProfileActivity extends Activity {
     private EditText Email;
     private EditText Name;
     private EditText Location;
+    private Intent intent;
 
     public EditText getEmail() {
         return Email;
@@ -38,7 +39,7 @@ public class EditProfileActivity extends Activity {
         Name = (EditText) findViewById(R.id.nameEditText);
         Location = (EditText) findViewById(R.id.locationEditText);
 
-        
+        intent = getIntent();
     }
 
     @Override

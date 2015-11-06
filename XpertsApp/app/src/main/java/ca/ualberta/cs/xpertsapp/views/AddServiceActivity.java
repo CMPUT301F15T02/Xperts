@@ -47,8 +47,8 @@ public class AddServiceActivity extends Activity {
 		Private = (CheckBox) findViewById(R.id.checkBox);
 		CL = CategoryList.sharedCategoryList();
 		//Category.setAdapter();
-		ArrayAdapter<Category> categoryarrayadapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item,getCL().getCategories());
-		Categories.setAdapter(categoryarrayadapter);
+		ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item,getCL().getCategories());
+		Categories.setAdapter(categoryArrayAdapter);
 		intent = getIntent();
 		if (intent.getStringExtra(Constants.IntentServiceName)!= null){
 			String Service_id = intent.getStringExtra(Constants.IntentServiceName);
