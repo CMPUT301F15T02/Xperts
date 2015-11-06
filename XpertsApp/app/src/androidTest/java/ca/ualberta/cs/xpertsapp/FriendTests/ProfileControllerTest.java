@@ -9,6 +9,8 @@ import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
 import ca.ualberta.cs.xpertsapp.controllers.ProfileController;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
+import ca.ualberta.cs.xpertsapp.model.ServiceManager;
+import ca.ualberta.cs.xpertsapp.model.TradeManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
@@ -34,6 +36,13 @@ public class ProfileControllerTest extends TestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        UserManager.sharedManager().clearCache();
+        ServiceManager.sharedManager().clearCache();
+        TradeManager.sharedManager().clearCache();
+
+        IOManager.sharedManager().deleteData(Constants.serverUserExtension());
+        IOManager.sharedManager().deleteData(Constants.serverServiceExtension());
+        IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
         u1 = newTestUser(testEmail1,"David Skrundz","Calgary");
         u2 = newTestUser(testEmail2, "Seann Murdock", "Vancouver");
         u3 = newTestUser(testEmail3, "Kathleen Baker", "Toronto");
@@ -54,11 +63,11 @@ public class ProfileControllerTest extends TestCase {
         assertEquals(user.getFriends().size() == 0, true);
         User friend = pc.addFriend(email);
         assertEquals(friend, null);
-        assertEquals(user.getFriends().size() ==0, true);
+        assertEquals(user.getFriends().size() == 0, true);
         String email2= "kathleen@xperts.com";
         //should exist
         friend = pc.addFriend(email2);
-        assertEquals(user.getFriends().contains(u3),true);
+        assertEquals(user.getFriends().contains(u3), true);
         assertEquals(u3.getFriends().contains(user),true);
     }
 

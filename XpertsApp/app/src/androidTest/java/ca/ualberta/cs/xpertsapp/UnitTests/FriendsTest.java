@@ -137,14 +137,15 @@ public class FriendsTest extends TestCase {
 	public void test_02_03_01() {
 		// Test remove friends
 		User user = MyApplication.getLocalUser();
+		int numFriends = user.getFriends().size();
 		user.addFriend(u1);
 		user.addFriend(u2);
 
-		assertEquals(user.getFriends().size(), 2);
+		assertEquals(user.getFriends().size(), numFriends + 2);
 
+		assertTrue(user.getFriends().contains(u1));
 		user.removeFriend(u1);
-		assertEquals(user.getFriends().size(), 1);
-		assertEquals(user.getFriends().get(0), u2);
+		assertFalse(user.getFriends().contains(u1));
 	}
 
 	public void test_02_04_01() {

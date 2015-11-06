@@ -148,7 +148,7 @@ public class InventoryTest extends TestCase {
 		user.addService(newService);
 		assertEquals(user.getServices().size(), 1);
 
-		//user.removeService(newService.getID());
+		user.removeService(newService);
 		assertEquals(user.getServices().size(), 0);
 
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());

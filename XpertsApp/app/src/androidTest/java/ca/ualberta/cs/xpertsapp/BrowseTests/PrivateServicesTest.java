@@ -7,14 +7,13 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
 import ca.ualberta.cs.xpertsapp.controllers.BrowseController;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
-import ca.ualberta.cs.xpertsapp.model.Category;
-import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.Service;
@@ -25,7 +24,8 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
 import ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
-public class CategorySearchTest extends TestCase {
+public class PrivateServicesTest extends TestCase {
+    private Spinner Categories;
     private Button browseButton;
     private Spinner categorySpinner;
     private SearchView searchView;
@@ -41,11 +41,12 @@ public class CategorySearchTest extends TestCase {
     private User u2;
     private User u3;
     BrowseServicesActivity browseActivity;
+    Service privateService;
     Instrumentation instrumentation;
     Instrumentation.ActivityMonitor monitor;
     private static final int TIME_OUT = 5000;
 
-    public CategorySearchTest() {
+    public PrivateServicesTest() {
         super();
     }
 
@@ -59,19 +60,17 @@ public class CategorySearchTest extends TestCase {
         IOManager.sharedManager().deleteData(Constants.serverUserExtension());
         IOManager.sharedManager().deleteData(Constants.serverServiceExtension());
         IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
-        u1 = newTestUser("david@xperts.com","David Skrundz","Calgary");
+        u1 = newTestUser("david@xperts.com", "David Skrundz", "Calgary");
         u2 = newTestUser("seann@xperts.com", "Seann Murdock", "Vancouver");
         u3 = newTestUser("kathleen@xperts.com", "Kathleen Baker", "Toronto");
-        u1.addService(newTestService("someCategory1Service","Description",0,true));
-        u1.addService(newTestService("someCategory2Service","Description",1,true));
-        u2.addService(newTestService("someCategory3Service","Description",2,true));
-        u2.addService(newTestService("someCategory4Service","Description",3,true));
-        u3.addService(newTestService("someCategory5Service","Description",4,true));
-        u3.addService(newTestService("someCategory6Service","Description",5,true));
-        u1.addService(newTestService("someCategory7Service","Description",6,true));
-        u2.addService(newTestService("someCategory8Service","Description",7,true));
-        u3.addService(newTestService("someCategory9Service","Description",8,true));
-        u1.addService(newTestService("someCategory10Service","Description",9,true));
+        u1.addService(newTestService("U1 FirstService", "U1 FirstDescription", 0, true));
+        u1.addService(newTestService("U1 SecondService", "U1 SecondDescription", 1, true));
+        u2.addService(newTestService("U2 FirstService", "U2 FirstDescription", 2, true));
+        u2.addService(newTestService("U2 SecondService", "U2 SecondDescription", 3, true));
+        u3.addService(newTestService("U3 FirstService", "U3 FirstDescription", 4, true));
+        u3.addService(newTestService("U3 SecondService", "U3 SecondDescription", 5, true));
+        privateService = newTestService("Private Service", "Description", 3, false);
+        u1.addService(privateService);
         localUser = MyApplication.getLocalUser();
         localUser.addFriend(u1);
         localUser.addFriend(u2);
@@ -88,12 +87,10 @@ public class CategorySearchTest extends TestCase {
     }
 
     /**
-     * UC03.03.01
+     * UC03.04.01
      */
-    public void testServiceCategorySearch(){
+    public void testPrivateServices() {
         setActivityInitialTouchMode(true);
-
-        User friend = localUser.getFriends().get(0);
 
         //Navigate from Main menu
         MainActivity activity = (MainActivity) getActivity();
@@ -105,36 +102,19 @@ public class CategorySearchTest extends TestCase {
             }
         });
         getInstrumentation().waitForIdleSync(); // makes sure that all the threads finish
+        //Navigate from View profile
         browseActivity = (BrowseServicesActivity) instrumentation.waitForMonitorWithTimeout(monitor, TIME_OUT);
         assertNotNull(browseActivity);
 
-        categorySpinner = browseActivity.getCategorySpinner();
-        int count = categorySpinner.getAdapter().getCount();
+        serviceList = browseActivity.getServiceList();
+        int count = serviceList.getAdapter().getCount();
 
-        //Iterate over every category in spinner
-        for(int i = 1; i < count; i++){
-            final int finalI = i;
-            browseActivity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    categorySpinner.setSelection(finalI);
-                }
-            });
-            getInstrumentation().waitForIdleSync();
-
-            //i-1 because i starts at 1, not testing all categories
-            Category currentCat = CategoryList.sharedCategoryList().getCategories().get(i-1);
-            serviceList = browseActivity.getServiceList();
-            int numResults = serviceList.getAdapter().getCount();
-
-            //Iterate over all services returned and check they are of the right category
-            for (int j = 0; j < numResults; j++) {
-                Service s = (Service) serviceList.getAdapter().getItem(j);
-                assertTrue(s.getCategory().equals(currentCat));
-            }
-
+        for (int i = 0; i < count; i++) {
+            Service s = (Service) serviceList.getAdapter().getItem(i);
+            assertNotSame(privateService, s);
         }
 
-
+        browseActivity.finish();
     }
+
 }
