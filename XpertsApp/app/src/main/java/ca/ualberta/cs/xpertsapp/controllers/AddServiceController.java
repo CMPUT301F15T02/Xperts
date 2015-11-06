@@ -19,28 +19,31 @@ import ca.ualberta.cs.xpertsapp.views.AddServiceActivity;
 
 public class AddServiceController {
 
-    public void addService(EditText title, EditText description, Category category,CheckBox isprivate, CategoryList CL) {
+    public void addService(EditText title, EditText description, Category category,CheckBox isPrivate, CategoryList CL) {
 
         Service newService = ServiceManager.sharedManager().newService();
         newService.setName(title.getText().toString());
         newService.setDescription(description.getText().toString());
         newService.setCategory(category);
-        newService.setShareable(isprivate.isChecked() ? Boolean.FALSE : Boolean.TRUE);
+        newService.setShareable(isPrivate.isChecked() ? Boolean.FALSE : Boolean.TRUE);
         User user = MyApplication.getLocalUser();
         user.addService(newService);
     }
 
-    public void editService(EditText title, EditText description, Category category,CheckBox isprivate, CategoryList CL, String serviceID) {
+    public void editService(EditText title, EditText description, Category category,CheckBox isPrivate, CategoryList CL, String serviceID) {
 
         Service editedService = ServiceManager.sharedManager().getService(serviceID);
         editedService.setName(title.getText().toString());
         editedService.setDescription(description.getText().toString());
         editedService.setCategory(category);
-        editedService.setShareable(isprivate.isChecked() ? Boolean.FALSE : Boolean.TRUE);
+        editedService.setShareable(isPrivate.isChecked() ? Boolean.FALSE : Boolean.TRUE);
     }
 
-    public void deleteService() {
+    public void deleteService(String id) {
 
+        ServiceManager.sharedManager().deleteService(id);
+        User user = MyApplication.getLocalUser();
+        user.removeService(id);
     }
 
 }

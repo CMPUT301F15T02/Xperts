@@ -3,17 +3,21 @@ package ca.ualberta.cs.xpertsapp.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
 
 public class ServiceDetailsActivity extends Activity {
+	private AddServiceController asc = new AddServiceController();
 	private TextView theTitle;
 	public TextView getTheTitle() {return theTitle;}
 	private TextView isPublic;
@@ -73,9 +77,32 @@ public class ServiceDetailsActivity extends Activity {
 		}
 	}
 
-	public void editService(View view) {
-		Intent intent2 = new Intent(this, AddServiceActivity.class);
-		intent2.putExtra(Constants.IntentServiceName,intent.getStringExtra(Constants.IntentServiceName));
-		startActivityForResult(intent2,1);
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_service_details, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.delete_service) {
+			asc.deleteService(getIntent().getStringExtra(Constants.IntentServiceName));
+			Intent intent2 = new Intent(this, ViewProfileActivity.class);
+			startActivity(intent2);
+		}
+		if (id == R.id.edit_service) {
+			Intent intent3 = new Intent(this, AddServiceActivity.class);
+			intent3.putExtra(Constants.IntentServiceName,intent.getStringExtra(Constants.IntentServiceName));
+			startActivityForResult(intent3, 1);
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 }
