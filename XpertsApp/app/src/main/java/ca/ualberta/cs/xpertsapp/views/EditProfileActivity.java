@@ -61,9 +61,12 @@ public class EditProfileActivity extends Activity {
         saveButton = (Button) findViewById(R.id.saveButton);
 
         intent = getIntent();
-
-        // Listen on toggle switch
         final User user = MyApplication.getLocalUser();
+        email.setText(user.getEmail());
+        name.setText(user.getName());
+        location.setText(user.getLocation());
+        // Listen on toggle switch
+
         switch1 = (Switch) findViewById(R.id.switch1);
         switch1.setChecked(user.getToggleEnabled());
 
