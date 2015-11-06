@@ -1,15 +1,12 @@
 package ca.ualberta.cs.xpertsapp.BrowseTests;
 
 import android.app.Instrumentation;
-import android.test.TouchUtils;
-import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
@@ -117,7 +114,7 @@ public class TextSearchTest extends TestCase {
         });
         getInstrumentation().waitForIdleSync();
 
-        serviceList = browseActivity.getServiceList();
+        serviceList = browseActivity.getServiceListView();
         assertFalse(serviceList.getAdapter().isEmpty());
 
         int count = serviceList.getAdapter().getCount();
@@ -133,7 +130,7 @@ public class TextSearchTest extends TestCase {
         });
         getInstrumentation().waitForIdleSync(); // makes sure that all the threads finish
 
-        serviceList = browseActivity.getServiceList();
+        serviceList = browseActivity.getServiceListView();
         assertFalse(serviceList.getAdapter().isEmpty());
 
         count = serviceList.getAdapter().getCount();

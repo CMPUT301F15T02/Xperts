@@ -17,7 +17,10 @@ import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.User;
 
-
+/**
+ *  Adapter to build ListView of services
+ *  @author Hammad Jutt
+ */
 public class ServiceListAdapter extends BaseAdapter {
 
     public List<Service> serviceData;
@@ -25,13 +28,15 @@ public class ServiceListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
 
     public ServiceListAdapter(Context context, List<Service> services) {
-        // TODO Auto-generated constructor stub
         this.context = context;
         this.serviceData = services;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
-
+    /**
+     * Updates the ListView with a new list of services
+     * @param services the new list of services
+     */
     public void updateServiceList(List<Service> services) {
         serviceData.clear();
         serviceData.addAll(services);
@@ -40,25 +45,21 @@ public class ServiceListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return serviceData.size();
     }
 
     @Override
     public Service getItem(int position) {
-        // TODO Auto-generated method stub
         return serviceData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
     @Override
     public View getView(int position, View serviceListItem, ViewGroup parent) {
-        // TODO Auto-generated method stub
         View vi = serviceListItem;
         if (vi == null)
             vi = inflater.inflate(R.layout.service_list_item, null);

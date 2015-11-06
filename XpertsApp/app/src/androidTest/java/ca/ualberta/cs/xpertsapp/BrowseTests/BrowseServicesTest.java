@@ -1,8 +1,6 @@
 package ca.ualberta.cs.xpertsapp.BrowseTests;
 
 import android.app.Instrumentation;
-import android.test.TouchUtils;
-import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -108,12 +106,12 @@ public class BrowseServicesTest extends TestCase {
             friendsServices.addAll(f.getServices());
         }
 
-        serviceList = browseActivity.getServiceList();
+        serviceList = browseActivity.getServiceListView();
         int count = serviceList.getAdapter().getCount();
         assertEquals(friendsServices.size(), count);
 
         for (int i = 0; i < count; i++) {
-            Service s = (Service) browseActivity.getServiceList().getAdapter().getItem(i);
+            Service s = (Service) browseActivity.getServiceListView().getAdapter().getItem(i);
             assertTrue(friendsServices.contains(s));
         }
         browseActivity.finish();

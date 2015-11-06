@@ -124,7 +124,7 @@ public class CategorySearchTest extends TestCase {
 
             //i-1 because i starts at 1, not testing all categories
             Category currentCat = CategoryList.sharedCategoryList().getCategories().get(i-1);
-            serviceList = browseActivity.getServiceList();
+            serviceList = browseActivity.getServiceListView();
             int numResults = serviceList.getAdapter().getCount();
 
             //Iterate over all services returned and check they are of the right category

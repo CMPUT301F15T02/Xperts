@@ -7,7 +7,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
@@ -106,15 +105,13 @@ public class PrivateServicesTest extends TestCase {
         browseActivity = (BrowseServicesActivity) instrumentation.waitForMonitorWithTimeout(monitor, TIME_OUT);
         assertNotNull(browseActivity);
 
-        serviceList = browseActivity.getServiceList();
+        serviceList = browseActivity.getServiceListView();
         int count = serviceList.getAdapter().getCount();
 
         for (int i = 0; i < count; i++) {
             Service s = (Service) serviceList.getAdapter().getItem(i);
             assertNotSame(privateService, s);
         }
-
-        browseActivity.finish();
     }
 
 }

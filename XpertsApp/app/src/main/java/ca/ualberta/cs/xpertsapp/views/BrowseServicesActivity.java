@@ -24,7 +24,9 @@ import ca.ualberta.cs.xpertsapp.controllers.BrowseController;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
 import ca.ualberta.cs.xpertsapp.model.Service;
 
-
+/**
+ * Activity to browse friends services and filter by category and/or textual query
+ */
 public class BrowseServicesActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
     private Spinner categorySpinner;
@@ -54,33 +56,22 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         return true;
     }
 
+
     public SearchView getSearchView() {
         return searchView;
     }
 
-    public void setCurrentCategory(int currentCategory) {
-        this.currentCategory = currentCategory;
+    public List<Service> getServices() {
+        return services;
     }
 
-    public void setCurrentQuery(String currentQuery) {
-        this.currentQuery = currentQuery;
-    }
-
-    public ListView getServiceList() {
+    public ListView getServiceListView() {
         return serviceList;
 
     }
 
     public Spinner getCategorySpinner() {
         return categorySpinner;
-    }
-
-    public int getCurrentCategory() {
-        return currentCategory;
-    }
-
-    public String getCurrentQuery() {
-        return currentQuery;
     }
 
     @Override
@@ -127,7 +118,9 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         updateListView();
     }
 
-
+    /**
+     * Handles search intent and updates list of services
+     */
     private void handleIntent (Intent intent) {
         //if intent is a search, use query to search and filter data
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -138,6 +131,9 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         }
     }
 
+    /**
+     * On item selected listener for category spinner. Updates list of services when category changed
+     */
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         currentCategory = pos;
@@ -148,6 +144,9 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
 
     }
 
+    /**
+     * Gets the services matching the current category selected and current query
+     */
     public void updateListView(){
         services = Controller.getServices(currentCategory, currentQuery);
         serviceAdapter.updateServiceList(services);
