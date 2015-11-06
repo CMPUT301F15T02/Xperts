@@ -71,6 +71,10 @@ public class ServiceManager implements IObserver {
 		return new Service(UUID.randomUUID().toString(), MyApplication.getLocalUser().getEmail());
 	}
 
+	public void deleteService(String id) {
+		getService(id).addObserver(this);
+		this.services.remove(id);
+	}
 
 	/**
 	 * clear the loaded services
