@@ -20,42 +20,23 @@ import ca.ualberta.cs.xpertsapp.views.AddServiceActivity;
 public class AddServiceController {
 
     public void addService(EditText title, EditText description, Category category,CheckBox isprivate, CategoryList CL) {
-        String Title = title.getText().toString();
-        String Description = description.getText().toString();
-
-        Boolean shareable;
-        if (isprivate.isChecked()){
-            shareable = Boolean.FALSE;
-        } else {
-            shareable = Boolean.TRUE;
-        }
 
         Service newService = ServiceManager.sharedManager().newService();
-        newService.setName(Title);
-        newService.setDescription(Description);
+        newService.setName(title.getText().toString());
+        newService.setDescription(description.getText().toString());
         newService.setCategory(category);
-        newService.setShareable(shareable);
+        newService.setShareable(isprivate.isChecked() ? Boolean.FALSE : Boolean.TRUE);
         User user = MyApplication.getLocalUser();
         user.addService(newService);
     }
 
     public void editService(EditText title, EditText description, Category category,CheckBox isprivate, CategoryList CL, String serviceID) {
 
-        String Title = title.getText().toString();
-        String Description = description.getText().toString();
-
-        Boolean shareable;
-        if (isprivate.isChecked()) {
-            shareable = Boolean.FALSE;
-        } else {
-            shareable = Boolean.TRUE;
-        }
-
-        Service newService = ServiceManager.sharedManager().getService(serviceID);
-        newService.setName(Title);
-        newService.setDescription(Description);
-        newService.setCategory(category);
-        newService.setShareable(shareable);
+        Service editedService = ServiceManager.sharedManager().getService(serviceID);
+        editedService.setName(title.getText().toString());
+        editedService.setDescription(description.getText().toString());
+        editedService.setCategory(category);
+        editedService.setShareable(isprivate.isChecked() ? Boolean.FALSE : Boolean.TRUE);
     }
 
     public void deleteService() {
