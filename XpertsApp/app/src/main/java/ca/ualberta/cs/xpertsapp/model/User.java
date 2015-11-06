@@ -127,12 +127,12 @@ public class User implements IObservable {
 	/**
 	 * @param service the old service
 	 */
-	public void removeService(String service) {
-		Service s = ServiceManager.sharedManager().getService(service);
+	public void removeService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.services.remove(service);
-		ServiceManager.sharedManager().deleteService(service);
-		ServiceManager.sharedManager().notify(s);
+		this.services.remove(service.getID());
+
+		ServiceManager.sharedManager().removeService(service);
+		ServiceManager.sharedManager().notify(service);
 		this.notifyObservers();
 	}
 
