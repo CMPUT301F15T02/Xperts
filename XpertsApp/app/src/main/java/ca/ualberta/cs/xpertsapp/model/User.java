@@ -125,7 +125,7 @@ public class User implements IObservable {
 	public void addService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
 		this.services.add(service.getID());
-		if(!service.getOwner().equals(this)){
+		if(!service.getOwner().equals(this)) {
 			service.setOwner(this.email);
 		}
 		ServiceManager.sharedManager().addService(service);
@@ -136,9 +136,12 @@ public class User implements IObservable {
 	/**
 	 * @param service the old service
 	 */
-	public void removeService(String service) {
+	public void removeService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.services.remove(service);
+		this.services.remove(service.getID());
+
+		ServiceManager.sharedManager().removeService(service);
+		//ServiceManager.sharedManager().notify(service);
 		this.notifyObservers();
 	}
 

@@ -25,7 +25,9 @@
         <activity
             android:name=".views.BrowseServicesActivity"
             android:label="@string/title_activity_browse_services"
-            android:parentActivityName=".views.MainActivity" >
+            android:parentActivityName=".views.MainActivity"
+            android:launchMode="singleTop">
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -80,7 +82,14 @@
         <activity
             android:name=".views.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Xperts.NoActionBar">
+            android:theme="@style/Theme.Xperts.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".views.FriendServiceDetailsActivity"
+            android:label="@string/title_activity_friend_service_details" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.FriendProfileActivity" />
         </activity>
     </application>
 

@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 import java.util.ArrayList;
@@ -34,13 +35,25 @@ public class ViewProfileActivity extends Activity {
     private ServiceListAdapter serviceListAdapter;
 
 
+    private TextView name;
+    private TextView email;
+    private TextView location;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_profile);
+        name = (TextView) findViewById(R.id.profileName);
+        email = (TextView) findViewById(R.id.profileEmail);
+        location = (TextView) findViewById(R.id.profileCity);
+
         editProfile = (Button) findViewById(R.id.editButton);
         addService = (Button) findViewById(R.id.add);
         serviceList = (ListView) findViewById(R.id.serviceList);
+        User user = MyApplication.getLocalUser();
+        name.setText(user.getName());
+        email.setText(user.getEmail());
+        location.setText(user.getLocation());
 
         serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

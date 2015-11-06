@@ -80,7 +80,12 @@ public class FriendsActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    //http://stackoverflow.com/questions/18799216/how-to-make-a-edittext-box-in-a-dialog november 3, 2015
+    /**
+     * The method that's called when add friend button pushed
+     * Used:
+     * http://stackoverflow.com/questions/18799216/how-to-make-a-edittext-box-in-a-dialog accessed November 3, 2015
+     * for assistance in setting up an AlertDialog
+     */
     public void addFriend(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         final EditText editText = new EditText(activity);

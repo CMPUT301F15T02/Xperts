@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,10 +29,12 @@ public class FriendProfileActivity extends Activity {
     private TextView name;
     private TextView email;
     private TextView location;
+    private Button delete;
     private Intent intent;
     private ListView services;
     private ServiceListAdapter serviceListAdapter;
     private FriendProfileActivity activity = this;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +46,21 @@ public class FriendProfileActivity extends Activity {
         email = (TextView) findViewById(R.id.friendEmail);
         location = (TextView) findViewById(R.id.friendCity);
         services = (ListView) findViewById(R.id.friendServiceList);
+        delete = (Button) findViewById(R.id.deleteButton);
 
 
         String userEmail = intent.getStringExtra("INTENT_EMAIL");
         friend = UserManager.sharedManager().getUser(userEmail);
         //print user's info to screen
-        //TODO test this - need another user
-        name.setText(friend.getName().toString());
-        email.setText(friend.getEmail().toString());
-        location.setText(friend.getLocation().toString());
+        //TODO this screws up going back from FriendServiceDetailsActivity
+        name.setText(friend.getName());
+        email.setText(friend.getEmail());
+        location.setText(friend.getLocation());
 
 
         services.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(activity, ServiceDetailsActivity.class);
+                Intent intent = new Intent(activity, FriendServiceDetailsActivity.class);
                 intent.putExtra(Constants.IntentServiceName, serviceListAdapter.getItem(position).getID());
                 startActivity(intent);
             }
@@ -73,7 +77,8 @@ public class FriendProfileActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        List<Service> Services = friend.getServices();
+        List<Service> Services;
+        Services = friend.getServices();
         serviceListAdapter = new ServiceListAdapter(this,Services);
         services.setAdapter(serviceListAdapter);
     }
@@ -93,8 +98,12 @@ public class FriendProfileActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * The method that's called when press delete button
+     */
     public void deleteFriend(View view) {
-        //TODO
+        //delete the friend
+        pc.deleteFriend(friend);
         Intent intent = new Intent(this, FriendsActivity.class);
         startActivity(intent);
     }
