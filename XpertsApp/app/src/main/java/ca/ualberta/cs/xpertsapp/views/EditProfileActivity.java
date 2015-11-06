@@ -7,7 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
@@ -19,6 +21,7 @@ public class EditProfileActivity extends Activity {
     private EditText email;
     private EditText name;
     private EditText location;
+    private Switch downloads;
     private Intent intent;
 
     public EditText getEmail() {
@@ -43,11 +46,23 @@ public class EditProfileActivity extends Activity {
         email = (EditText) findViewById(R.id.emailEditText);
         name = (EditText) findViewById(R.id.nameEditText);
         location = (EditText) findViewById(R.id.locationEditText);
+        downloads = (Switch) findViewById(R.id.switch1);
         User user = MyApplication.getLocalUser();
         intent = getIntent();
         email.setText(user.getEmail());
         name.setText(user.getName());
         location.setText(user.getLocation());
+
+        downloads.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //enable photo downloads
+                } else {
+                    //disable photo downloads
+                }
+            }
+        });
     }
 
     @Override
