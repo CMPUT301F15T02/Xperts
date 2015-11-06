@@ -14,6 +14,7 @@ public class User implements IObservable {
 	private String email;
 	private String name = "";
 	private String location = "";
+	private Boolean toggleEnabled = false;
 	private List<String> friends = new ArrayList<String>();
 	private List<String> services = new ArrayList<String>();
 	private List<String> trades = new ArrayList<String>();
@@ -65,6 +66,14 @@ public class User implements IObservable {
 		if (!this.isEditable()) throw new AssertionError();
 		this.location = location;
 		this.notifyObservers();
+	}
+
+	public Boolean getToggleEnabled() {
+		return toggleEnabled;
+	}
+
+	public void setToggleEnabled(Boolean toggleEnabled) {
+		this.toggleEnabled = toggleEnabled;
 	}
 
 	/**

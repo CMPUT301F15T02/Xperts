@@ -3,9 +3,6 @@ package ca.ualberta.cs.xpertsapp.UnitTests;
 import android.content.SharedPreferences;
 import android.test.ActivityInstrumentationTestCase2;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;

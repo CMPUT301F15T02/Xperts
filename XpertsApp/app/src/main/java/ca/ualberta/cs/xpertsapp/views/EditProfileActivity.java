@@ -7,15 +7,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.model.User;
 
 public class EditProfileActivity extends Activity {
 
     private EditText Email;
     private EditText Name;
     private EditText Location;
+    private Switch switch1;
     private Intent intent;
 
     public EditText getEmail() {
@@ -30,6 +35,10 @@ public class EditProfileActivity extends Activity {
         return Location;
     }
 
+    public Switch getSwitch1() {
+        return switch1;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +47,25 @@ public class EditProfileActivity extends Activity {
         Email = (EditText) findViewById(R.id.emailEditText);
         Name = (EditText) findViewById(R.id.nameEditText);
         Location = (EditText) findViewById(R.id.locationEditText);
+        switch1 = (Switch) findViewById(R.id.switch1);
 
         intent = getIntent();
+
+        // Listen on toggle switch
+        final User user = MyApplication.getLocalUser();
+        switch1 = (Switch) findViewById(R.id.switch1);
+        switch1.setChecked(user.getToggleEnabled());
+
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+                if (switch1.isChecked()) {
+                    user.setToggleEnabled(true);
+                } else {
+                    user.setToggleEnabled(false);
+                }
+            }
+        });
     }
 
     @Override
