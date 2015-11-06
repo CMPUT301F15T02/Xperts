@@ -108,7 +108,9 @@ public class ServiceManager implements IObserver {
 		List<Service> services = new ArrayList<Service>();
 		for (SearchHit<Service> service : found) {
 			if (MyApplication.getLocalUser().getFriends().contains(UserManager.sharedManager().getUser(service.getSource().getOwner().getEmail()))) {
-				services.add(this.getService(service.getSource().getID()));
+				if (this.getService(service.getSource().getID()).isShareable()) {
+					services.add(this.getService(service.getSource().getID()));
+				}
 			}
 		}
 		return services;
