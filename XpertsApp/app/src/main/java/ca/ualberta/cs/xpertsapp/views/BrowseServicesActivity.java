@@ -27,14 +27,16 @@ import ca.ualberta.cs.xpertsapp.model.Service;
 
 public class BrowseServicesActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
-    Spinner categorySpinner;
-    ArrayAdapter<String> categoryAdapter;
-    BrowseController Controller;
-    ServiceListAdapter serviceAdapter;
-    List<Service> services;
-    ListView serviceList;
-    int currentCategory;
-    String currentQuery;
+    private Spinner categorySpinner;
+    private ArrayAdapter<String> categoryAdapter;
+    private SearchManager searchManager;
+    private SearchView searchView;
+    private BrowseController Controller;
+    private ServiceListAdapter serviceAdapter;
+    private List<Service> services;
+    private ListView serviceList;
+    private int currentCategory;
+    private String currentQuery;
 
 
     @Override
@@ -45,14 +47,40 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         categorySpinner.setAdapter(categoryAdapter);
         categorySpinner.setOnItemSelectedListener(this);
 
-        SearchManager searchManager =
-                (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+        searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return true;
+    }
+
+    public SearchView getSearchView() {
+        return searchView;
+    }
+
+    public void setCurrentCategory(int currentCategory) {
+        this.currentCategory = currentCategory;
+    }
+
+    public void setCurrentQuery(String currentQuery) {
+        this.currentQuery = currentQuery;
+    }
+
+    public ListView getServiceList() {
+        return serviceList;
+
+    }
+
+    public Spinner getCategorySpinner() {
+        return categorySpinner;
+    }
+
+    public int getCurrentCategory() {
+        return currentCategory;
+    }
+
+    public String getCurrentQuery() {
+        return currentQuery;
     }
 
     @Override
@@ -112,7 +140,6 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        Toast.makeText(getApplicationContext(), "You Selected a category", Toast.LENGTH_SHORT).show();
         currentCategory = pos;
         updateListView();
     }

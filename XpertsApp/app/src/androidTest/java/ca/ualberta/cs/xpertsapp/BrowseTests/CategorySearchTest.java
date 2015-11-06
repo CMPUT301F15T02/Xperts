@@ -1,21 +1,20 @@
 package ca.ualberta.cs.xpertsapp.BrowseTests;
 
 import android.app.Instrumentation;
-import android.test.TouchUtils;
-import android.view.KeyEvent;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
 import ca.ualberta.cs.xpertsapp.controllers.BrowseController;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
+import ca.ualberta.cs.xpertsapp.model.Category;
+import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.Service;
@@ -26,8 +25,7 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
 import ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
-public class BrowseServicesTest extends TestCase {
-    private Spinner Categories;
+public class CategorySearchTest extends TestCase {
     private Button browseButton;
     private Spinner categorySpinner;
     private SearchView searchView;
@@ -46,7 +44,7 @@ public class BrowseServicesTest extends TestCase {
     Instrumentation.ActivityMonitor monitor;
     private static final int TIME_OUT = 5000;
 
-    public BrowseServicesTest() {
+    public CategorySearchTest() {
         super();
     }
 
@@ -60,15 +58,19 @@ public class BrowseServicesTest extends TestCase {
         IOManager.sharedManager().deleteData(Constants.serverUserExtension());
         IOManager.sharedManager().deleteData(Constants.serverServiceExtension());
         IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
-        u1 = newTestUser("david@xperts.com", "David Skrundz", "Calgary");
+        u1 = newTestUser("david@xperts.com","David Skrundz","Calgary");
         u2 = newTestUser("seann@xperts.com", "Seann Murdock", "Vancouver");
         u3 = newTestUser("kathleen@xperts.com", "Kathleen Baker", "Toronto");
-        u1.addService(newTestService("U1 FirstService", "U1 FirstDescription", 0, true));
-        u1.addService(newTestService("U1 SecondService", "U1 SecondDescription", 1, true));
-        u2.addService(newTestService("U2 FirstService", "U2 FirstDescription", 2, true));
-        u2.addService(newTestService("U2 SecondService", "U2 SecondDescription", 3, true));
-        u3.addService(newTestService("U3 FirstService", "U3 FirstDescription", 4, true));
-        u3.addService(newTestService("U3 SecondService", "U3 SecondDescription", 5, true));
+        u1.addService(newTestService("someCategory1Service","Description",0,true));
+        u1.addService(newTestService("someCategory2Service","Description",1,true));
+        u2.addService(newTestService("someCategory3Service","Description",2,true));
+        u2.addService(newTestService("someCategory4Service","Description",3,true));
+        u3.addService(newTestService("someCategory5Service","Description",4,true));
+        u3.addService(newTestService("someCategory6Service","Description",5,true));
+        u1.addService(newTestService("someCategory7Service","Description",6,true));
+        u2.addService(newTestService("someCategory8Service","Description",7,true));
+        u3.addService(newTestService("someCategory9Service","Description",8,true));
+        u1.addService(newTestService("someCategory10Service","Description",9,true));
         localUser = MyApplication.getLocalUser();
         localUser.addFriend(u1);
         localUser.addFriend(u2);
@@ -84,10 +86,13 @@ public class BrowseServicesTest extends TestCase {
     }
 
     /**
-     * UC03.01.01
+     * UC03.02.01
      */
-    public void testServiceSearch() {
+    public void testServiceCategorySearch(){
         setActivityInitialTouchMode(true);
+
+        User friend = localUser.getFriends().get(0);
+
         //Navigate from Main menu
         MainActivity activity = (MainActivity) getActivity();
         browseButton = activity.getBrowseBtn();
@@ -98,25 +103,37 @@ public class BrowseServicesTest extends TestCase {
             }
         });
         getInstrumentation().waitForIdleSync(); // makes sure that all the threads finish
-        //Navigate from View profile
         BrowseServicesActivity browseActivity = (BrowseServicesActivity) instrumentation.waitForMonitorWithTimeout(monitor, TIME_OUT);
         assertNotNull(browseActivity);
 
-        List<User> friends = localUser.getFriends();
-        List<Service> friendsServices = new ArrayList<Service>();
-        for (User f : friends) {
-            friendsServices.addAll(f.getServices());
+        categorySpinner = browseActivity.getCategorySpinner();
+        int count = categorySpinner.getAdapter().getCount();
+
+        //Iterate over every category in spinner
+        for(int i = 1; i < count; i++){
+            final int finalI = i;
+            browseActivity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    categorySpinner.setSelection(finalI);
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            //i-1 because i starts at 1, not testing all categories
+            Category currentCat = CategoryList.sharedCategoryList().getCategories().get(i-1);
+            serviceList = browseActivity.getServiceList();
+            int numResults = serviceList.getAdapter().getCount();
+
+            //Iterate over all services returned and check they are of the right category
+            for (int j = 0; j < numResults; j++) {
+                Service s = (Service) serviceList.getAdapter().getItem(j);
+                assertTrue(s.getCategory().equals(currentCat));
+            }
+
         }
 
-        serviceList = browseActivity.getServiceList();
-        int count = serviceList.getAdapter().getCount();
-        assertEquals(friendsServices.size(), count);
-
-        for (int i = 0; i < count; i++) {
-            Service s = (Service) browseActivity.getServiceList().getAdapter().getItem(i);
-            assertTrue(friendsServices.contains(s));
-        }
         browseActivity.finish();
-    }
 
+    }
 }
