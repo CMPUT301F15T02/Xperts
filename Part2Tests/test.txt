@@ -1,2 +1,0 @@
-Put java files with jUnit tests in here.
-Also link each test to the use case.
