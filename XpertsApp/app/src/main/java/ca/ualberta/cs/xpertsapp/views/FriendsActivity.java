@@ -128,6 +128,12 @@ public class FriendsActivity extends Activity {
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
+                } else if (friend.equals(MyApplication.getLocalUser())) {
+                    Context context = getApplicationContext();
+                    CharSequence text = "You can't add yourself!";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
                 } else {
                     friendsListAdapter.updateFriendsList(MyApplication.getLocalUser().getFriends());
                     Context context = getApplicationContext();
