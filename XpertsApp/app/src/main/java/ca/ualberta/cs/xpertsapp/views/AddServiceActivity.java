@@ -72,7 +72,7 @@ public class AddServiceActivity extends Activity {
 	public void saveService(View view) {
 		int index =  getCategories().getSelectedItemPosition();
 		Category category = CL.getCategories().get(index);
-		if (intent.getStringExtra(Constants.IntentServiceName)== null){
+		if (intent.getStringExtra(Constants.IntentServiceName) == null){
 			try {
 				asc.addService(getTheTitle(), getDescription(), category, getPrivate(), getCL());
 			}
