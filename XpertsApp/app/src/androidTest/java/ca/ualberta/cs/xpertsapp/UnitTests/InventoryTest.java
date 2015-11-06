@@ -110,7 +110,10 @@ public class InventoryTest extends TestCase {
 	public void test_01_03_02() {
 		// Test not listing items that are private
 		User friend = UserManager.sharedManager().getUser("1");
+
+		Constants.isTest = false;
 		List<Service> friendServices = friend.getServices();
+		Constants.isTest = true;
 
 		assertEquals(friendServices.size(), 1);
 	}

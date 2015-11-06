@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
@@ -77,17 +78,13 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         getActionBar().setTitle("");
 
         Controller = new BrowseController();
-        services = Controller.getServices();
 
-        serviceAdapter = new ServiceListAdapter(MyApplication.getContext(), services);
+        serviceAdapter = new ServiceListAdapter(MyApplication.getContext(), new ArrayList<Service>());
         // Taken from: http://stackoverflow.com/questions/9863378/how-to-hide-one-item-in-an-android-spinner
         categoryAdapter = new ArrayAdapter<String>(MyApplication.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, Controller.getCategoryNames());
-
         serviceList = (ListView) findViewById(R.id.serviceList);
         serviceList.setAdapter(serviceAdapter);
-
-        handleIntent(getIntent());
     }
 
     @Override
@@ -98,6 +95,8 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
     @Override
     protected void onStart() {
         super.onStart();
+        services = Controller.getServices();
+        serviceAdapter.updateServiceList(services);
     }
 
     private void handleIntent (Intent intent) {
@@ -112,8 +111,9 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
+        Toast.makeText(getApplicationContext(), "You Selected a category", Toast.LENGTH_SHORT).show();
         services = Controller.selectCategory(pos);
-        serviceAdapter.updateServiceList(services);
+//        serviceAdapter.updateServiceList(services);
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

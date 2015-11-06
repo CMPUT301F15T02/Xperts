@@ -35,8 +35,6 @@ public class MainActivity extends Activity {
 
         MyApplication.loginCheck();
 
-
-
         MyProfileBtn = (Button) findViewById(R.id.MyProfileBtn);
         MyProfileBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
