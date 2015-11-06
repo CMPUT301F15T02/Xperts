@@ -1,5 +1,6 @@
 package ca.ualberta.cs.xpertsapp.InventoryTests;
 
+import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -8,6 +9,7 @@ import android.widget.Spinner;
 
 import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
 import ca.ualberta.cs.xpertsapp.views.AddServiceActivity;
+import ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 import ca.ualberta.cs.xpertsapp.views.ViewProfileActivity;
 
@@ -20,12 +22,32 @@ public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
         private Button saveButton;
         private Button profileButton;
         private Button addServiceButton;
-
+        AddServiceActivity activity2;
+        Instrumentation instrumentation;
+        Instrumentation.ActivityMonitor monitor;
+        Instrumentation.ActivityMonitor monitor2;
+        private static final int TIME_OUT = 5000;
 
         public AddInventoryServiceTest() {
                 super(MainActivity.class);
 
         }
+
+        @Override
+        protected void setUp() throws Exception {
+                super.setUp();
+                instrumentation = getInstrumentation();
+                monitor = instrumentation.addMonitor(ViewProfileActivity.class.getName(), null, false);
+                monitor2 = instrumentation.addMonitor(AddServiceActivity.class.getName(), null, false);
+        }
+
+        @Override
+        protected void tearDown() throws Exception {
+                activity2.finish();
+                getInstrumentation().removeMonitor(monitor);
+                super.tearDown();
+        }
+
         /**
          * UC01.03.01
          */
@@ -43,8 +65,11 @@ public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
                         }
                 });
                 getInstrumentation().waitForIdleSync(); // makes sure that all the threads finish
+
+
                 //Navigate from View profile
-                ViewProfileActivity activity1 = (ViewProfileActivity) getActivity();
+                ViewProfileActivity activity1 = (ViewProfileActivity) instrumentation.waitForMonitorWithTimeout(monitor, TIME_OUT);
+                assertNotNull(activity1);
                 addServiceButton = activity1.getAddService();
                 activity.runOnUiThread(new Runnable() {
                         @Override
@@ -53,7 +78,9 @@ public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
                         }
                 });
                 getInstrumentation().waitForIdleSync(); // makes sure that all the threads finish
-                AddServiceActivity activity2 = (AddServiceActivity) getActivity();
+
+                activity2 = (AddServiceActivity) instrumentation.waitForMonitorWithTimeout(monitor2, TIME_OUT);
+                assertNotNull(activity2);
 
                 Title = activity2.getTheTitle();
                 activity.runOnUiThread(new Runnable() {

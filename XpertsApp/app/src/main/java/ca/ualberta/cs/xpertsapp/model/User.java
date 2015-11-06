@@ -91,7 +91,7 @@ public class User implements IObservable {
 	 * @param friend The new friend
 	 */
 	public void addFriend(User friend) {
-		//if (!this.isEditable()) throw new AssertionError();
+		if (!this.isEditable()) throw new AssertionError();
 		this.friends.add(friend.getEmail());
 		this.notifyObservers();
 	}
@@ -100,7 +100,7 @@ public class User implements IObservable {
 	 * @param friend The old friend
 	 */
 	public void removeFriend(User friend) {
-		//if (!this.isEditable()) throw new AssertionError();
+		if (!this.isEditable()) throw new AssertionError();
 		this.friends.remove(friend.getEmail());
 		this.notifyObservers();
 	}
@@ -112,7 +112,7 @@ public class User implements IObservable {
 		List<Service> services = new ArrayList<Service>();
 		for (String service : this.services) {
 			Service s = ServiceManager.sharedManager().getService(service);
-			if (this.isEditable() || s.isShareable()) {
+			if (this.isOwner() || s.isShareable()) {
 				services.add(s);
 			}
 		}
@@ -180,6 +180,7 @@ public class User implements IObservable {
 	protected boolean isEditable() {
 		return Constants.isTest || this == MyApplication.getLocalUser();
 	}
+	protected boolean isOwner(){return this == MyApplication.getLocalUser();}
 
 	// IObservable
 	private transient List<IObserver> observers = new ArrayList<IObserver>();
