@@ -1,8 +1,10 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
 import android.app.AlertDialog;
+import android.app.Instrumentation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -15,10 +17,12 @@ import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 import ca.ualberta.cs.xpertsapp.views.FriendsActivity;
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
+import ca.ualberta.cs.xpertsapp.views.ViewProfileActivity;
 
 public class FriendsTest extends TestCase {
 	public FriendsTest() {
-		super(FriendsActivity.class);
+		super();
 	}
 
 	final String testEmail1 = "david@xperts.com";
@@ -52,8 +56,24 @@ public class FriendsTest extends TestCase {
 		assertEquals(user.getEmail(), testLocalEmail);
 		final String friendSearchString = "kathleen@xperts.com";
 
-		FriendsActivity mActivity = (FriendsActivity) getActivity();
-		final Button buttonAddFriend = mActivity.getButtonAddFriend();
+		MainActivity mActivity = (MainActivity) getActivity();
+		final Button buttonViewFriends = mActivity.getFriendsBtn();
+
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				buttonViewFriends.performClick();
+			}
+		});
+
+		// Load the next activity, it may fail here if 5000 is not long enough
+		Instrumentation.ActivityMonitor receiverActivityMonitor =
+				getInstrumentation().addMonitor(FriendsActivity.class.getName(), null, false);
+		FriendsActivity receiverActivity = (FriendsActivity)
+				receiverActivityMonitor.waitForActivityWithTimeout(5000);
+		assertNotNull(receiverActivity);
+
+		final Button buttonAddFriend = receiverActivity.getButtonAddFriend();
 		mActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -62,7 +82,7 @@ public class FriendsTest extends TestCase {
 		});
 		getInstrumentation().waitForIdleSync();
 
-		final AlertDialog alertDialog = mActivity.getAlertDialog();
+		final AlertDialog alertDialog = receiverActivity.getAlertDialog();
 		mActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -71,7 +91,7 @@ public class FriendsTest extends TestCase {
 		});
 		getInstrumentation().waitForIdleSync();
 
-		final EditText editTextEmail = mActivity.getEditTextEmail();
+		final EditText editTextEmail = receiverActivity.getEditTextEmail();
 		mActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
@@ -82,8 +102,13 @@ public class FriendsTest extends TestCase {
 		});
 		getInstrumentation().waitForIdleSync();
 
-		FriendsListAdapter friendsListAdapter = mActivity.getFriendsListAdapter();
+		FriendsListAdapter friendsListAdapter = receiverActivity.getFriendsListAdapter();
 		assertTrue(friendsListAdapter.getCount() > 0);
+
+		// Remove the ActivityMonitor
+		getInstrumentation().removeMonitor(receiverActivityMonitor);
+		// end of test, make sure edit activity is close
+		receiverActivity.finish();
 	}
 
 	public void test_02_02_01() {
@@ -124,21 +149,37 @@ public class FriendsTest extends TestCase {
 
 	public void test_02_04_01() {
 		// Test set contact info and location
+
+		MainActivity mActivity = (MainActivity) getActivity();
+		final Button buttonMyProfile = mActivity.getMyProfileBtn();
+
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				buttonMyProfile.performClick();
+			}
+		});
+
+		// Load the next activity, it may fail here if 5000 is not long enough
+		Instrumentation.ActivityMonitor receiverActivityMonitor =
+				getInstrumentation().addMonitor(ViewProfileActivity.class.getName(), null, false);
+		ViewProfileActivity receiverActivity = (ViewProfileActivity)
+				receiverActivityMonitor.waitForActivityWithTimeout(5000);
+
+		TextView name = receiverActivity.getName();
+		TextView email = receiverActivity.getEmail();
+		TextView location = receiverActivity.getLocation();
+
 		User user = MyApplication.getLocalUser();
 
-		String name = "Polar bear";
-		String location = "Nunavut";
+		assertEquals(user.getName(), name.getText().toString());
+		assertEquals(user.getEmail(), email.getText().toString());
+		assertEquals(user.getLocation(), location.getText().toString());
 
-		user.setLocation(location);
-		user.setName(name);
-
-		//UserManager.sharedManager().clearCache();
-		//user = MyApplication.getLocalUser();
-
-		assertEquals(user.getLocation(), location);
-		assertEquals(user.getName(), name);
-
-		//assertEquals(UserManager.sharedManager().getUsers().size(), 4);
+		// Remove the ActivityMonitor
+		getInstrumentation().removeMonitor(receiverActivityMonitor);
+		// end of test, make sure edit activity is close
+		receiverActivity.finish();
 	}
 
 	// 02.05.01 is not model

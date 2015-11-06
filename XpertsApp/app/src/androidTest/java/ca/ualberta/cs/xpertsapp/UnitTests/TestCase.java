@@ -22,14 +22,8 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		super(MainActivity.class);
 	}
 
-	public TestCase(Class mClass) {
-		super(mClass);
-	}
-
 	static final String testLocalEmail =  Constants.testEmail;
 	protected static SharedPreferences pref;
-
-
 
 	@Override
 	protected void setUp() throws Exception {
