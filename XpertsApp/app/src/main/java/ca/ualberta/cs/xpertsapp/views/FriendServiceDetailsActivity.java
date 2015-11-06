@@ -72,14 +72,5 @@ public class FriendServiceDetailsActivity extends Activity {
 
         }
     }
-    @Override
-    /**
-     * This doesn't work right now
-     * http://stackoverflow.com/questions/18337536/android-overriding-onbackpressed november 5, 2015
-     */
-    public void onBackPressed() {
-        Intent intent = new Intent(activity, FriendProfileActivity.class);
-        intent.putExtra("INTENT_EMAIL", service.getOwner().getEmail());
-        startActivity(intent);
-    }
+
 }

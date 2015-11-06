@@ -30,11 +30,6 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		super.setUp();
 
 		Constants.isTest = true;
-
-//		MyApplication.logout();
-//		MyApplication.login(testLocalEmail);
-
-//		UserManager.sharedManager().registerUser(testLocalEmail);
 	}
 
 	@Override
