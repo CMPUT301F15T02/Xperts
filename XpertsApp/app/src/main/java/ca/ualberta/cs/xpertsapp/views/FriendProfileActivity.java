@@ -84,6 +84,15 @@ public class FriendProfileActivity extends Activity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        List<Service> Services;
+        Services = friend.getServices();
+        serviceListAdapter = new ServiceListAdapter(this,Services);
+        services.setAdapter(serviceListAdapter);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
