@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.ProfileController;
+import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
@@ -23,6 +24,7 @@ public class FriendProfileActivity extends Activity {
     private TextView location;
     private Intent intent;
     private ListView services; //?
+    private ServiceListAdapter serviceListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
