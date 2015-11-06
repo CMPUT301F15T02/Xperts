@@ -132,7 +132,7 @@ public class User implements IObservable {
 		this.services.remove(service.getID());
 
 		ServiceManager.sharedManager().removeService(service);
-		ServiceManager.sharedManager().notify(service);
+		//ServiceManager.sharedManager().notify(service);
 		this.notifyObservers();
 	}
 
