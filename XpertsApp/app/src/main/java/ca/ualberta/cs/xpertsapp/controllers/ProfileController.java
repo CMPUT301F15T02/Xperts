@@ -29,7 +29,7 @@ public class ProfileController {
         if (friend == null) {
             return null;
         }
-        if (!friend.equals(user)) {
+        if (!friend.equals(user) && !user.getFriends().contains(friend)) {
             user.addFriend(friend);
         }
         return friend;
