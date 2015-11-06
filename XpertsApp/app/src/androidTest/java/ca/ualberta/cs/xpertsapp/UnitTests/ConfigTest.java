@@ -32,7 +32,7 @@ public class ConfigTest extends ActivityInstrumentationTestCase2 {
 
 	public void test_10_01_01() {
 		// Test toggle image download
-		final EditProfileActivity mActivity = (EditProfileActivity) getActivity();
+		EditProfileActivity mActivity = (EditProfileActivity) getActivity();
 		final Switch switch1 = mActivity.getSwitch1();
 		final Boolean toggleEnabled = switch1.isChecked();
 
@@ -70,7 +70,7 @@ public class ConfigTest extends ActivityInstrumentationTestCase2 {
 
 	public void test_10_02_01() {
 		// Test edit profile
-		final EditProfileActivity mActivity = (EditProfileActivity) getActivity();
+		EditProfileActivity mActivity = (EditProfileActivity) getActivity();
 		final EditText email = mActivity.getEmail();
 		final EditText name = mActivity.getName();
 		final EditText location = mActivity.getLocation();

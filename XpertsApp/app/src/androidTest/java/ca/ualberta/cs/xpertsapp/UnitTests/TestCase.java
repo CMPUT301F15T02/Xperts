@@ -1,5 +1,6 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -19,6 +20,10 @@ import ca.ualberta.cs.xpertsapp.views.MainActivity;
 public class TestCase extends ActivityInstrumentationTestCase2 {
 	public TestCase() {
 		super(MainActivity.class);
+	}
+
+	public TestCase(Class mClass) {
+		super(mClass);
 	}
 
 	static final String testLocalEmail =  Constants.testEmail;

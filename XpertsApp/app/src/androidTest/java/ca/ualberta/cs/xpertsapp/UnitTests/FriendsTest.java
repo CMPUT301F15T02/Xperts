@@ -1,18 +1,24 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
+import android.app.AlertDialog;
+import android.widget.Button;
+import android.widget.EditText;
+
 import com.google.gson.Gson;
 
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
+import ca.ualberta.cs.xpertsapp.controllers.FriendsListAdapter;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
+import ca.ualberta.cs.xpertsapp.views.FriendsActivity;
 
 public class FriendsTest extends TestCase {
 	public FriendsTest() {
-		super();
+		super(FriendsActivity.class);
 	}
 
 	final String testEmail1 = "david@xperts.com";
@@ -39,8 +45,48 @@ public class FriendsTest extends TestCase {
 		super.tearDown();
 	}
 
-	// Also 02.02.01
 	public void test_02_01_01() {
+		// Test track user by searching for username
+		UserManager.sharedManager().clearCache();
+		User user = MyApplication.getLocalUser();
+		assertEquals(user.getEmail(), testLocalEmail);
+		final String friendSearchString = "kathleen@xperts.com";
+
+		FriendsActivity mActivity = (FriendsActivity) getActivity();
+		final Button buttonAddFriend = mActivity.getButtonAddFriend();
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				buttonAddFriend.performClick();
+			}
+		});
+		getInstrumentation().waitForIdleSync();
+
+		final AlertDialog alertDialog = mActivity.getAlertDialog();
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				alertDialog.show();
+			}
+		});
+		getInstrumentation().waitForIdleSync();
+
+		final EditText editTextEmail = mActivity.getEditTextEmail();
+		mActivity.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				editTextEmail.setText(friendSearchString);
+				Button buttonDialog = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+				buttonDialog.performClick();
+			}
+		});
+		getInstrumentation().waitForIdleSync();
+
+		FriendsListAdapter friendsListAdapter = mActivity.getFriendsListAdapter();
+		assertTrue(friendsListAdapter.getCount() > 0);
+	}
+
+	public void test_02_02_01() {
 		// Test add friends by searching for username
 		User user = MyApplication.getLocalUser();
 		assertEquals(user.getEmail(), testLocalEmail);
