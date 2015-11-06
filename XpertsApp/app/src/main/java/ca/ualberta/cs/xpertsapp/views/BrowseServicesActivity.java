@@ -24,6 +24,7 @@ import ca.ualberta.cs.xpertsapp.controllers.BrowseController;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
 import ca.ualberta.cs.xpertsapp.model.Service;
 
+
 public class BrowseServicesActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
     Spinner categorySpinner;
@@ -32,20 +33,20 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
     ServiceListAdapter serviceAdapter;
     List<Service> services;
     ListView serviceList;
+    int currentCategory;
+    String currentQuery;
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_browse_services, menu);
 
         categorySpinner = (Spinner)menu.findItem(R.id.category_spinner).getActionView();
         categorySpinner.setAdapter(categoryAdapter);
         categorySpinner.setOnItemSelectedListener(this);
 
-        // Associate searchable configuration with the SearchView
         SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+                (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
@@ -56,9 +57,6 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -76,6 +74,9 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
 
         assert(getActionBar() != null);
         getActionBar().setTitle("");
+
+        currentCategory = 0;
+        currentQuery = "";
 
         Controller = new BrowseController();
 
@@ -95,30 +96,33 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
     @Override
     protected void onStart() {
         super.onStart();
-        services = Controller.getServices();
-        serviceAdapter.updateServiceList(services);
+        updateListView();
     }
+
 
     private void handleIntent (Intent intent) {
         //if intent is a search, use query to search and filter data
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Toast.makeText(getApplicationContext(), "You searched for : " + query, Toast.LENGTH_SHORT).show();
-            services = Controller.getServices(query);
-            serviceAdapter.updateServiceList(services);
+            currentQuery = query;
+            updateListView();
         }
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         Toast.makeText(getApplicationContext(), "You Selected a category", Toast.LENGTH_SHORT).show();
-        services = Controller.selectCategory(pos);
-//        serviceAdapter.updateServiceList(services);
+        currentCategory = pos;
+        updateListView();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
-
+    public void updateListView(){
+        services = Controller.getServices(currentCategory, currentQuery);
+        serviceAdapter.updateServiceList(services);
+    }
 }

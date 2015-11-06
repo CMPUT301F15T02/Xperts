@@ -23,7 +23,7 @@ public class BrowseController {
     List<Category> categories;
 
 
-    public List<Service> getServices (){
+    public List<Service> getServices () {
         List<Service> services = new ArrayList<Service>();
         User user = MyApplication.getLocalUser();
 
@@ -33,8 +33,44 @@ public class BrowseController {
         return services;
     }
 
-    public List<Service> getServices (String query){
-        return ServiceManager.sharedManager().findServicesOfFriends(query);
+    public List<Service> getServices (int categoryNum) {
+        Category selectedCategory = null;
+        if (categoryNum == 0)
+            return getServices();
+
+        if (categoryNum > 0) {
+            selectedCategory = CategoryList.sharedCategoryList().getCategories().get(categoryNum - 1);
+        }
+
+        List<Service> services = new ArrayList<Service>();
+        User user = MyApplication.getLocalUser();
+
+        for (User friend : user.getFriends()) {
+            for (Service s: friend.getServices()) {
+                if (s.getCategory().equals(selectedCategory))
+                    services.add(s);
+            }
+        }
+        return services;
+    }
+
+    public List<Service> getServices (int categoryNum, String query) {
+        if(query.equals(""))
+            return getServices(categoryNum);
+
+        List<Service> services = ServiceManager.sharedManager().findServicesOfFriends(query);
+
+        if (categoryNum > 0) {
+            Category selectedCategory = null;
+            selectedCategory = CategoryList.sharedCategoryList().getCategories().get(categoryNum - 1);
+
+            for (Service s: services) {
+                if (!s.getCategory().equals(selectedCategory))
+                    services.remove(s);
+            }
+        }
+
+        return services;
     }
 
     public List<String> getCategoryNames() {
@@ -50,22 +86,23 @@ public class BrowseController {
 
     public List<Service> selectCategory(int position) {
         Category selectedCategory = null;
+        if (position == 0)
+            return getServices();
         if (position > 0) {
             selectedCategory = CategoryList.sharedCategoryList().getCategories().get(position - 1);
         }
-
         List<Service> services = new ArrayList<Service>();
         User user = MyApplication.getLocalUser();
 
         for (User friend : user.getFriends()) {
             for (Service s: friend.getServices()) {
-                if (s.getCategory() == selectedCategory)
+                if (s.getCategory().equals(selectedCategory))
                     services.add(s);
             }
         }
-
         return services;
     }
+
 
 
 
