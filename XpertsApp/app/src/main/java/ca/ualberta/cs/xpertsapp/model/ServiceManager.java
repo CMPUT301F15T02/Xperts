@@ -72,8 +72,9 @@ public class ServiceManager implements IObserver {
 	}
 
 	void removeService(Service service) {
-		service.addObserver(this);
 		this.services.remove(service.getID());
+		service.removeObserver(this);
+		IOManager.sharedManager().deleteData(Constants.serverServiceExtension()+service.getID());
 	}
 
 	/**
