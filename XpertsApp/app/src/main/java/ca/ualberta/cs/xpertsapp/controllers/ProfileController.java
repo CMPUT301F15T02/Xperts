@@ -15,7 +15,12 @@ public class ProfileController {
     //should probably be an exception
     public User addFriend(String email){
         User user = MyApplication.getLocalUser();
-        User friend = UserManager.sharedManager().getUser(email);
+        User friend;
+        try {
+            friend = UserManager.sharedManager().getUser(email);
+        } catch (RuntimeException e) {
+            return null;
+        }
         if (friend == null) {
             return null;
         }

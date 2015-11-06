@@ -23,5 +23,6 @@
     <string name="string_email">email</string>
     <string name="btn_login_text">LOGIN</string>
     <string name="btn_logout_text">Logout</string>
+    <string name="title_activity_friend_service_details">FriendServiceDetailsActivity</string>
 </resources>
 
