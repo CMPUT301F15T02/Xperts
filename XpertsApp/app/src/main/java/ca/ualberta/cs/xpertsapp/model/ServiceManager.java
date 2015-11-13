@@ -15,6 +15,7 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
 /**
  * Manages services
@@ -59,9 +60,10 @@ public class ServiceManager implements IObserver {
 		return new ArrayList<Service>(this.services.values());
 	}
 
-	void addService(Service service) {
+	public void addService(Service service) {
 		service.addObserver(this);
 		this.services.put(service.getID(), service);
+		this.notify(service);
 	}
 
 	/**
@@ -130,6 +132,10 @@ public class ServiceManager implements IObserver {
 	@Override
 	public void notify(IObservable observable) {
 		// TODO:
-		IOManager.sharedManager().storeData(observable, Constants.serverServiceExtension() + ((Service) observable).getID());
+		Constants.refreshSync = true;
+		if (Constants.isOnline) {
+			System.out.println("added service " + ((Service) observable).getName());
+			IOManager.sharedManager().storeData(observable, Constants.serverServiceExtension() + ((Service) observable).getID());
+		}
 	}
 }

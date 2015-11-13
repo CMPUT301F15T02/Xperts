@@ -14,6 +14,7 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
 /**
  * Manages the loaded users to allow circular references without getting stuck in a loading loop
@@ -132,6 +133,10 @@ public class UserManager implements IObserver {
 	@Override
 	public void notify(IObservable observable) {
 		// TODO:
-		IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
+		Constants.refreshSync = true;
+		if (Constants.isOnline) {
+			System.out.println("added user " + ((User) observable).getEmail());
+			IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
+		}
 	}
 }

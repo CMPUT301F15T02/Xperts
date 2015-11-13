@@ -14,6 +14,7 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
 /**
  * Manages loaded trades to prevent circular loading
@@ -100,6 +101,9 @@ public class TradeManager implements IObserver {
 	@Override
 	public void notify(IObservable observable) {
 		// TODO:
-		IOManager.sharedManager().storeData(observable, Constants.serverTradeExtension() + ((Trade) observable).getID());
+		Constants.refreshSync = true;
+		if (Constants.isOnline) {
+			IOManager.sharedManager().storeData(observable, Constants.serverTradeExtension() + ((Trade) observable).getID());
+		}
 	}
 }

@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
@@ -30,6 +31,22 @@ import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 public class IOManager {
 	// When writing to the server, we need to sleep to make sure the server can update before we fetch
 	private static final int sleepTime = 500;
+
+	private List<User> users = new ArrayList<User>();
+	private List<Service> services = new ArrayList<Service>();
+	private List<Trade> trades = new ArrayList<Trade>();
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public List<Service> getServices() {
+		return services;
+	}
+
+	public List<Trade> getTrades() {
+		return trades;
+	}
 
 	/**
 	 * Does Network Requests Asynchronously
@@ -46,9 +63,41 @@ public class IOManager {
 			}
 			return response;
 		}
+	}
 
+	/**
+	 * Push changes of local user
+	 */
+	public void pushToServer() {
+		new Thread(new Runnable() {
+			User user = MyApplication.getLocalUser();
 
+			@Override
+			public void run() {
+				IOManager.sharedManager().storeData(user, Constants.serverUserExtension() + user.getEmail());
+				for (Service service : user.getServices()) {
+					IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
+				}
 
+				for (Trade trade : user.getTrades()) {
+					IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
+				}
+			}
+		}).start();
+	}
+
+	/**
+	 * Cache users, services, trades
+	 */
+	public void pullFromServer() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				users = UserManager.sharedManager().findUsers("*");
+				services = ServiceManager.sharedManager().findServices("*");
+				//trades = TradeManager.sharedManager().findTrades("*");
+			}
+		}).start();
 	}
 
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
@@ -77,7 +126,7 @@ public class IOManager {
 			addRequest.setHeader("Accept", "application/json");
 			HttpResponse response = new AsyncRequest().execute(addRequest).get();
 			String status = response.getStatusLine().toString();
-			Log.i("STATUS: ", status);
+			Log.i("STORE STATUS: ", status);
 //			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
 		} catch (Exception e) {
 			// TODO:
@@ -93,7 +142,7 @@ public class IOManager {
 			deleteRequest.setHeader("Accept", "application/json");
 			HttpResponse response = new AsyncRequest().execute(deleteRequest).get();
 			String status = response.getStatusLine().toString();
-//			Log.i("Status: ", status);
+			Log.i("Delete Status: ", status);
 //			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
 		} catch (Exception e) {
 			// TODO:

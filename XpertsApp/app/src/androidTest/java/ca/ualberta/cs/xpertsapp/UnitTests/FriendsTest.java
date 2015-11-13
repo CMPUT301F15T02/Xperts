@@ -150,7 +150,6 @@ public class FriendsTest extends TestCase {
 
 	public void test_02_04_01() {
 		// Test set contact info and location
-
 		MainActivity mActivity = (MainActivity) getActivity();
 		final Button buttonMyProfile = mActivity.getMyProfileBtn();
 

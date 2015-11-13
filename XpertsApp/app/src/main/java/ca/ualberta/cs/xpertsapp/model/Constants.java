@@ -8,6 +8,9 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
  * A class with only static methods which are used to retrieve constant strings
  */
 public class Constants {
+	public static boolean isOnline = false;
+	public static boolean refreshSync = true;
+
 	public static boolean allowOnline = true;
 	public static boolean allowPhotoDownload = true;
 	public static boolean isTest = false;

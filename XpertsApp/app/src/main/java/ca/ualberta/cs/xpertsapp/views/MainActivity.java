@@ -1,19 +1,32 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.net.InetAddress;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.model.Constants;
+import ca.ualberta.cs.xpertsapp.model.IOManager;
 
 public class MainActivity extends Activity {
+
+    // The BroadcastReceiver that tracks network connectivity changes.
+    private NetworkReceiver receiver = new NetworkReceiver();
+
     private Button MyProfileBtn;
     public Button getMyProfileBtn() {return MyProfileBtn;};
     private Button BrowseBtn;
@@ -32,6 +45,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Register BroadcastReceiver to track connection changes.
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkReceiver();
+        this.registerReceiver(receiver, filter);
 
         MyApplication.loginCheck();
 
@@ -73,8 +90,46 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (receiver != null) {
+            this.unregisterReceiver(receiver);
+        }
+    }
 
+    /**
+     *
+     * This BroadcastReceiver intercepts the android.net.ConnectivityManager.CONNECTIVITY_ACTION,
+     * which indicates a connection change.
+     *
+     * Code from http://developer.android.com/training/basics/network-ops/managing.html
+     *
+     */
+    public class NetworkReceiver extends BroadcastReceiver {
 
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+            // Checks to see if the device has a connection.
+            if (networkInfo != null) {
+                Constants.isOnline = true;
+                //Toast.makeText(context, "Internet connection detected", Toast.LENGTH_SHORT).show();
+
+                // Whether the sync should be refreshed
+                if (Constants.refreshSync) {
+                    IOManager.sharedManager().pushToServer();
+                    IOManager.sharedManager().pullFromServer();
+                }
+                Constants.refreshSync = false;
+            } else {
+                Constants.isOnline = false;
+                //Toast.makeText(context, "Internet connection lost", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
 
     @Override
