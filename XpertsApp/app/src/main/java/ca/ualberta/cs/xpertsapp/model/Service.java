@@ -10,7 +10,7 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 
 /**
- * Represents a Service
+ * Represents a Service. Has an id, name, description, category, pictures, shareable boolean and owner.
  */
 public class Service implements IObservable {
 	private String id;
@@ -21,6 +21,11 @@ public class Service implements IObservable {
 	private boolean shareable = true;
 	private String owner = "";
 
+	/**
+	 * Constructor
+	 * @param id random uuid
+	 * @param owner String of owner
+	 */
 	protected Service(String id, String owner) {
 		this.id = id;
 		this.owner = owner;
