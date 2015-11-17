@@ -23,6 +23,11 @@ import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
+/**
+ * This activity displays the profile of a friend.
+ * It is called from the FriendsActivity.
+ */
+
 public class FriendProfileActivity extends Activity {
     private ProfileController pc = new ProfileController();
     private User friend;
@@ -36,6 +41,11 @@ public class FriendProfileActivity extends Activity {
     private FriendProfileActivity activity = this;
 
 
+    /**
+     * Sets the services button to start FriendServiceDetailsActivity.
+     * Sets the textViews to display the user's details.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +84,9 @@ public class FriendProfileActivity extends Activity {
         return true;
     }
 
+    /**
+     * Updates the serviceListAdapter with new services.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -83,6 +96,9 @@ public class FriendProfileActivity extends Activity {
         services.setAdapter(serviceListAdapter);
     }
 
+    /**
+     * Updates the serviceListAdapter with new services.
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -108,7 +124,7 @@ public class FriendProfileActivity extends Activity {
     }
 
     /**
-     * The method that's called when press delete button
+     * The method that's called when the delete button is pressed.
      */
     public void deleteFriend(View view) {
         //delete the friend

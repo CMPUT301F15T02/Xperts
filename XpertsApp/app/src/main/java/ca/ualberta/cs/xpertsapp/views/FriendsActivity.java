@@ -26,6 +26,10 @@ import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
+/**
+ * This activity displays the list of friends a user has and
+ * allows a user to search for and add friends.
+ */
 public class FriendsActivity extends Activity {
     private ListView friendsList;
     private FriendsActivity activity = this;
@@ -54,6 +58,10 @@ public class FriendsActivity extends Activity {
         return friendsListAdapter;
     }
 
+    /**
+     * This sets the click listener for the friends list.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +87,9 @@ public class FriendsActivity extends Activity {
         return true;
     }
 
+    /**
+     * This initializes the friendListAdapter to display the friends a user has.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -105,10 +116,12 @@ public class FriendsActivity extends Activity {
     }
 
     /**
-     * The method that's called when add friend button pushed
+     * The method that's called when add friend button pushed.
+     * It doesn't allow a user to add themselves or to add a friend again.
      * Used:
      * http://stackoverflow.com/questions/18799216/how-to-make-a-edittext-box-in-a-dialog accessed November 3, 2015
      * for assistance in setting up an AlertDialog
+     * @param view
      */
     public void addFriend(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

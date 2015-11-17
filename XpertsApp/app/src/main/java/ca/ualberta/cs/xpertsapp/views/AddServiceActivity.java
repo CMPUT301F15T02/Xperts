@@ -19,6 +19,10 @@ import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
+/**
+ * Activity that allows the user to add or edit a service.
+ * It is called from ViewProfileActivity or ServiceDetailsActivity.
+ */
 public class AddServiceActivity extends Activity {
 	private AddServiceController asc = new AddServiceController();
 	private Spinner Categories;
@@ -35,6 +39,10 @@ public class AddServiceActivity extends Activity {
 	public Button getSaveButton() {return SaveButton;}
 	private Intent intent;
 
+	/**
+	 * This sets the title, description, category and private widgets.
+	 * @param savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -69,6 +77,10 @@ public class AddServiceActivity extends Activity {
 		super.onStart();
 	}
 
+	/**
+	 * This is called when the save button is pressed. It adds a service or edits a service if it already exists.
+	 * @param view
+	 */
 	public void saveService(View view) {
 		int index =  getCategories().getSelectedItemPosition();
 		Category category = CL.getCategories().get(index);

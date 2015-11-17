@@ -12,12 +12,20 @@ import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.AlertDialogManager;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
+/**
+ * Activity that allows user to create or login to their account by entering their email.
+ */
 public class LoginActivity extends Activity {
 
     EditText emailField;
     Button loginButton;
     AlertDialogManager alert = new AlertDialogManager();
 
+    /**
+     * Sets the click listener for the login button. It will call isValidEmail to check if the email
+     * entered is valid.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +52,12 @@ public class LoginActivity extends Activity {
             }
         });
     }
-    
+
+    /**
+     * Checks if email entered is valid by checking if it matches an email pattern.
+     * @param email
+     * @return true if valid email, false if invalid
+     */
     private static boolean isValidEmail(CharSequence email) {
         return email != null && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }

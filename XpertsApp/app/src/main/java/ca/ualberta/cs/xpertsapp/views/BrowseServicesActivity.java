@@ -41,6 +41,10 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
     private String currentQuery;
 
 
+    /**
+     * Sets the category spinner and search view in the options menu.
+     * @param menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_browse_services, menu);
@@ -86,6 +90,10 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Sets the serviceAdapter and categoryAdapter.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -17,6 +17,9 @@ import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.EditProfileController;
 import ca.ualberta.cs.xpertsapp.model.User;
 
+/**
+ * This activity allows the user to edit their profile. It is called from ViewProfileActivity.
+ */
 public class EditProfileActivity extends Activity {
 
     private EditText email;
@@ -49,6 +52,10 @@ public class EditProfileActivity extends Activity {
 
     private EditProfileController epc = new EditProfileController();
 
+    /**
+     * This fills in the text fields with the user's info.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +111,11 @@ public class EditProfileActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This is called when the save button is pushed. It edits the user's profile by
+     * calling editProfile with the new values.
+     * @param view
+     */
     public void saveProfile(View view) {
         epc.editProfile(email,name,location);
 
