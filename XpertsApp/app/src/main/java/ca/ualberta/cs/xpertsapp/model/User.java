@@ -14,7 +14,6 @@ public class User implements IObservable {
 	private String email;
 	private String name = "";
 	private String location = "";
-	/** what is this????????? */
 	private Boolean downloadsEnabled = false;
 	private List<String> friends = new ArrayList<String>();
 	private List<String> services = new ArrayList<String>();
@@ -74,10 +73,16 @@ public class User implements IObservable {
 		this.notifyObservers();
 	}
 
+	/**
+	 * @return  true if downloads are enabled, false otherwise
+	 */
 	public Boolean getDownloadsEnabled() {
 		return downloadsEnabled;
 	}
 
+	/**
+	 * @param  downloadsEnabled boolean representing if downloads are enabled
+	 */
 	public void setDownloadsEnabled(Boolean downloadsEnabled) {
 		this.downloadsEnabled = downloadsEnabled;
 	}
@@ -182,12 +187,21 @@ public class User implements IObservable {
 		this.notifyObservers();
 	}
 
+	/**
+	 * @return whether the active user has permission to edit this user. returns true for tests.
+	 */
 	protected boolean isEditable() {
 		return Constants.isTest || this == MyApplication.getLocalUser();
 	}
+
+	/**
+	 * @return if the active user is this user
+	 */
 	protected boolean isOwner(){return this == MyApplication.getLocalUser();}
 
-	// IObservable
+	/**
+	 * @see IObservable
+	 */
 	private transient List<IObserver> observers = new ArrayList<IObserver>();
 
 	@Override
