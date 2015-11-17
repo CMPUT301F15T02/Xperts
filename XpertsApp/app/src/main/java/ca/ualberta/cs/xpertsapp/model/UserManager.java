@@ -125,14 +125,16 @@ public class UserManager implements IObserver {
 	private UserManager() {
 	}
 
+	/** Get the singleton instance */
 	public static UserManager sharedManager() {
 		return UserManager.instance;
 	}
 
 	// IObserver
+	/** Gets notified when an observable being observed is observer and changes */
 	@Override
 	public void notify(IObservable observable) {
-		// TODO:
+		// TODO: store locally
 		Constants.refreshSync = true;
 		if (Constants.isOnline) {
 			System.out.println("added user " + ((User) observable).getEmail());

@@ -6,7 +6,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
-import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
@@ -43,7 +42,7 @@ public class ConfigTest extends ActivityInstrumentationTestCase2 {
 		String newContact = "2390832490838042";
 		user.setName(newName);
 		user.setLocation(newLocation);
-		user.setToggleEnabled(false);
+		user.setDownloadsEnabled(false);
 
 		// Toggle switch
 		mActivity.runOnUiThread(new Runnable() {
@@ -62,9 +61,9 @@ public class ConfigTest extends ActivityInstrumentationTestCase2 {
 		//UserManager.sharedManager().clearCache();
 		user = MyApplication.getLocalUser();
 		if (toggleEnabled) {
-			assertFalse(user.getToggleEnabled());
+			assertFalse(user.getDownloadsEnabled());
 		} else {
-			assertTrue(user.getToggleEnabled());
+			assertTrue(user.getDownloadsEnabled());
 		}
 	}
 

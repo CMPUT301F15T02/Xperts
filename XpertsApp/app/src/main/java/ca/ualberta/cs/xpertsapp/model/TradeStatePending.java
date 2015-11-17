@@ -8,6 +8,7 @@ import ca.ualberta.cs.xpertsapp.interfaces.TradeState;
  */
 public class TradeStatePending implements TradeState {
 	@Override
+	/** accept the trade */
 	public void accept(Trade context) {
 		if (MyApplication.getLocalUser() != context.getBorrower()) throw new AssertionError();
 		context.setState(new TradeStateAccepted());
@@ -15,6 +16,7 @@ public class TradeStatePending implements TradeState {
 	}
 
 	@Override
+	/** decline the trade */
 	public void decline(Trade context) {
 		if (MyApplication.getLocalUser() != context.getBorrower()) throw new AssertionError();
 		context.setState(new TradeStateDeclined());
@@ -22,6 +24,7 @@ public class TradeStatePending implements TradeState {
 	}
 
 	@Override
+	/** cancel the trade */
 	public void cancel(Trade context) {
 		if (MyApplication.getLocalUser() != context.getOwner()) throw new AssertionError();
 		context.setState(new TradeStateCancelled());

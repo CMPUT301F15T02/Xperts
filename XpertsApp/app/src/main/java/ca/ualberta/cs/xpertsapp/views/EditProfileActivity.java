@@ -68,15 +68,15 @@ public class EditProfileActivity extends Activity {
         // Listen on toggle switch
 
         switch1 = (Switch) findViewById(R.id.switch1);
-        switch1.setChecked(user.getToggleEnabled());
+        switch1.setChecked(user.getDownloadsEnabled());
 
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton button, boolean isChecked) {
                 if (switch1.isChecked()) {
-                    user.setToggleEnabled(true);
+                    user.setDownloadsEnabled(true);
                 } else {
-                    user.setToggleEnabled(false);
+                    user.setDownloadsEnabled(false);
                 }
             }
         });
