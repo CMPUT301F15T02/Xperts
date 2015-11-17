@@ -50,6 +50,7 @@ public class IOManager {
 
 	/**
 	 * Does Network Requests Asynchronously
+	 * this is where the magic happens
 	 */
 	private class AsyncRequest extends AsyncTask<HttpUriRequest, Void, HttpResponse> {
 
@@ -105,7 +106,7 @@ public class IOManager {
 		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
 		String loadedData;
 		try {
-			HttpResponse response = new AsyncRequest().execute(httpGet).get();
+			HttpResponse response = new AsyncRequest().execute(httpGet).get(); // Tier 1
 			loadedData = convertStreamToString(response.getEntity().getContent());
 		} catch (Exception e) {
 			// TODO: load localyl
@@ -124,7 +125,7 @@ public class IOManager {
 			HttpPost addRequest = new HttpPost(Constants.serverBaseURL() + meta);
 			addRequest.setEntity(new StringEntity((new Gson()).toJson(data)));
 			addRequest.setHeader("Accept", "application/json");
-			HttpResponse response = new AsyncRequest().execute(addRequest).get();
+			HttpResponse response = new AsyncRequest().execute(addRequest).get(); // Tier 1
 			String status = response.getStatusLine().toString();
 			Log.i("STORE STATUS: ", status);
 //			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
@@ -140,7 +141,7 @@ public class IOManager {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpDelete deleteRequest = new HttpDelete(Constants.serverBaseURL() + meta);
 			deleteRequest.setHeader("Accept", "application/json");
-			HttpResponse response = new AsyncRequest().execute(deleteRequest).get();
+			HttpResponse response = new AsyncRequest().execute(deleteRequest).get(); // Tier 1
 			String status = response.getStatusLine().toString();
 			Log.i("Delete Status: ", status);
 //			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
@@ -156,7 +157,7 @@ public class IOManager {
 		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + searchMeta);
 		String loadedData;
 		try {
-			HttpResponse response = new AsyncRequest().execute(httpGet).get();
+			HttpResponse response = new AsyncRequest().execute(httpGet).get(); // Tier 1
 			loadedData = convertStreamToString(response.getEntity().getContent());
 		} catch (Exception e) {
 			// TODO:
