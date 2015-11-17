@@ -23,16 +23,22 @@ import ca.ualberta.cs.xpertsapp.model.User;
  */
 public class ServiceListAdapter extends BaseAdapter {
 
+
     public List<Service> serviceData;
     private Context context;
     private LayoutInflater inflater;
 
+    /**
+     * Contructor for this Adapter
+     * @param services The list of services to create an adapter for
+     */
     public ServiceListAdapter(Context context, List<Service> services) {
         this.context = context;
         this.serviceData = services;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
+
     /**
      * Updates the ListView with a new list of services
      * @param services the new list of services
@@ -43,21 +49,38 @@ public class ServiceListAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
+    /**
+     * @return  Number of services in the adapter
+     */
     @Override
     public int getCount() {
         return serviceData.size();
     }
 
+    /**
+     * @param position of a service in the adapter
+     * @return The service belonging to the ListItem in the given position
+     */
     @Override
     public Service getItem(int position) {
         return serviceData.get(position);
     }
 
+    /**
+     * @param position of an item
+     * @return the position of the item
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     * Lays out the view of a list item representing a service.
+     * @param position of an item in the service list
+     * @param serviceListItem to layout the view for
+     * @return the view for the given service list item
+     */
     @Override
     public View getView(int position, View serviceListItem, ViewGroup parent) {
         View vi = serviceListItem;

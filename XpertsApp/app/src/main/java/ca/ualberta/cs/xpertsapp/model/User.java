@@ -8,13 +8,17 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 
 /**
- * Represents a user
+ * This class is used to internally represent a real life user of this digital application for android.  Some functions run in O(1) time (maybe) and others do not.
+ * Pl0x only have one instance of user representing a person at any given time.
+ *
+ * Use the user managers to manage users plz. DO NOT CREATE USERS ON YOUR OWN
  */
 public class User implements IObservable {
 	private String email;
 	private String name = "";
 	private String location = "";
 	private Boolean downloadsEnabled = false;
+
 	private List<String> friends = new ArrayList<String>();
 	private List<String> services = new ArrayList<String>();
 	private List<String> trades = new ArrayList<String>();
@@ -88,6 +92,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * get a list of friends that I have (spoiler: its probably zero )
 	 * @return A List of the users friends
 	 */
 	public List<User> getFriends() {
@@ -99,6 +104,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * add a friends
 	 * @param friend The new friend
 	 */
 	public void addFriend(User friend) {
@@ -108,6 +114,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * remove a friend from the user
 	 * @param friend The old friend
 	 */
 	public void removeFriend(User friend) {
@@ -117,6 +124,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * get a list of services the user owns
 	 * @return A List of services
 	 */
 	public List<Service> getServices() {
@@ -131,6 +139,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * add a new service to the user
 	 * @param service The new service
 	 */
 	public void addService(Service service) {
@@ -145,6 +154,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * remove service form the use. the service still exists, but is unlinked
 	 * @param service the old service
 	 */
 	public void removeService(Service service) {
@@ -156,6 +166,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * gets the number of trades that are 'new' (the user has to take an action)
 	 * @return the number of trades proposed to the user that are waiting for their review
 	 */
 	public int newTrades() {
@@ -169,6 +180,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * get a list of trades that the user takes part in
 	 * @return A List of trades that user has participated in
 	 */
 	public List<Trade> getTrades() {
@@ -180,6 +192,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * add a new trade that the user will maybe be participating in.
 	 * @param trade The new trade
 	 */
 	void addTrade(Trade trade) {
@@ -205,6 +218,7 @@ public class User implements IObservable {
 	private transient List<IObserver> observers = new ArrayList<IObserver>();
 
 	@Override
+	/** add an observer to the pool*/
 	public void addObserver(IObserver observer) {
 		if (this.observers == null) {
 			this.observers = new ArrayList<IObserver>();
@@ -213,11 +227,13 @@ public class User implements IObservable {
 	}
 
 	@Override
+	/** remove the obsever from the pool */
 	public void removeObserver(IObserver observer) {
 		this.observers.remove(observer);
 	}
 
 	@Override
+	/** get told when something changes */
 	public void notifyObservers() {
 		for (IObserver observer : this.observers) {
 			observer.notify(this);
