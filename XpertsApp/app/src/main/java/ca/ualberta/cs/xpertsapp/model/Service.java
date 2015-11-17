@@ -31,6 +31,7 @@ public class Service implements IObservable {
 	}
 
 	/**
+	 * set the email of the owner
 	 * @param email of the owner
 	 */
 	public void setOwner(String email) {

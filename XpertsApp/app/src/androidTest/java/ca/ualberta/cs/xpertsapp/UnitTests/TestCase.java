@@ -30,6 +30,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		super.setUp();
 
 		Constants.isTest = true;
+		Constants.isOnline = true;
 	}
 
 	@Override

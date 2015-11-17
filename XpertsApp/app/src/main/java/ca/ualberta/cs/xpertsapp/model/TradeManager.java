@@ -93,12 +93,14 @@ public class TradeManager implements IObserver {
 	private TradeManager() {
 	}
 
+	/** get the instance of the singleton */
 	public static TradeManager sharedManager() {
 		return TradeManager.instance;
 	}
 
 	// IObserver
 	@Override
+	/** gets notified by things its watching */
 	public void notify(IObservable observable) {
 		// TODO:
 		Constants.refreshSync = true;

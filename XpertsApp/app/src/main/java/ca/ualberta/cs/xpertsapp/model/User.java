@@ -14,7 +14,8 @@ public class User implements IObservable {
 	private String email;
 	private String name = "";
 	private String location = "";
-	private Boolean toggleEnabled = false;
+	/** what is this????????? */
+	private Boolean downloadsEnabled = false;
 	private List<String> friends = new ArrayList<String>();
 	private List<String> services = new ArrayList<String>();
 	private List<String> trades = new ArrayList<String>();
@@ -28,6 +29,7 @@ public class User implements IObservable {
 	// Get/Set
 
 	/**
+	 * Get the email
 	 * @return The Users email
 	 */
 	public String getEmail() {
@@ -35,6 +37,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * get the name of the user
 	 * @return the users name
 	 */
 	public String getName() {
@@ -44,6 +47,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * set the name of the user
 	 * @param name the users new name
 	 */
 	public void setName(String name) {
@@ -53,6 +57,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * get the location of the user
 	 * @return the users location
 	 */
 	public String getLocation() {
@@ -60,6 +65,7 @@ public class User implements IObservable {
 	}
 
 	/**
+	 * set the location of the user
 	 * @param location the users new location
 	 */
 	public void setLocation(String location) {
@@ -68,12 +74,12 @@ public class User implements IObservable {
 		this.notifyObservers();
 	}
 
-	public Boolean getToggleEnabled() {
-		return toggleEnabled;
+	public Boolean getDownloadsEnabled() {
+		return downloadsEnabled;
 	}
 
-	public void setToggleEnabled(Boolean toggleEnabled) {
-		this.toggleEnabled = toggleEnabled;
+	public void setDownloadsEnabled(Boolean downloadsEnabled) {
+		this.downloadsEnabled = downloadsEnabled;
 	}
 
 	/**

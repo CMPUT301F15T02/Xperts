@@ -124,12 +124,14 @@ public class ServiceManager implements IObserver {
 	private ServiceManager() {
 	}
 
+	/** Returns the singleton instance of the Service manager */
 	public static ServiceManager sharedManager() {
 		return ServiceManager.instance;
 	}
 
 	/// IObserver
 	@Override
+	/** gets notified by observables */
 	public void notify(IObservable observable) {
 		// TODO:
 		Constants.refreshSync = true;
