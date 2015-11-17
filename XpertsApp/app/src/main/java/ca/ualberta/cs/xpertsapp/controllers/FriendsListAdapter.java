@@ -15,6 +15,10 @@ import ca.ualberta.cs.xpertsapp.model.User;
 /**
  * Adapter to build ListView of friends.
  */
+
+/**
+ * This is a Adapter to display friends in  a listview.
+ */
 public class FriendsListAdapter extends BaseAdapter {
     public List<User> friendData;
     private Context context;
