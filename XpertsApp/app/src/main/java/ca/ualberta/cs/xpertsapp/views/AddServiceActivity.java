@@ -86,7 +86,7 @@ public class AddServiceActivity extends Activity {
 		Category category = CL.getCategories().get(index);
 		if (intent.getStringExtra(Constants.IntentServiceName) == null){
 			try {
-				asc.addService(getTheTitle(), getDescription(), category, getPrivate(), getCL());
+				asc.addService(getTheTitle(), getDescription(), category, getPrivate());
 			}
 			catch (RuntimeException e){
 				Toast.makeText(getApplicationContext(), "Runtime error",
@@ -95,7 +95,7 @@ public class AddServiceActivity extends Activity {
 		}
 		else{
 			try{
-				asc.editService(getTheTitle(), getDescription(), category, getPrivate(), getCL(),intent.getStringExtra(Constants.IntentServiceName));
+				asc.editService(getTheTitle(), getDescription(), category, getPrivate(),intent.getStringExtra(Constants.IntentServiceName));
 			}
 			catch (RuntimeException e){
 				Toast.makeText(getApplicationContext(), "Runtime error",
