@@ -7,6 +7,9 @@ import android.view.MenuItem;
 
 import ca.ualberta.cs.xpertsapp.R;
 
+/**
+ * Activity to handle trades. Not finished yet. It is called from MainActivity.
+ */
 public class TradeListActivity extends Activity {
 
     @Override

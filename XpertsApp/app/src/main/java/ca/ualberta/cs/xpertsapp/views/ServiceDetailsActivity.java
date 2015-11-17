@@ -15,7 +15,9 @@ import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
-
+/**
+ * Activity that displays the details of a service. It is called in ViewProfileActivity.
+ */
 public class ServiceDetailsActivity extends Activity {
 	private AddServiceController asc = new AddServiceController();
 	private TextView theTitle;
@@ -30,6 +32,11 @@ public class ServiceDetailsActivity extends Activity {
 	public Button getEditButton() {return editButton;}
 	private Intent intent;
 
+	/**
+	 * Sets up the title, public, category, description TextViews and the edit button.
+	 * Calls method Notified.
+	 * @param savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +59,11 @@ public class ServiceDetailsActivity extends Activity {
 		Notified();
 
  	}
+
+	/**
+	 * Used in onCreate().
+	 * Sets the text views with the service information.
+	 */
 	public void Notified(){
 		String Service_id = intent.getStringExtra(Constants.IntentServiceName);
 		Service service = ServiceManager.sharedManager().getService(Service_id);
@@ -85,6 +97,12 @@ public class ServiceDetailsActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Handles action bar item clicks. The options are delete_service or edit_service.
+	 * delete_service starts ViewProfileActivity.
+	 * edit_service starts AddServiceActivity.
+	 * @param item A MenuItem
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will

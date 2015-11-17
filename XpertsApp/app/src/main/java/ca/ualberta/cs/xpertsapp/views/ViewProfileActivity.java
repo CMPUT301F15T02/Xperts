@@ -24,6 +24,10 @@ import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.User;
 
+/**
+ * Activity that allows user to view their profile. It is called from MainActivity.
+ * From here a user can add services, edit their profile, or view their services.
+ */
 public class ViewProfileActivity extends Activity {
     private Button editProfile;
     public Button getEditProfile() {return editProfile;};
@@ -50,6 +54,9 @@ public class ViewProfileActivity extends Activity {
         return location;
     }
 
+    /**
+     * Sets text for user's name, email and location and the click listener for ListView of services.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +90,9 @@ public class ViewProfileActivity extends Activity {
         return true;
     }
 
+    /**
+     * Sets serviceList adapter to display user's services.
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -107,11 +117,17 @@ public class ViewProfileActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Method called when edit button is pushed. It starts EditProfileActivity.
+     */
     public void editProfile(View view) {
         Intent intent = new Intent(this, EditProfileActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Method called when add service button is pushed. It starts AddServiceActivity.
+     */
     public void addService(View view) {
         Intent intent = new Intent(this, AddServiceActivity.class);
         startActivity(intent);

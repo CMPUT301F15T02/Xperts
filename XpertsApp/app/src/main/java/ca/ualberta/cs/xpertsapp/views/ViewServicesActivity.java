@@ -5,7 +5,9 @@ import android.os.Bundle;
 
 import ca.ualberta.cs.xpertsapp.R;
 
-
+/**
+ * Not currently being used.
+ */
 public class ViewServicesActivity extends Activity {
 
 	@Override
