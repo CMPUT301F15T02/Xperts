@@ -26,6 +26,7 @@ import ca.ualberta.cs.xpertsapp.model.Service;
 
 /**
  * Activity to browse friends services and filter by category and/or textual query
+ *
  */
 public class BrowseServicesActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
@@ -43,7 +44,6 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
 
     /**
      * Sets the category spinner and search view in the options menu.
-     * @param menu
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,20 +60,31 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         return true;
     }
 
-
+    /**
+     * @return the searvice search search input view
+     */
     public SearchView getSearchView() {
         return searchView;
     }
 
+    /**
+     * @return List of current services attached to the activity
+     */
     public List<Service> getServices() {
         return services;
     }
 
+    /**
+     * @return ListView of current services attached to the activity
+     */
     public ListView getServiceListView() {
         return serviceList;
 
     }
 
+    /**
+     * @return CategorySpinner view to select a category of services
+     */
     public Spinner getCategorySpinner() {
         return categorySpinner;
     }
@@ -92,7 +103,6 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
 
     /**
      * Sets the serviceAdapter and categoryAdapter.
-     * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +125,9 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         serviceList.setAdapter(serviceAdapter);
     }
 
+    /**
+     * Handle any new incoming intents. Used to handle user searches
+     */
     @Override
     protected void onNewIntent(Intent intent) {
         handleIntent(intent);
@@ -141,13 +154,16 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
 
     /**
      * On item selected listener for category spinner. Updates list of services when category changed
+     * @param pos The index of the category selected in the spinner
      */
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         currentCategory = pos;
         updateListView();
     }
-
+    /**
+     * Executes in place of {@link #onItemSelected(AdapterView, View, int, long)} when no category selected
+     */
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
