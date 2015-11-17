@@ -13,7 +13,7 @@ import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.model.User;
 
 /**
- * Created by kmbaker on 11/5/15.
+ * Adapter to build ListView of friends.
  */
 
 /**
@@ -24,24 +24,40 @@ public class FriendsListAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
 
+    /**
+     * Constructor
+     * @param context Context from the activity
+     * @param friends List of users
+     */
     public FriendsListAdapter(Context context, List<User> friends) {
         this.context = context;
         this.friendData = friends;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
+    /**
+     * clears and re-adds friends list to adapter.
+     * @param friends List of users
+     */
     public void updateFriendsList(List<User> friends) {
         friendData.clear();
         friendData.addAll(friends);
         this.notifyDataSetChanged();
     }
 
+    /**
+     * @return size of friends list
+     */
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
         return friendData.size();
     }
 
+    /**
+     * @param position position in listView
+     * @return The User at position in the list
+     */
     @Override
     public User getItem(int position) {
         // TODO Auto-generated method stub
@@ -54,6 +70,13 @@ public class FriendsListAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * Sets the textViews with the user's name and email.
+     * @param position position in list
+     * @param friendListItem View
+     * @param parent ViewGroup
+     * @return View that is friendListItem
+     */
     @Override
     public View getView(int position, View friendListItem, ViewGroup parent) {
         // TODO Auto-generated method stub

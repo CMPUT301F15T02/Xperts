@@ -10,7 +10,9 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.interfaces.TradeState;
 
 /**
- * Represents a Trade between two Users
+ * Represents a Trade of services between two Users. A trade will consist of 1 item from the owner's inventory
+ * and 0 or more items from the borrower's inventory.
+ * Counter trades are initialized with the items from the original trade and isCounterOffer is set to true.
  */
 public class Trade implements IObservable {
 	private String id;
@@ -26,6 +28,13 @@ public class Trade implements IObservable {
 
 	// Constructor
 
+	/**
+	 * Constructor for a trade. These parameters must not be null.
+	 * @param id
+	 * @param isCounterOffer true if is a counter offer, false if not.
+	 * @param owner String identifying the owner of the service the borrower wants.
+	 * @param borrower String identifying the borrower of the service.
+	 */
 	Trade(String id, boolean isCounterOffer, String owner, String borrower) {
 		this.id = id;
 		this.isCounterOffer = isCounterOffer;
@@ -43,21 +52,21 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * @return The User who created the trade
+	 * @return The User who will accept or decline the trade.
 	 */
 	public User getOwner() {
 		return UserManager.sharedManager().getUser(this.owner);
 	}
 
 	/**
-	 * @return The User who is receiving the trade
+	 * @return The User who created the trade
 	 */
 	public User getBorrower() {
 		return UserManager.sharedManager().getUser(this.borrower);
 	}
 
 	/**
-	 * @return The list of services the Initiator wants to trade away
+	 * @return The services the borrower wants
 	 */
 	public List<Service> getOwnerServices() {
 		// TODO:
@@ -65,7 +74,8 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * @param service The service to trade away
+	 * Adds a service that the borrower wants.
+	 * @param service The owner's service the borrower wants.
 	 */
 	public void addOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
@@ -75,7 +85,8 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * @param service The service not to trade
+	 * Removes an owner's service from the trade.
+	 * @param service The owner's service to remove from the trade
 	 */
 	public void removeOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
@@ -85,7 +96,7 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * @return The services the initiator wants
+	 * @return The services the initiator offers
 	 */
 	public List<Service> getBorrowerServices() {
 		// TODO:
@@ -93,7 +104,8 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * @param service The service to add
+	 * Adds a service the borrower will trade.
+	 * @param service The borrower's service to add to the trade.
 	 */
 	public void addBorrowerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
@@ -103,7 +115,8 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * @param service The service to remove
+	 * Removes the borrower's service from the trade.
+	 * @param service The borrower's service to remove
 	 */
 	public void removeBorrowerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
@@ -127,13 +140,14 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * @return if the trade is a counter
+	 * @return if the trade is a counter trade
 	 */
 	public boolean isCounterOffer() {
 		return this.isCounterOffer;
 	}
 
 	/**
+	 * The states could be accepted, cancelled, declined, or pending.
 	 * @return the state of the trade
 	 */
 	public TradeState getState() {
@@ -144,12 +158,15 @@ public class Trade implements IObservable {
 		this.state = state;
 	}
 
+	/**
+	 * @return true if editable, false if not
+	 */
 	private boolean isEditable() {
 		return this.getOwner() == MyApplication.getLocalUser();
 	}
 
 	/**
-	 * The user wants to accept the incoming trade
+	 * The user wants to accept the incoming trade. The state is changed.
 	 */
 	public void accept() {
 		if (this.state == null) {
@@ -169,7 +186,7 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * The user wants to decline the incoming trade
+	 * The user wants to decline the incoming trade. The state is changed.
 	 */
 	public void decline() {
 		if (this.state == null) {
@@ -189,7 +206,7 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * The sender wants to cancel the outgoing trade
+	 * The sender wants to cancel the outgoing trade. The state is changed.
 	 */
 	public void cancel() {
 		if (this.state == null) {
@@ -209,7 +226,8 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * The trade parameters are set up and the trade should be sent
+	 * The trade parameters are set up and the trade should be sent. This notifies observers
+	 * @see #notifyObservers()
 	 */
 	public void commit() {
 		UserManager.sharedManager().getUser(this.owner).addTrade(this);
