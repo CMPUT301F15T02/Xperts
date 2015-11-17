@@ -24,10 +24,10 @@ public class AddServiceController {
 
     /**
      * This function takes the inputted information and converts it into a Service object in the database
-     * @param title this is the string value of the Service's title, there are no character restrictions. Ex "Write JavaDoc"
-     * @param description this is a description of the service that a user writes to better describe the service to other users. Ex "I write excellent JavaDoc for java projects. This includes descriptions and examples of different variables and functions. And I don't forget about runime."
+     * @param title this is the string value of the Service's title passed as a EditText from the addService activity, there are no character restrictions. Ex "Write JavaDoc"
+     * @param description this is a description of the service passed as an EditText from the addService activity that a user writes to better describe the service to other users. Ex "I write excellent JavaDoc for java projects. This includes descriptions and examples of different variables and functions. And I don't forget about runime."
      * @param category is the category of a Service. Category objects are used by User's to better focus their search results.Category objects have a string title. Ex "Computers"
-     * @param isPrivate is the setting that allows a user to keep a Service unsearchable by other Users. For example User Bob might want to keep his "Write JavaDoc" private because it is highly in demand. This way he isn't spammed by 301 students but is still able to offer his service to other User's who have a service that he wants.
+     * @param isPrivate is the setting that allows a user to keep a Service unsearchable by other Users. It is passed as a CheckBox from the addService activity. For example User Bob might want to keep his "Write JavaDoc" private because it is highly in demand. This way he isn't spammed by 301 students but is still able to offer his service to other User's who have a service that he wants.
      */
      public void addService(EditText title, EditText description, Category category,CheckBox isPrivate) {
 
