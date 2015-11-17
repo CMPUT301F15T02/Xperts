@@ -21,7 +21,9 @@ import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
 /**
  * Activity that allows the user to add or edit a service.
- * It is called from ViewProfileActivity or ServiceDetailsActivity.
+ * It is called from either:
+ * @see ViewProfileActivity
+ * @see ServiceDetailsActivity
  */
 public class AddServiceActivity extends Activity {
 	private AddServiceController asc = new AddServiceController();
@@ -41,7 +43,6 @@ public class AddServiceActivity extends Activity {
 
 	/**
 	 * This sets the title, description, category and private widgets.
-	 * @param savedInstanceState
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,7 @@ public class AddServiceActivity extends Activity {
 
 	/**
 	 * This is called when the save button is pressed. It adds a service or edits a service if it already exists.
-	 * @param view
+	 * @param view the save button
 	 */
 	public void saveService(View view) {
 		int index =  getCategories().getSelectedItemPosition();

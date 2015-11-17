@@ -26,7 +26,8 @@ import ca.ualberta.cs.xpertsapp.model.Service;
 
 /**
  * Activity to browse friends services and filter by category and/or textual query
- *
+ * It is called from:
+ * @see MainActivity
  */
 public class BrowseServicesActivity extends Activity implements AdapterView.OnItemSelectedListener {
 
