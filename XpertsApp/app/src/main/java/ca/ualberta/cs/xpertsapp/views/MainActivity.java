@@ -22,6 +22,9 @@ import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
 
+/**
+ * Activity that displays the menu with My Profile, Browse Services, Trades, and Friends buttons.
+ */
 public class MainActivity extends Activity {
 
     // The BroadcastReceiver that tracks network connectivity changes.
@@ -40,6 +43,10 @@ public class MainActivity extends Activity {
         return LogoutBtn;
     }
 
+    /**
+     * Sets the onClickListeners for My Profile, Browse Services, Trades, and Friends buttons.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

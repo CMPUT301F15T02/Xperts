@@ -12,6 +12,10 @@ import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
+/**
+ * This displays the info about a friend's service.
+ * It is called from FriendProfileActivity.
+ */
 public class FriendServiceDetailsActivity extends Activity {
     private TextView theTitle;
     public TextView getTheTitle() {return theTitle;}
@@ -23,6 +27,10 @@ public class FriendServiceDetailsActivity extends Activity {
     private FriendServiceDetailsActivity activity = this;
     private Service service;
 
+    /**
+     * This sets all the TextViews with the service information.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -222,6 +222,7 @@ public class Trade implements IObservable {
 	private transient List<IObserver> observers = new ArrayList<IObserver>();
 
 	@Override
+	/** Add an observer */
 	public void addObserver(IObserver observer) {
 		if (this.observers == null) {
 			this.observers = new ArrayList<IObserver>();
@@ -229,11 +230,13 @@ public class Trade implements IObservable {
 		this.observers.add(observer);
 	}
 
+	/** Remove the observer */
 	public void removeObserver(IObserver observer) {
 		this.observers.remove(observer);
 	}
 
 	@Override
+	/** notify all observers of a change */
 	public void notifyObservers() {
 		this.lastUpdatedDate = new Date();
 		for (IObserver observer : this.observers) {
