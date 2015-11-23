@@ -1,0 +1,10 @@
+ca.ualberta.cs.xpertsapp
+ca.ualberta.cs.xpertsapp.BrowseTests
+ca.ualberta.cs.xpertsapp.FriendTests
+ca.ualberta.cs.xpertsapp.InventoryTests
+ca.ualberta.cs.xpertsapp.UnitTests
+ca.ualberta.cs.xpertsapp.controllers
+ca.ualberta.cs.xpertsapp.interfaces
+ca.ualberta.cs.xpertsapp.model
+ca.ualberta.cs.xpertsapp.model.es
+ca.ualberta.cs.xpertsapp.views

@@ -1,108 +1,140 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
+import java.net.InetAddress;
+
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
-import ca.ualberta.cs.xpertsapp.datamanagers.IOManager;
-import ca.ualberta.cs.xpertsapp.models.User;
-import ca.ualberta.cs.xpertsapp.models.Users;
+import ca.ualberta.cs.xpertsapp.model.Constants;
+import ca.ualberta.cs.xpertsapp.model.IOManager;
 
+/**
+ * Activity that displays the menu with My Profile, Browse Services, Trades, and Friends buttons.
+ */
 public class MainActivity extends Activity {
 
-    private IOManager ioManager;
-    private User user;
-    private Users users;
+    // The BroadcastReceiver that tracks network connectivity changes.
+    private NetworkReceiver receiver = new NetworkReceiver();
 
+    private Button MyProfileBtn;
+    public Button getMyProfileBtn() {return MyProfileBtn;};
+    private Button BrowseBtn;
+    public Button getBrowseBtn() {return BrowseBtn;};
+    private Button TradesBtn;
+    public Button getTradesBtn() {return TradesBtn;};
+    private Button FriendsBtn;
+    public Button getFriendsBtn() {return FriendsBtn;};
+    private Button LogoutBtn;
+    public Button getLogoutBtn() {
+        return LogoutBtn;
+    }
+
+    /**
+     * Sets the onClickListeners for My Profile, Browse Services, Trades, and Friends buttons.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
-    // Button's function
-    public void viewServices(View view) {
-        // Create test user
-        /*User user = new User();
-        user.setEmail("hindle");
-        Users users = new Users();
-        usersController = new UsersController(users);
-        Thread thread = new AddThread(user);
-        thread.start();*/
+        // Register BroadcastReceiver to track connection changes.
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new NetworkReceiver();
+        this.registerReceiver(receiver, filter);
 
-        // Search user by my email
-        ioManager = new IOManager(this);
-        // Need change email here
-        Thread thread = new GetThread("hindle");
-        thread.start();
+        MyApplication.loginCheck();
+
+        MyProfileBtn = (Button) findViewById(R.id.MyProfileBtn);
+        MyProfileBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ViewProfileActivity.class));
+            }
+        });
+
+        BrowseBtn = (Button) findViewById(R.id.BrowseBtn);
+        BrowseBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BrowseServicesActivity.class));
+            }
+        });
+
+        TradesBtn = (Button) findViewById(R.id.TradesBtn);
+        TradesBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TradeListActivity.class));
+            }
+        });
+
+        FriendsBtn = (Button) findViewById(R.id.FriendsBtn);
+        FriendsBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, FriendsActivity.class));
+            }
+        });
+
+        LogoutBtn = (Button) findViewById(R.id.btn_logout);
+        LogoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyApplication.logout();
+            }
+        });
+
     }
 
-    // Button's function
-    public void viewProfile(View view) {
-        Intent intent = new Intent(MainActivity.this, ViewProfileActivity.class);
-        startActivity(intent);
-    }
-
-    // If you need list all users
-    class SearchThread extends Thread {
-        private String search;
-
-        public SearchThread(String search) {
-            this.search = search;
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (receiver != null) {
+            this.unregisterReceiver(receiver);
         }
+    }
+
+    /**
+     *
+     * This BroadcastReceiver intercepts the android.net.ConnectivityManager.CONNECTIVITY_ACTION,
+     * which indicates a connection change.
+     *
+     * Code from http://developer.android.com/training/basics/network-ops/managing.html
+     *
+     */
+    public class NetworkReceiver extends BroadcastReceiver {
 
         @Override
-        public void run() {
-            users.clear();
-            users.addAll(ioManager.searchUsers(search, null));
-        }
-    }
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-    // Search only a specific user
-    class GetThread extends Thread {
-        private String email;
+            // Checks to see if the device has a connection.
+            if (networkInfo != null) {
+                Constants.isOnline = true;
+                //Toast.makeText(context, "Internet connection detected", Toast.LENGTH_SHORT).show();
 
-        public GetThread(String email) {
-            this.email = email;
-        }
-
-        @Override
-        public void run() {
-            user = ioManager.getUser(email);
-
-            runOnUiThread(doFinishGet);
-        }
-    }
-
-    private Runnable doFinishGet = new Runnable() {
-        public void run() {
-            Intent intent = new Intent(MainActivity.this, ViewServicesActivity.class);
-            intent.putExtra("EMAIL", user.getEmail());
-            startActivity(intent);
-        }
-    };
-
-    // If you need add a user
-    class AddThread extends Thread {
-        private User user;
-
-        public AddThread(User user) {
-            this.user = user;
-        }
-
-        @Override
-        public void run() {
-            ioManager.addUserToServer(user);
-
-            // Give some time to get updated info
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                // Whether the sync should be refreshed
+                if (Constants.refreshSync) {
+                    IOManager.sharedManager().pushToServer();
+                    IOManager.sharedManager().pullFromServer();
+                }
+                Constants.refreshSync = false;
+            } else {
+                Constants.isOnline = false;
+                //Toast.makeText(context, "Internet connection lost", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -1,84 +1,110 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import ca.ualberta.cs.xpertsapp.R;
-import ca.ualberta.cs.xpertsapp.datamanagers.IOManager;
-import ca.ualberta.cs.xpertsapp.models.Service;
-import ca.ualberta.cs.xpertsapp.models.User;
-import ca.ualberta.cs.xpertsapp.models.Users;
+import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
+import ca.ualberta.cs.xpertsapp.model.CategoryList;
+import ca.ualberta.cs.xpertsapp.model.Category;
+import ca.ualberta.cs.xpertsapp.model.Constants;
+import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 
-
+/**
+ * Activity that allows the user to add or edit a service.
+ * It is called from either:
+ * @see ViewProfileActivity
+ * @see ServiceDetailsActivity
+ */
 public class AddServiceActivity extends Activity {
+	private AddServiceController asc = new AddServiceController();
+	private Spinner Categories;
+	public Spinner getCategories() {return Categories;}
+	private EditText Title;
+	public EditText getTheTitle() {return Title;}
+	private EditText Description;
+	public EditText getDescription() {return Description;}
+	private CheckBox Private;
+	public CheckBox getPrivate() {return Private;}
+	private CategoryList CL;
+	public CategoryList getCL() {return CL;}
+	private Button SaveButton;
+	public Button getSaveButton() {return SaveButton;}
+	private Intent intent;
 
-	private IOManager ioManager;
-	private Users users;
-	private User user;
-
+	/**
+	 * This sets the title, description, category and private widgets.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_service);
 
-		users = new Users();
-		ioManager = new IOManager(this);
+		setContentView(R.layout.activity_add_service);
+		SaveButton = (Button) findViewById(R.id.saveButon);
+		Categories = (Spinner) findViewById(R.id.spinner);
+		Title = (EditText) findViewById(R.id.editText);
+		Description = (EditText) findViewById(R.id.editText2);
+		Private = (CheckBox) findViewById(R.id.checkBox);
+		CL = CategoryList.sharedCategoryList();
+		//Category.setAdapter();
+		ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item,getCL().getCategories());
+		Categories.setAdapter(categoryArrayAdapter);
+		intent = getIntent();
+		if (intent.getStringExtra(Constants.IntentServiceName)!= null){
+			String Service_id = intent.getStringExtra(Constants.IntentServiceName);
+			Service service = ServiceManager.sharedManager().getService(Service_id);
+			Title.setText(service.getName());
+			Description.setText(service.getDescription());
+			if (service.isShareable()){
+				Private.setChecked(false);
+			} else {
+				Private.setChecked(true);
+			}
+		}
+
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-
-		user = (User) getIntent().getExtras().getSerializable("User");
 	}
 
-	// Button's function
+	/**
+	 * This is called when the save button is pressed. It adds a service or edits a service if it already exists.
+	 * @param view the save button
+	 */
 	public void saveService(View view) {
-		TextView id = (TextView) findViewById(R.id.detailsIdText);
-		TextView name = (TextView) findViewById(R.id.detailsNameText);
-		TextView description = (TextView) findViewById(R.id.detailsDescriptionText);
-
-		Service newService = new Service();
-		newService.setId(id.getText().toString());
-		newService.setName(name.getText().toString());
-		newService.setDescription(description.getText().toString());
-
-		user.addService(newService);
-		// Execute the thread to write to server
-		Thread thread = new AddThread(user);
-		thread.start();
-	}
-
-	class AddThread extends Thread {
-		private User user;
-
-		public AddThread(User user) {
-			this.user = user;
-		}
-
-		@Override
-		public void run() {
-			ioManager.addUserToServer(user);
-
-			// Give some time to get updated info
+		int index =  getCategories().getSelectedItemPosition();
+		Category category = CL.getCategories().get(index);
+		if (intent.getStringExtra(Constants.IntentServiceName) == null){
 			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				asc.addService(getTheTitle(), getDescription(), category, getPrivate());
 			}
-
-			runOnUiThread(doFinishAdd);
+			catch (RuntimeException e){
+				Toast.makeText(getApplicationContext(), "Runtime error",
+						Toast.LENGTH_LONG).show();
+			}
 		}
+		else{
+			try{
+				asc.editService(getTheTitle(), getDescription(), category, getPrivate(),intent.getStringExtra(Constants.IntentServiceName));
+			}
+			catch (RuntimeException e){
+				Toast.makeText(getApplicationContext(), "Runtime error",
+						Toast.LENGTH_LONG).show();
+			}
+		}
+		setResult(RESULT_OK);
+		Intent intent = new Intent(this, ViewProfileActivity.class);
+		startActivity(intent);
 	}
-
-	// Thread that close the activity after finishing add
-	private Runnable doFinishAdd = new Runnable() {
-		public void run() {
-			finish();
-		}
-	};
 }
-
-
