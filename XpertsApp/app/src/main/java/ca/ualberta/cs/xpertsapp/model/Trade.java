@@ -16,11 +16,12 @@ import ca.ualberta.cs.xpertsapp.interfaces.TradeState;
  */
 public class Trade implements IObservable {
 	private String id;
+	private String description;
 	private boolean isCounterOffer;
 	private String owner;
 	private String borrower;
-	private List<String> borrowerServices = new ArrayList<String>();
-	private List<String> ownerServices = new ArrayList<String>();
+	private List<Service> borrowerServices = new ArrayList<Service>();
+	private List<Service> ownerServices = new ArrayList<Service>();
 	private final Date proposedDate = new Date();
 	private Date lastUpdatedDate = new Date();
 	int status = 0;
@@ -31,6 +32,7 @@ public class Trade implements IObservable {
 	/**
 	 * Constructor for a trade. These parameters must not be null.
 	 * @param id
+	 * @param description
 	 * @param isCounterOffer true if is a counter offer, false if not.
 	 * @param owner String identifying the owner of the service the borrower wants.
 	 * @param borrower String identifying the borrower of the service.
@@ -43,6 +45,17 @@ public class Trade implements IObservable {
 	}
 
 	// Get/Set
+
+	/*
+	** Set a trade's name
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return description;
+	}
 
 	/**
 	 * @return The Trades id
@@ -80,7 +93,7 @@ public class Trade implements IObservable {
 	public void addOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
 		if (service.getOwner() != this.getOwner()) throw new AssertionError();
-		this.ownerServices.add(service.getID());
+		this.ownerServices.add(service);
 		this.notifyObservers();
 	}
 
@@ -91,7 +104,7 @@ public class Trade implements IObservable {
 	public void removeOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
 		if (service.getOwner() != this.getOwner()) throw new AssertionError();
-		this.ownerServices.remove(service.getID());
+		this.ownerServices.remove(service);
 		this.notifyObservers();
 	}
 
@@ -110,7 +123,7 @@ public class Trade implements IObservable {
 	public void addBorrowerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
 		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
-		this.borrowerServices.add(service.getID());
+		this.borrowerServices.add(service);
 		this.notifyObservers();
 	}
 
@@ -121,7 +134,7 @@ public class Trade implements IObservable {
 	public void removeBorrowerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
 		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
-		this.borrowerServices.remove(service.getID());
+		this.borrowerServices.remove(service);
 		this.notifyObservers();
 	}
 

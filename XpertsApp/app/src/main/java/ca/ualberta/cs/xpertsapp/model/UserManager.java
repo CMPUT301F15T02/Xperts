@@ -25,6 +25,15 @@ public class UserManager implements IObserver {
 	// Get/Set
 
 	/**
+	 * @param users Cache users
+	 */
+	public void setUsers(List<User> users) {
+		for (User user : users) {
+			this.users.put(user.getEmail(), user);
+		}
+	}
+
+	/**
 	 * @return A List of loaded Users
 	 */
 	public List<User> getUsers() {
@@ -52,23 +61,7 @@ public class UserManager implements IObserver {
 		if (this.users.containsKey(email)) {
 			return this.users.get(email);
 		}
-		// TODO: Only return a user if one existed
-		try {
-			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + email, new TypeToken<SearchHit<User>>() {
-			});
-			if (loadedUser.isFound()) {
-				this.addUser(loadedUser.getSource());
-				return loadedUser.getSource();
-			} else {
-				return null;
-			}
-		} catch (JsonIOException e) {
-			throw new RuntimeException(e);
-		} catch (JsonSyntaxException e) {
-			throw new RuntimeException(e);
-		} catch (IllegalStateException e) {
-			throw new RuntimeException(e);
-		}
+		return null;
 	}
 
 	/**
@@ -103,9 +96,11 @@ public class UserManager implements IObserver {
 	public List<User> findUsers(String meta) {
 		List<SearchHit<User>> found = IOManager.sharedManager().searchData(Constants.serverUserExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<User>>() {
 		});
+
 		List<User> users = new ArrayList<User>();
 		for (SearchHit<User> user : found) {
-			users.add(this.getUser(user.getSource().getEmail()));
+			//users.add(this.getUser(user.getSource().getEmail()));
+			users.add(user.getSource());
 		}
 		return users;
 	}
@@ -135,10 +130,11 @@ public class UserManager implements IObserver {
 	@Override
 	public void notify(IObservable observable) {
 		// TODO: store locally
-		Constants.refreshSync = true;
 		if (Constants.isOnline) {
-			System.out.println("added user " + ((User) observable).getEmail());
 			IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
+			Constants.refreshSync = false;
+		} else {
+			Constants.refreshSync = true;
 		}
 	}
 }

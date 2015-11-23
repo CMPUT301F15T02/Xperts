@@ -19,9 +19,9 @@ public class User implements IObservable {
 	private String location = "";
 	private Boolean downloadsEnabled = false;
 
-	private List<String> friends = new ArrayList<String>();
-	private List<String> services = new ArrayList<String>();
-	private List<String> trades = new ArrayList<String>();
+	private List<User> friends = new ArrayList<User>();
+	private List<Service> services = new ArrayList<Service>();
+	private List<Trade> trades = new ArrayList<Trade>();
 
 	// Constructor
 
@@ -97,8 +97,8 @@ public class User implements IObservable {
 	 */
 	public List<User> getFriends() {
 		List<User> friends = new ArrayList<User>();
-		for (String friendID : this.friends) {
-			friends.add(UserManager.sharedManager().getUser(friendID));
+		for (User friend : this.friends) {
+			friends.add(UserManager.sharedManager().getUser(friend.getEmail()));
 		}
 		return friends;
 	}
@@ -109,7 +109,7 @@ public class User implements IObservable {
 	 */
 	public void addFriend(User friend) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.friends.add(friend.getEmail());
+		this.friends.add(friend);
 		this.notifyObservers();
 	}
 
@@ -119,8 +119,23 @@ public class User implements IObservable {
 	 */
 	public void removeFriend(User friend) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.friends.remove(friend.getEmail());
+		this.friends.remove(friend);
 		this.notifyObservers();
+	}
+
+	/*
+	** For cache local user's services
+	 */
+	public void setMyServices(List<Service> onlineServices) {
+		List<Service> offlineServices = new ArrayList<Service>();
+
+		for (Service s : onlineServices) {
+			//if (this.isOwner(s) || s.isShareable()) {
+			if (this.isOwner(s)) {
+				offlineServices.add(s);
+			}
+		}
+		this.services = offlineServices;
 	}
 
 	/**
@@ -128,13 +143,6 @@ public class User implements IObservable {
 	 * @return A List of services
 	 */
 	public List<Service> getServices() {
-		List<Service> services = new ArrayList<Service>();
-		for (String service : this.services) {
-			Service s = ServiceManager.sharedManager().getService(service);
-			if (this.isOwner() || s.isShareable()) {
-				services.add(s);
-			}
-		}
 		return services;
 	}
 
@@ -144,7 +152,7 @@ public class User implements IObservable {
 	 */
 	public void addService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.services.add(service.getID());
+		this.services.add(service);
 		if(!service.getOwner().equals(this)) {
 			service.setOwner(this.email);
 		}
@@ -179,15 +187,24 @@ public class User implements IObservable {
 		return count;
 	}
 
+	/*
+	** For cache local user's trades
+	 */
+	public void setMyTrades(List<Trade> onlineTrades) {
+		List<Trade> offlineTrades = new ArrayList<Trade>();
+
+		for (Trade t : onlineTrades) {
+			// TODO Need check here
+			offlineTrades.add(t);
+		}
+		this.trades = offlineTrades;
+	}
+
 	/**
 	 * get a list of trades that the user takes part in
 	 * @return A List of trades that user has participated in
 	 */
 	public List<Trade> getTrades() {
-		List<Trade> trades = new ArrayList<Trade>();
-		for (String trade : this.trades) {
-			trades.add(TradeManager.sharedManager().getTrade(trade));
-		}
 		return trades;
 	}
 
@@ -195,8 +212,10 @@ public class User implements IObservable {
 	 * add a new trade that the user will maybe be participating in.
 	 * @param trade The new trade
 	 */
-	void addTrade(Trade trade) {
-		this.trades.add(trade.getID());
+	public void addTrade(Trade trade) {
+		this.trades.add(trade);
+		TradeManager.sharedManager().addTrade(trade);
+		TradeManager.sharedManager().notify(trade);
 		this.notifyObservers();
 	}
 
@@ -210,7 +229,10 @@ public class User implements IObservable {
 	/**
 	 * @return if the active user is this user
 	 */
-	protected boolean isOwner(){return this == MyApplication.getLocalUser();}
+	protected boolean isOwner(Service s) {
+		//return this == MyApplication.getLocalUser();
+		return s.getOwner() == MyApplication.getLocalUser();
+	}
 
 	/**
 	 * @see IObservable

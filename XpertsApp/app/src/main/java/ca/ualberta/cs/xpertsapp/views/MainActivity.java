@@ -50,8 +50,16 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // First run requires internet, otherwise write local
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                IOManager.sharedManager().cacheAll();
+            }
+        }).start();
+
         setContentView(R.layout.activity_main);
-    }
 
         // Register BroadcastReceiver to track connection changes.
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -98,6 +106,7 @@ public class MainActivity extends Activity {
 
     }
 
+    // Remove broadcast receiver
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -128,8 +137,13 @@ public class MainActivity extends Activity {
 
                 // Whether the sync should be refreshed
                 if (Constants.refreshSync) {
-                    IOManager.sharedManager().pushToServer();
-                    IOManager.sharedManager().pullFromServer();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            IOManager.sharedManager().pushMe();
+                            IOManager.sharedManager().cacheAll();
+                        }
+                    }).start();
                 }
                 Constants.refreshSync = false;
             } else {

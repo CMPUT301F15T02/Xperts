@@ -22,7 +22,17 @@ import ca.ualberta.cs.xpertsapp.views.MainActivity;
  */
 public class ServiceManager implements IObserver {
 
+	// Shall not modify the key after having inserted it in the map
 	private Map<String, Service> services = new HashMap<String, Service>();
+
+	/**
+	 * For cache services
+	 */
+	public void setServices(List<Service> services) {
+		for (Service service : services) {
+			this.services.put(service.getID(), service);
+		}
+	}
 
 	/**
 	 * @param id the id of the service to look for
@@ -33,24 +43,7 @@ public class ServiceManager implements IObserver {
 		if (this.services.containsKey(id)) {
 			return this.services.get(id);
 		}
-		// TODO:
-		try {
-			SearchHit<Service> loadedService = IOManager.sharedManager().fetchData(Constants.serverServiceExtension() + id, new TypeToken<SearchHit<Service>>() {
-			});
-			if (loadedService.isFound()) {
-				this.addService(loadedService.getSource());
-				return loadedService.getSource();
-			} else {
-				// TODO:
-				return null;
-			}
-		} catch (JsonIOException e) {
-			throw new RuntimeException(e);
-		} catch (JsonSyntaxException e) {
-			throw new RuntimeException(e);
-		} catch (IllegalStateException e) {
-			throw new RuntimeException(e);
-		}
+		return null;
 	}
 
 	/**
@@ -95,7 +88,8 @@ public class ServiceManager implements IObserver {
 		});
 		List<Service> services = new ArrayList<Service>();
 		for (SearchHit<Service> service : found) {
-			services.add(this.getService(service.getSource().getID()));
+			//services.add(this.getService(service.getSource().getID()));
+			services.add(service.getSource());
 		}
 		return services;
 	}
@@ -133,11 +127,11 @@ public class ServiceManager implements IObserver {
 	@Override
 	/** gets notified by observables */
 	public void notify(IObservable observable) {
-		// TODO:
-		Constants.refreshSync = true;
 		if (Constants.isOnline) {
-			System.out.println("added service " + ((Service) observable).getName());
 			IOManager.sharedManager().storeData(observable, Constants.serverServiceExtension() + ((Service) observable).getID());
+			Constants.refreshSync = false;
+		} else {
+			Constants.refreshSync = true;
 		}
 	}
 }
