@@ -2,11 +2,15 @@ package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +31,20 @@ public class OfferTradeActivity extends Activity {
     private Service initialService;
     private ServiceManager serviceManager = ServiceManager.sharedManager();
     private ArrayList<Service> initialServiceList = new ArrayList<Service>();
+    private OfferTradeActivity activity = this;
+    private View colouredView;
+    private ArrayList<View> colouredItems = new ArrayList<View>();
 
+    /**
+     * used:
+     * http://stackoverflow.com/questions/2217753/changing-background-color-of-listview-items-on-android
+     * to help set background color on item selected. Answer from user Francisco Cabezas
+     * Oct. 4, 2011. Accessed November 27, 2015.
+     * http://stackoverflow.com/questions/14510346/nullpointerexception-when-clicking-listview-item
+     * to help with NullPointerException from setBackgroundColor, accessed November 27, 2015.
+     * Answer from user Leonidos, Jan. 24, 2013.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +60,27 @@ public class OfferTradeActivity extends Activity {
         //set list adapter to display list
         serviceRequestAdapter = new ServiceListAdapter(this,initialServiceList);
         requestServices.setAdapter(serviceRequestAdapter);
+
+        yourServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //set colour - add to colourItems
+                View v = parent.getChildAt(position);
+                if (colouredItems.contains(v)) {
+                    colouredItems.remove(v);
+                    view.setBackgroundColor(Color.WHITE);
+                }
+                else {
+                    colouredItems.add(v);
+                    //set colour
+                    float[] hsv = new float[3];
+                    hsv[0] = (float) 203;
+                    hsv[1] = (float) 0.1;
+                    hsv[2] = (float) 0.75;
+                    view.setBackgroundColor(Color.HSVToColor(hsv));
+                }
+            }
+        });
     }
 
     @Override
