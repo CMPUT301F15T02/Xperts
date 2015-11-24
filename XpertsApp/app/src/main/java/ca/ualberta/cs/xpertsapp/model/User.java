@@ -195,7 +195,7 @@ public class User implements IObservable {
 	 * add a new trade that the user will maybe be participating in.
 	 * @param trade The new trade
 	 */
-	void addTrade(Trade trade) {
+	public void addTrade(Trade trade) {
 		this.trades.add(trade.getID());
 		this.notifyObservers();
 	}

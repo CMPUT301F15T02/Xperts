@@ -34,7 +34,16 @@
         android:id="@+id/yourServiceList"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_below="@+id/addServiceText"
+        android:layout_above="@+id/sendTradeButton"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Trade"
+        android:id="@+id/sendTradeButton"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/addServiceText"/>
+        android:layout_centerHorizontal="true"
+        android:onClick="makeTrade"/>
 
 </RelativeLayout>

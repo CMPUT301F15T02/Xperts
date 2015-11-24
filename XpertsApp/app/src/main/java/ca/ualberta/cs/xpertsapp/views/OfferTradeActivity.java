@@ -17,8 +17,10 @@ import java.util.List;
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
+import ca.ualberta.cs.xpertsapp.controllers.TradeController;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
+import ca.ualberta.cs.xpertsapp.model.Trade;
 import ca.ualberta.cs.xpertsapp.model.User;
 
 public class OfferTradeActivity extends Activity {
@@ -32,8 +34,10 @@ public class OfferTradeActivity extends Activity {
     private ServiceManager serviceManager = ServiceManager.sharedManager();
     private ArrayList<Service> initialServiceList = new ArrayList<Service>();
     private OfferTradeActivity activity = this;
-    private View colouredView;
     private ArrayList<View> colouredItems = new ArrayList<View>();
+    private ArrayList<Service> ownerServices = new ArrayList<Service>();
+    private TradeController tradeController = new TradeController();
+
 
     /**
      * used:
@@ -69,6 +73,7 @@ public class OfferTradeActivity extends Activity {
                 if (colouredItems.contains(v)) {
                     colouredItems.remove(v);
                     view.setBackgroundColor(Color.WHITE);
+                    ownerServices.remove(serviceListAdapter.getItem(position));
                 }
                 else {
                     colouredItems.add(v);
@@ -78,6 +83,7 @@ public class OfferTradeActivity extends Activity {
                     hsv[1] = (float) 0.1;
                     hsv[2] = (float) 0.75;
                     view.setBackgroundColor(Color.HSVToColor(hsv));
+                    ownerServices.add(serviceListAdapter.getItem(position));
                 }
             }
         });
@@ -112,5 +118,19 @@ public class OfferTradeActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Called when Send Trade button is pushed. It creates a trade using a trade controller and
+     * starts the next activity, which is BrowseServicesActivity.
+     */
+    public void makeTrade(View view) {
+        //need to check that at least one service was selected - probably make toast to let user know
+        if (!ownerServices.isEmpty()) {
+            tradeController.createTrade(initialService.getOwner(), ownerServices);
+            //make a toast to say sent trade
+            //return to activity
+            finish();
+        }
     }
 }
