@@ -131,7 +131,7 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
         serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(activity, OfferTradeActivity.class);
+                Intent intent = new Intent(activity, BrowseServiceDetailsActivity.class);
                 intent.putExtra("INTENT_SERVICEID", serviceAdapter.getItem(position).getID());
                 startActivity(intent);
             }

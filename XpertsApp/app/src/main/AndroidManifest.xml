@@ -99,6 +99,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity" />
         </activity>
+        <activity
+            android:name=".views.BrowseServiceDetailsActivity"
+            android:label="@string/title_activity_browse_service_details"
+            android:parentActivityName=".views.BrowseServicesActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity" />
+        </activity>
     </application>
 
 </manifest>
