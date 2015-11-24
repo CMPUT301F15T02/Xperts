@@ -24,5 +24,6 @@
     <string name="btn_login_text">LOGIN</string>
     <string name="btn_logout_text">Logout</string>
     <string name="title_activity_friend_service_details">FriendServiceDetailsActivity</string>
+    <string name="title_activity_offer_trade">OfferTradeActivity</string>
 </resources>
 
