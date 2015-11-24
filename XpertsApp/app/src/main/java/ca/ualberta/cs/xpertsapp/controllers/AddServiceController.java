@@ -40,6 +40,22 @@ public class AddServiceController {
     }
 
     /**
+     * This function takes the inputted information and converts it into a Service object in the database
+     * @param title this is the string value of the Service's title passed as a EditText
+     * @param description this is a description of the service passed as an EditText
+     * @param category is the category of a Service.
+     */
+    public void cloneService(String title, String description, Category category) {
+
+        Service newService = ServiceManager.sharedManager().newService();
+        newService.setName(title);
+        newService.setDescription(description);
+        newService.setCategory(category);
+        newService.setShareable(Boolean.TRUE);
+        MyApplication.getLocalUser().addService(newService);
+    }
+
+    /**
      *This function takes the inputted information from the  {@link AddServiceActivity}  and converts it into a service object in the database
      * @param title see above
      * @param description "" ""
