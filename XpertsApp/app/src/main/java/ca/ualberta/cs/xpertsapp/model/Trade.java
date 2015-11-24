@@ -162,7 +162,7 @@ public class Trade implements IObservable {
 	 * @return true if editable, false if not
 	 */
 	private boolean isEditable() {
-		return this.getOwner() == MyApplication.getLocalUser();
+		return this.getBorrower() == MyApplication.getLocalUser();
 	}
 
 	/**

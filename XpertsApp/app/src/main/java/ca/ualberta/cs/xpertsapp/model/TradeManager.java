@@ -65,12 +65,12 @@ public class TradeManager implements IObserver {
 	}
 
 	/**
-	 * @param borrower  the borrower of the trade
+	 * @param owner  the owner of the service the borrower wants
 	 * @param isCounter if its a counter offer or not
 	 * @return an empty trade that should be modified then committed
 	 */
-	public Trade newTrade(User borrower, boolean isCounter) {
-		Trade trade = new Trade(UUID.randomUUID().toString(), isCounter, MyApplication.getLocalUser().getEmail(), borrower.getEmail());
+	public Trade newTrade(User owner, boolean isCounter) {
+		Trade trade = new Trade(UUID.randomUUID().toString(), isCounter, owner.getEmail(), MyApplication.getLocalUser().getEmail());
 		return trade;
 	}
 

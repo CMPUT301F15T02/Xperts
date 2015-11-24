@@ -35,7 +35,7 @@ public class OfferTradeActivity extends Activity {
     private ArrayList<Service> initialServiceList = new ArrayList<Service>();
     private OfferTradeActivity activity = this;
     private ArrayList<View> colouredItems = new ArrayList<View>();
-    private ArrayList<Service> ownerServices = new ArrayList<Service>();
+    private ArrayList<Service> borrowerServices = new ArrayList<Service>();
     private TradeController tradeController = new TradeController();
 
 
@@ -73,7 +73,7 @@ public class OfferTradeActivity extends Activity {
                 if (colouredItems.contains(v)) {
                     colouredItems.remove(v);
                     view.setBackgroundColor(Color.WHITE);
-                    ownerServices.remove(serviceListAdapter.getItem(position));
+                    borrowerServices.remove(serviceListAdapter.getItem(position));
                 }
                 else {
                     colouredItems.add(v);
@@ -83,7 +83,7 @@ public class OfferTradeActivity extends Activity {
                     hsv[1] = (float) 0.1;
                     hsv[2] = (float) 0.75;
                     view.setBackgroundColor(Color.HSVToColor(hsv));
-                    ownerServices.add(serviceListAdapter.getItem(position));
+                    borrowerServices.add(serviceListAdapter.getItem(position));
                 }
             }
         });
@@ -126,8 +126,8 @@ public class OfferTradeActivity extends Activity {
      */
     public void makeTrade(View view) {
         //need to check that at least one service was selected - probably make toast to let user know
-        if (!ownerServices.isEmpty()) {
-            tradeController.createTrade(initialService.getOwner(), ownerServices);
+        if (!borrowerServices.isEmpty()) {
+            tradeController.createTrade(initialService.getOwner(), borrowerServices, initialService);
             //make a toast to say sent trade
             //return to activity
             finish();

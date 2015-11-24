@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import ca.ualberta.cs.xpertsapp.R;
@@ -79,6 +80,11 @@ public class FriendServiceDetailsActivity extends Activity {
         if (resultCode == RESULT_OK) {
 
         }
+    }
+    public void goToOfferTrade(View view) {
+        Intent intent = new Intent(this, OfferTradeActivity.class);
+        intent.putExtra("INTENT_SERVICEID", service.getID());
+        startActivity(intent);
     }
 
 }
