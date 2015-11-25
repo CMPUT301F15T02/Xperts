@@ -4,18 +4,49 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.TradeListAdapter;
+import ca.ualberta.cs.xpertsapp.model.Trade;
+import ca.ualberta.cs.xpertsapp.model.User;
+import ca.ualberta.cs.xpertsapp.model.UserManager;
 
 /**
  * Activity to handle trades. Not finished yet. It is called from MainActivity.
  */
 public class TradeListActivity extends Activity {
 
+    private TradeListAdapter tradeListAdapter;
+    private ListView tradesListView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_list);
+
+        //tradeListAdapter = new TradeListAdapter(MyApplication.getContext(), new ArrayList<Trade>());
+        tradesListView = (ListView) findViewById(R.id.tradeListView);
+        //tradesListView.setAdapter(tradeListAdapter);
+
+    }
+
+    /**
+     * This initializes the tradeListAdapter to display the trades a user has.
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        UserManager.sharedManager().clearCache();
+        User user = MyApplication.getLocalUser();
+        List<Trade> trades = user.getTrades();
+        tradeListAdapter = new TradeListAdapter(this,trades);
+        tradesListView.setAdapter(tradeListAdapter);
     }
 
     @Override

@@ -74,7 +74,7 @@ public class OfferTradeActivity extends Activity {
                 View v = parent.getChildAt(position);
                 if (colouredItems.contains(v)) {
                     colouredItems.remove(v);
-                    view.setBackgroundColor(Color.WHITE);
+                    view.setBackgroundColor(Color.TRANSPARENT);
                     borrowerServices.remove(serviceListAdapter.getItem(position));
                 }
                 else {
