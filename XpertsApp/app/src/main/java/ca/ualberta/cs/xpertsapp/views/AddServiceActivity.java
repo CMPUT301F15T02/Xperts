@@ -3,7 +3,9 @@ package ca.ualberta.cs.xpertsapp.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,6 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
@@ -43,6 +52,9 @@ public class AddServiceActivity extends Activity {
 	private Button SaveButton;
 	public Button getSaveButton() {return SaveButton;}
 	private Intent intent;
+	private int REQUEST_TAKE_PHOTO = 1;
+	private List<Bitmap> pictures;
+	public List<Bitmap> getPictures() {return pictures;}
 
 
 	/**
@@ -59,6 +71,7 @@ public class AddServiceActivity extends Activity {
 		Description = (EditText) findViewById(R.id.editText2);
 		Private = (CheckBox) findViewById(R.id.checkBox);
 		CL = CategoryList.sharedCategoryList();
+		pictures = new ArrayList<Bitmap>();
 		//Category.setAdapter();
 		ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item,getCL().getCategories());
 		Categories.setAdapter(categoryArrayAdapter);
@@ -91,7 +104,7 @@ public class AddServiceActivity extends Activity {
 		Category category = CL.getCategories().get(index);
 		if (intent.getStringExtra(Constants.IntentServiceName) == null){
 			try {
-				asc.addService(getTheTitle(), getDescription(), category, getPrivate());
+				asc.addService(getTheTitle(), getDescription(), category, getPrivate(),getPictures());
 			}
 			catch (RuntimeException e){
 				Toast.makeText(getApplicationContext(), "Runtime error",
@@ -100,7 +113,7 @@ public class AddServiceActivity extends Activity {
 		}
 		else{
 			try{
-				asc.editService(getTheTitle(), getDescription(), category, getPrivate(),intent.getStringExtra(Constants.IntentServiceName));
+				asc.editService(getTheTitle(), getDescription(), category, getPrivate(),intent.getStringExtra(Constants.IntentServiceName), getPictures());
 			}
 			catch (RuntimeException e){
 				Toast.makeText(getApplicationContext(), "Runtime error",
@@ -113,21 +126,65 @@ public class AddServiceActivity extends Activity {
 	}
 
 	/**
-	 * this doesnt work yet from android developers
-	 */
+	 * this does work from android developers
+	 *
+
+	String mCurrentPhotoPath;
+
+	private File createImageFile() throws IOException {
+		// Create an image file name
+		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		String imageFileName = "JPEG_" + timeStamp + "_";
+		File storageDir = Environment.getExternalStoragePublicDirectory(
+				Environment.DIRECTORY_PICTURES);
+		File image = File.createTempFile(
+				imageFileName,
+				".jpg",
+				storageDir
+		);
+
+		// Save a file: path for use with ACTION_VIEW intents
+		mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+		return image;
+	}
+
+	public void dispatchTakePictureIntent(View view) {
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		// Ensure that there's a camera activity to handle the intent
+		if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+			// Create the File where the photo should go
+			File photoFile = null;
+			try {
+				photoFile = createImageFile();
+			} catch (IOException ex) {
+				// Error occurred while creating the File
+			}
+			// Continue only if the File was successfully created
+			if (photoFile != null) {
+				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+						Uri.fromFile(photoFile));
+				getPictures().add(photoFile);
+				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+
+			}
+		}
+	}
+	*/
+
 	public void dispatchTakePictureIntent(View view) {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-			startActivityForResult(takePictureIntent, 1);
+			startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
 		}
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == 1 && resultCode == RESULT_OK) {
+		if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");
-			ImageView iv = new ImageView(this);
-			iv.setImageBitmap(imageBitmap);
+			getPictures().add(imageBitmap);
 		}
 	}
+
 }

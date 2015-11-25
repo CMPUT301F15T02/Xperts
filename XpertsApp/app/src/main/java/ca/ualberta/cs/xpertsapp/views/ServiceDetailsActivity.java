@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import ca.ualberta.cs.xpertsapp.R;
@@ -25,12 +26,14 @@ public class ServiceDetailsActivity extends Activity {
 	private TextView isPublic;
 	public TextView getIsPublic() {return isPublic;}
 	private TextView category;
-	public TextView getCategory() {return category;}
+	public TextView getCate() {return category;}
 	private TextView description;
-	public TextView getDescription() {return description;}
+	public TextView getDesc() {return description;}
 	private Button editButton;
 	public Button getEditButton() {return editButton;}
 	private Intent intent;
+	private ImageView image;
+	public ImageView getImage() {return image;}
 
 	/**
 	 * Sets up the title, public, category, description TextViews and the edit button.
@@ -46,6 +49,7 @@ public class ServiceDetailsActivity extends Activity {
 		category = (TextView) findViewById(R.id.categoryTextView);
 		description = (TextView) findViewById(R.id.longDescriptionTextView);
 		editButton = (Button) findViewById(R.id.editButton);
+		image = (ImageView) findViewById(R.id.imageView);
 		intent = getIntent();
 		String Service_id = intent.getStringExtra(Constants.IntentServiceName);
 		Service service = ServiceManager.sharedManager().getService(Service_id);
@@ -56,6 +60,11 @@ public class ServiceDetailsActivity extends Activity {
 			{isPublic.setText(Constants.notShareable);}
 		category.setText(service.getCategory().toString());
 		description.setText(service.getDescription());
+		if (!(service.getPictures().isEmpty())) {
+			if (service.getPictures().get(0) != null) {
+				image.setImageBitmap(service.getPictures().get(0));
+			}
+		}
 		Notified();
 
  	}
@@ -74,6 +83,11 @@ public class ServiceDetailsActivity extends Activity {
 		{isPublic.setText(Constants.notShareable);}
 		category.setText(service.getCategory().toString());
 		description.setText(service.getDescription());
+		if (!(service.getPictures().isEmpty())) {
+			if (service.getPictures().get(0) != null) {
+				image.setImageBitmap(service.getPictures().get(0));
+			}
+		}
 	}
 
 	@Override
