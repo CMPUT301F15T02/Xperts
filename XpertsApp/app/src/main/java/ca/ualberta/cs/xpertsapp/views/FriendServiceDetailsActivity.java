@@ -69,7 +69,7 @@ public class FriendServiceDetailsActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.clone_service) {
-            asc.cloneService(service.getName(), service.getDescription(), service.getCategory());
+            asc.cloneService(service.getName(), service.getDescription(), service.getCategory(), service.getPictures());
             return true;
         }
 
