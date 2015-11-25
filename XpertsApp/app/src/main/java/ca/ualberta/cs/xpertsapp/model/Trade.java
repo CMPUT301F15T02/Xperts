@@ -66,11 +66,17 @@ public class Trade implements IObservable {
 	}
 
 	/**
+	 * This should only ever have one item in the list for non counter trades
 	 * @return The services the borrower wants
 	 */
 	public List<Service> getOwnerServices() {
 		// TODO:
-		return null;
+		List<Service> services = new ArrayList<Service>();
+		ServiceManager sm = ServiceManager.sharedManager();
+		for (String id : ownerServices) {
+			services.add(sm.getService(id));
+		}
+		return services;
 	}
 
 	/**
@@ -100,7 +106,12 @@ public class Trade implements IObservable {
 	 */
 	public List<Service> getBorrowerServices() {
 		// TODO:
-		return null;
+		List<Service> services = new ArrayList<Service>();
+		ServiceManager sm = ServiceManager.sharedManager();
+		for (String id : borrowerServices) {
+			services.add(sm.getService(id));
+		}
+		return services;
 	}
 
 	/**

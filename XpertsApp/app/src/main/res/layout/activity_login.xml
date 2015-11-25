@@ -15,7 +15,8 @@
         android:id="@+id/login_email"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:hint="@string/string_email" />
+        android:hint="@string/string_email"
+        android:textColor="@color/lightGrey"/>
 
     <Button
         android:layout_width="150dp"
