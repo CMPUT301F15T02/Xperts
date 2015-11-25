@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="ca.ualberta.cs.xpertsapp.views.OutgoingOfferActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YOU SENT A REQUEST FOR"
+        android:id="@+id/constantText3"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OFFERED BY"
+        android:id="@+id/constantText4"
+        android:layout_below="@+id/borrowerServicesOut"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/grey"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Owner Name"
+        android:id="@+id/outgoingOwnerName"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/constantText4"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/blue" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="115dp"
+        android:id="@+id/borrowerServicesOut"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/constantText3"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IN EXCHANGE FOR:"
+        android:id="@+id/constantText5"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="250dp"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ownerServices"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/constantText5"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_above="@+id/cancelButton"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CANCEL TRADE"
+        android:id="@+id/cancelButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>

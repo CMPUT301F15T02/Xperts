@@ -4,11 +4,12 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     //should work for camera
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -112,6 +113,22 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity" />
+        </activity>
+        <activity
+            android:name=".views.IncomingOfferActivity"
+            android:label="@string/title_activity_incoming_offer"
+            android:parentActivityName=".views.TradeListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.TradeListActivity" />
+        </activity>
+        <activity
+            android:name=".views.OutgoingOfferActivity"
+            android:label="@string/title_activity_outgoing_offer"
+            android:parentActivityName=".views.TradeListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.TradeListActivity" />
         </activity>
     </application>
 
