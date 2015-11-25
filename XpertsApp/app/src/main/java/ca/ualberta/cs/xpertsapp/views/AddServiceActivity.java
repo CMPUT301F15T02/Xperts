@@ -2,12 +2,15 @@ package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ public class AddServiceActivity extends Activity {
 	private Button SaveButton;
 	public Button getSaveButton() {return SaveButton;}
 	private Intent intent;
+
 
 	/**
 	 * This sets the title, description, category and private widgets.
@@ -106,5 +110,24 @@ public class AddServiceActivity extends Activity {
 		setResult(RESULT_OK);
 		Intent intent = new Intent(this, ViewProfileActivity.class);
 		startActivity(intent);
+	}
+
+	/**
+	 * this doesnt work yet from android developers
+	 */
+	public void dispatchTakePictureIntent(View view) {
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+			startActivityForResult(takePictureIntent, 1);
+		}
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1 && resultCode == RESULT_OK) {
+			Bundle extras = data.getExtras();
+			Bitmap imageBitmap = (Bitmap) extras.get("data");
+			ImageView iv = new ImageView(this);
+			iv.setImageBitmap(imageBitmap);
+		}
 	}
 }
