@@ -1,6 +1,7 @@
 package ca.ualberta.cs.xpertsapp.controllers;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.model.Trade;
 
@@ -81,15 +83,29 @@ public class TradeListAdapter extends BaseAdapter {
         if (vi == null)
             vi = inflater.inflate(R.layout.trade_list_item, null);
         Trade trade = tradeData.get(position);
-        TextView borrower = (TextView) vi.findViewById(R.id.trade_list_borrower);
+        TextView user = (TextView) vi.findViewById(R.id.trade_list_borrower);
         TextView service = (TextView) vi.findViewById(R.id.trade_list_service);
         TextView category = (TextView) vi.findViewById(R.id.trade_list_category);
         TextView state = (TextView) vi.findViewById(R.id.trade_list_state);
+        TextView incoming = (TextView) vi.findViewById(R.id.trade_list_madeOfferFor);
+        TextView outgoing = (TextView) vi.findViewById(R.id.trade_list_receivedRequestFor);
 
-        borrower.setText(trade.getBorrower().getName());
+        if (trade.getBorrower().equals(MyApplication.getLocalUser())){
+            user.setText(trade.getOwner().getName());
+        } else {
+            user.setText(trade.getBorrower().getName());
+        }
         service.setText(trade.getOwnerServices().get(0).getName());
         category.setText(trade.getOwnerServices().get(0).getCategory().toString());
         //state.setText(trade.getState().getString());
+
+        if (trade.getBorrower().equals(MyApplication.getLocalUser())) {
+            incoming.setTextColor(Color.TRANSPARENT);
+            outgoing.setTextColor(Color.parseColor("#ff4A4A4A"));
+        } else {
+            outgoing.setTextColor(Color.TRANSPARENT);
+            incoming.setTextColor(Color.parseColor("#ff4A4A4A"));
+        }
         return vi;
     }
 }

@@ -26,22 +26,13 @@ public class TradeListActivity extends Activity {
 
     private TradeListAdapter tradeListAdapter;
     private ListView tradesListView;
-    private TextView incomingText;
-    private TextView outgoingText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_list);
 
-        //tradeListAdapter = new TradeListAdapter(MyApplication.getContext(), new ArrayList<Trade>());
         tradesListView = (ListView) findViewById(R.id.tradeListView);
-        incomingText = (TextView) findViewById(R.id.trade_list_madeOfferFor);
-        outgoingText = (TextView) findViewById(R.id.trade_list_receivedRequestFor);
-        outgoingText.setVisibility(View.INVISIBLE);
-        //tradesListView.setAdapter(tradeListAdapter);
-
     }
 
     /**
@@ -95,8 +86,7 @@ public class TradeListActivity extends Activity {
                 outgoing.add(trade);
             }
         }
-        tradeListAdapter = new TradeListAdapter(this,outgoing);
-        tradesListView.setAdapter(tradeListAdapter);
+        tradeListAdapter.updateTradeList(outgoing);
     }
 
     public void viewIncoming(View view) {
@@ -108,9 +98,6 @@ public class TradeListActivity extends Activity {
                 incoming.add(trade);
             }
         }
-        tradeListAdapter = new TradeListAdapter(this,incoming);
-        tradesListView.setAdapter(tradeListAdapter);
-        //incomingText.setTextColor(getResources().getColor(R.color.darkGrey));
-        //outgoingText.setTextColor(Color.TRANSPARENT);
+        tradeListAdapter.updateTradeList(incoming);
     }
 }
