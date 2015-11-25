@@ -1,11 +1,13 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,8 @@ public class TradeListActivity extends Activity {
 
     private TradeListAdapter tradeListAdapter;
     private ListView tradesListView;
+    private TextView incomingText;
+    private TextView outgoingText;
 
 
     @Override
@@ -33,6 +37,9 @@ public class TradeListActivity extends Activity {
 
         //tradeListAdapter = new TradeListAdapter(MyApplication.getContext(), new ArrayList<Trade>());
         tradesListView = (ListView) findViewById(R.id.tradeListView);
+        incomingText = (TextView) findViewById(R.id.trade_list_madeOfferFor);
+        outgoingText = (TextView) findViewById(R.id.trade_list_receivedRequestFor);
+        outgoingText.setVisibility(View.INVISIBLE);
         //tradesListView.setAdapter(tradeListAdapter);
 
     }
@@ -88,7 +95,8 @@ public class TradeListActivity extends Activity {
                 outgoing.add(trade);
             }
         }
-        tradeListAdapter.updateTradeList(outgoing);
+        tradeListAdapter = new TradeListAdapter(this,outgoing);
+        tradesListView.setAdapter(tradeListAdapter);
     }
 
     public void viewIncoming(View view) {
@@ -100,6 +108,9 @@ public class TradeListActivity extends Activity {
                 incoming.add(trade);
             }
         }
-        tradeListAdapter.updateTradeList(incoming);
+        tradeListAdapter = new TradeListAdapter(this,incoming);
+        tradesListView.setAdapter(tradeListAdapter);
+        //incomingText.setTextColor(getResources().getColor(R.color.darkGrey));
+        //outgoingText.setTextColor(Color.TRANSPARENT);
     }
 }
