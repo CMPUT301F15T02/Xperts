@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -45,7 +46,13 @@ public class TradeListActivity extends Activity {
         UserManager.sharedManager().clearCache();
         User user = MyApplication.getLocalUser();
         List<Trade> trades = user.getTrades();
-        tradeListAdapter = new TradeListAdapter(this,trades);
+        List<Trade> incoming = new ArrayList<Trade>();
+        for (Trade trade :trades) {
+            if (trade.getOwner().equals(user)) {
+                incoming.add(trade);
+            }
+        }
+        tradeListAdapter = new TradeListAdapter(this,incoming);
         tradesListView.setAdapter(tradeListAdapter);
     }
 
@@ -69,5 +76,30 @@ public class TradeListActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void viewOutgoing(View view) {
+        UserManager.sharedManager().clearCache();
+        User user = MyApplication.getLocalUser();
+        List<Trade> trades = user.getTrades();
+        List<Trade> outgoing = new ArrayList<Trade>();
+        for (Trade trade :trades) {
+            if (trade.getBorrower().equals(user)) {
+                outgoing.add(trade);
+            }
+        }
+        tradeListAdapter.updateTradeList(outgoing);
+    }
+
+    public void viewIncoming(View view) {
+        User user = MyApplication.getLocalUser();
+        List<Trade> trades = user.getTrades();
+        List<Trade> incoming = new ArrayList<Trade>();
+        for (Trade trade :trades) {
+            if (trade.getOwner().equals(user)) {
+                incoming.add(trade);
+            }
+        }
+        tradeListAdapter.updateTradeList(incoming);
     }
 }
