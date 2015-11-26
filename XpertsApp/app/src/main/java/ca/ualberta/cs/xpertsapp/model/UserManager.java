@@ -1,8 +1,15 @@
 package ca.ualberta.cs.xpertsapp.model;
 
+import android.os.AsyncTask;
+
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +30,16 @@ public class UserManager implements IObserver {
 	private Map<String, User> users = new HashMap<String, User>();
 
 	// Get/Set
+
+	/**
+	 * @param users Cache users
+	 */
+	public void setUsers(List<User> users) {
+		for (User user : users) {
+			System.out.println("llll" + user.getEmail());
+			addUser(user);
+		}
+	}
 
 	/**
 	 * @return A List of loaded Users
@@ -48,10 +65,14 @@ public class UserManager implements IObserver {
 		if (email == null) {
 			return null;
 		}
+
 		// If we have the user loaded
 		if (this.users.containsKey(email)) {
 			return this.users.get(email);
 		}
+		return null;
+
+		/*
 		// TODO: Only return a user if one existed
 		try {
 			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + email, new TypeToken<SearchHit<User>>() {
@@ -68,7 +89,7 @@ public class UserManager implements IObserver {
 			throw new RuntimeException(e);
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);
-		}
+		}*/
 	}
 
 	/**
@@ -101,11 +122,12 @@ public class UserManager implements IObserver {
 	 * @return The list of matching users with the most relevant first
 	 */
 	public List<User> findUsers(String meta) {
-		List<SearchHit<User>> found = IOManager.sharedManager().searchData(Constants.serverUserExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<User>>() {
-		});
+
+		List<SearchHit<User>> found = IOManager.sharedManager().searchData(Constants.serverUserExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<User>>() {});
+
 		List<User> users = new ArrayList<User>();
 		for (SearchHit<User> user : found) {
-			users.add(this.getUser(user.getSource().getEmail()));
+			users.add(user.getSource());
 		}
 		return users;
 	}
@@ -134,11 +156,11 @@ public class UserManager implements IObserver {
 	/** Gets notified when an observable being observed is observer and changes */
 	@Override
 	public void notify(IObservable observable) {
-		// TODO: store locally
-		Constants.refreshSync = true;
 		if (Constants.isOnline) {
-			System.out.println("added user " + ((User) observable).getEmail());
 			IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
+		} else {
+			Constants.refreshSync = true;
 		}
 	}
+
 }

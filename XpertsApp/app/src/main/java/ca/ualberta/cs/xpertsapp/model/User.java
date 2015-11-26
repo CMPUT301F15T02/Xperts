@@ -129,10 +129,14 @@ public class User implements IObservable {
 	 */
 	public List<Service> getServices() {
 		List<Service> services = new ArrayList<Service>();
+		System.out.println("00000string size=" + this.services.size() + "     " + this.services.toString());
+		System.out.println("00000services size=" + services.size() + "     " + services.toString());
 		for (String service : this.services) {
 			Service s = ServiceManager.sharedManager().getService(service);
+			System.out.println("nullnull" + s);
 			if (this.isOwner() || s.isShareable()) {
 				services.add(s);
+				System.out.println("000000000" + s.toString());
 			}
 		}
 		return services;
@@ -160,7 +164,7 @@ public class User implements IObservable {
 	public void removeService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
 		this.services.remove(service.getID());
-
+		System.out.println("xxx"+service);
 		ServiceManager.sharedManager().removeService(service);
 		this.notifyObservers();
 	}
@@ -204,13 +208,17 @@ public class User implements IObservable {
 	 * @return whether the active user has permission to edit this user. returns true for tests.
 	 */
 	protected boolean isEditable() {
+		// Compare two different objects
+		//return Constants.isTest || this.getEmail().equals(MyApplication.getLocalUser().getEmail());
 		return Constants.isTest || this == MyApplication.getLocalUser();
 	}
 
 	/**
 	 * @return if the active user is this user
 	 */
-	protected boolean isOwner(){return this == MyApplication.getLocalUser();}
+	protected boolean isOwner(){
+		return this == MyApplication.getLocalUser();
+	}
 
 	/**
 	 * @see IObservable

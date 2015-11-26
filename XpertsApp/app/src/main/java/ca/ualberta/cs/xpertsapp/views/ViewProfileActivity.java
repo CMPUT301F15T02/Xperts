@@ -53,6 +53,7 @@ public class ViewProfileActivity extends Activity {
     public TextView getLocation() {
         return location;
     }
+    List<Service> services;
 
     /**
      * Sets text for user's name, email and location and the click listener for ListView of services.
@@ -96,10 +97,24 @@ public class ViewProfileActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        User user = MyApplication.getLocalUser();
-        List<Service> Services = user.getServices();
-        serviceListAdapter = new ServiceListAdapter(this,Services);
-        serviceList.setAdapter(serviceListAdapter);
+        final User user = MyApplication.getLocalUser();
+        System.out.println("1111" +user.getEmail()+user.getServices());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                services = user.getServices();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        serviceListAdapter = new ServiceListAdapter(ViewProfileActivity.this, services);
+                        serviceList.setAdapter(serviceListAdapter);
+                    }
+                });
+            }
+        }).start();
+        //List<Service> services = user.getServices();
+        //serviceListAdapter = new ServiceListAdapter(this, services);
+        //serviceList.setAdapter(serviceListAdapter);
     }
 
     @Override

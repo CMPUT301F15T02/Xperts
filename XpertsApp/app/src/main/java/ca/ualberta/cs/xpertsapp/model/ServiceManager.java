@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
@@ -25,31 +27,12 @@ public class ServiceManager implements IObserver {
 	private Map<String, Service> services = new HashMap<String, Service>();
 
 	/**
-	 * @param id the id of the service to look for
-	 * @return the service or null if it doesn't exist
+	 * For cache services
 	 */
-	public Service getService(String id) {
-		// If service is loaded
-		if (this.services.containsKey(id)) {
-			return this.services.get(id);
-		}
-		// TODO:
-		try {
-			SearchHit<Service> loadedService = IOManager.sharedManager().fetchData(Constants.serverServiceExtension() + id, new TypeToken<SearchHit<Service>>() {
-			});
-			if (loadedService.isFound()) {
-				this.addService(loadedService.getSource());
-				return loadedService.getSource();
-			} else {
-				// TODO:
-				return null;
-			}
-		} catch (JsonIOException e) {
-			throw new RuntimeException(e);
-		} catch (JsonSyntaxException e) {
-			throw new RuntimeException(e);
-		} catch (IllegalStateException e) {
-			throw new RuntimeException(e);
+	public void setServices(List<Service> services) {
+		for (Service service : services) {
+			addService(service);
+			System.out.println("333" + service.getID());
 		}
 	}
 
@@ -58,6 +41,20 @@ public class ServiceManager implements IObserver {
 	 */
 	public List<Service> getServices() {
 		return new ArrayList<Service>(this.services.values());
+	}
+
+	/**
+	 * @param id the id of the service to look for
+	 * @return the service or null if it doesn't exist
+	 */
+	public Service getService(String id) {
+		// If service is loaded
+		System.out.println("33333"+this.services.keySet());
+		if (this.services.containsKey(id)) {
+			return this.services.get(id);
+		}
+		System.out.println("3334 " + id);
+		return null;
 	}
 
 	public void addService(Service service) {
@@ -95,7 +92,7 @@ public class ServiceManager implements IObserver {
 		});
 		List<Service> services = new ArrayList<Service>();
 		for (SearchHit<Service> service : found) {
-			services.add(this.getService(service.getSource().getID()));
+			services.add(service.getSource());
 		}
 		return services;
 	}
@@ -133,11 +130,10 @@ public class ServiceManager implements IObserver {
 	@Override
 	/** gets notified by observables */
 	public void notify(IObservable observable) {
-		// TODO:
-		Constants.refreshSync = true;
 		if (Constants.isOnline) {
-			System.out.println("added service " + ((Service) observable).getName());
 			IOManager.sharedManager().storeData(observable, Constants.serverServiceExtension() + ((Service) observable).getID());
+		} else {
+			Constants.refreshSync = true;
 		}
 	}
 }

@@ -78,6 +78,7 @@ public class MyApplication extends Application {
 			throw new RuntimeException();
 		}
 		User user = UserManager.sharedManager().getUser(email);
+
 		if (user == null) {
 			user = UserManager.sharedManager().registerUser(email);
 		}

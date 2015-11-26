@@ -66,41 +66,6 @@ public class IOManager {
 		}
 	}
 
-	/**
-	 * Push changes of local user
-	 */
-	public void pushToServer() {
-		new Thread(new Runnable() {
-			User user = MyApplication.getLocalUser();
-
-			@Override
-			public void run() {
-				IOManager.sharedManager().storeData(user, Constants.serverUserExtension() + user.getEmail());
-				for (Service service : user.getServices()) {
-					IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
-				}
-
-				for (Trade trade : user.getTrades()) {
-					IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
-				}
-			}
-		}).start();
-	}
-
-	/**
-	 * Cache users, services, trades
-	 */
-	public void pullFromServer() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				users = UserManager.sharedManager().findUsers("*");
-				services = ServiceManager.sharedManager().findServices("*");
-				//trades = TradeManager.sharedManager().findTrades("*");
-			}
-		}).start();
-	}
-
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
 		// TODO: LOOK LOCALLY
 		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
@@ -164,7 +129,11 @@ public class IOManager {
 			throw new RuntimeException(e);
 		}
 		SearchResponse<T> loadedThings = (new Gson()).fromJson(loadedData, typeToken.getType());
-		List<SearchHit<T>> hits = new ArrayList<SearchHit<T>>(loadedThings.getHits().getHits());
+		List<SearchHit<T>> hits = new ArrayList<SearchHit<T>>();
+		if (loadedThings.getHits() == null) {
+			return hits;
+		}
+		hits = new ArrayList<SearchHit<T>>(loadedThings.getHits().getHits());
 		Collections.sort(hits, new Comparator<SearchHit<T>>() {
 			@Override
 			public int compare(SearchHit<T> lhs, SearchHit<T> rhs) {
@@ -188,5 +157,41 @@ public class IOManager {
 
 	public static IOManager sharedManager() {
 		return IOManager.instance;
+	}
+
+	// Don't do thread here, to control when background task is done
+	/**
+	 * Push changes of local user
+	 */
+	public void pushMe() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				User user = MyApplication.getLocalUser();
+
+				IOManager.sharedManager().storeData(user, Constants.serverUserExtension() + user.getEmail());
+				for (Service service : user.getServices()) {
+					IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
+					System.out.println("push " + service.getName());
+				}
+				for (Trade trade : user.getTrades()) {
+					IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
+				}
+			}
+		}).start();
+	}
+
+	/**
+	 * Cache users, services, trades, my services, my trades
+	 */
+	public void cacheAll() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				UserManager.sharedManager().setUsers(UserManager.sharedManager().findUsers("*"));
+				ServiceManager.sharedManager().setServices(ServiceManager.sharedManager().findServices("*"));
+				TradeManager.sharedManager().setTrades(TradeManager.sharedManager().findTrades("*"));
+			}
+		}).start();
 	}
 }

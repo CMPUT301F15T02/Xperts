@@ -15,7 +15,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
@@ -50,13 +54,18 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         // Register BroadcastReceiver to track connection changes.
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new NetworkReceiver();
         this.registerReceiver(receiver, filter);
 
+        // First run requires internet, otherwise write local
+        if (Constants.isOnline) {
+            IOManager.sharedManager().cacheAll();
+        }
+
+        setContentView(R.layout.activity_main);
         MyApplication.loginCheck();
 
         MyProfileBtn = (Button) findViewById(R.id.MyProfileBtn);
@@ -116,24 +125,56 @@ public class MainActivity extends Activity {
     public class NetworkReceiver extends BroadcastReceiver {
 
         @Override
-        public void onReceive(Context context, Intent intent) {
+        public void onReceive(final Context context, Intent intent) {
             ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
             // Checks to see if the device has a connection.
             if (networkInfo != null) {
-                Constants.isOnline = true;
-                //Toast.makeText(context, "Internet connection detected", Toast.LENGTH_SHORT).show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            URL url = new URL("http://www.google.com");
+                            HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+                            urlc.setConnectTimeout(3000);
+                            urlc.connect();
+                            if (urlc.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                                Constants.isOnline = true;
+                            }
+                        } catch (MalformedURLException mue) {
+                            // TODO Auto-generated catch block
+                            mue.printStackTrace();
+                            Constants.isOnline = false;
+                        } catch (IOException ie) {
+                            // TODO Auto-generated catch block
+                            ie.printStackTrace();
+                            Constants.isOnline = false;
+                        }
 
-                // Whether the sync should be refreshed
-                if (Constants.refreshSync) {
-                    IOManager.sharedManager().pushToServer();
-                    IOManager.sharedManager().pullFromServer();
-                }
-                Constants.refreshSync = false;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (Constants.isOnline) {
+                                    Toast.makeText(context, "Internet connection detected", Toast.LENGTH_SHORT).show();
+
+                                    // Whether the sync should be refreshed
+                                    if (Constants.refreshSync) {
+                                        System.out.println("push");
+                                        IOManager.sharedManager().pushMe();
+                                        IOManager.sharedManager().cacheAll();
+                                    }
+                                    Constants.refreshSync = false;
+                                } else {
+                                    Toast.makeText(context, "Internet connection lost", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                }).start();
             } else {
                 Constants.isOnline = false;
-                //Toast.makeText(context, "Internet connection lost", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Internet connection lost", Toast.LENGTH_SHORT).show();
             }
         }
     }
