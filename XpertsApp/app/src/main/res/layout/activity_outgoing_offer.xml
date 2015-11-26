@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:text="OFFERED BY"
         android:id="@+id/constantText4"
-        android:layout_below="@+id/borrowerServicesOut"
+        android:layout_below="@+id/ownerServicesOut"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:textSize="12sp"
@@ -40,7 +40,7 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="115dp"
-        android:id="@+id/borrowerServicesOut"
+        android:id="@+id/ownerServicesOut"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/constantText3"
         android:layout_centerHorizontal="true"
@@ -57,7 +57,7 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ownerServices"
+        android:id="@+id/borrowerServicesOut"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/constantText5"
         android:layout_centerHorizontal="true"
