@@ -1,11 +1,13 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -23,7 +25,7 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
  * Activity to handle trades. Not finished yet. It is called from MainActivity.
  */
 public class TradeListActivity extends Activity {
-
+    private TradeListActivity activity = this;
     private TradeListAdapter tradeListAdapter;
     private ListView tradesListView;
 
@@ -33,6 +35,19 @@ public class TradeListActivity extends Activity {
         setContentView(R.layout.activity_trade_list);
 
         tradesListView = (ListView) findViewById(R.id.tradeListView);
+        tradesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(activity, IncomingOfferActivity.class);
+                //if the borrower of the trade is local user, then go to OutgoingOfferActivity
+                //otherwise you go to IncomingOfferActivity
+                if (tradeListAdapter.getItem(position).getBorrower().equals(MyApplication.getLocalUser())) {
+                    intent = new Intent(activity, OutgoingOfferActivity.class);
+                }
+                intent.putExtra("INTENT_ID",tradeListAdapter.getItem(position).getID());
+                startActivity(intent);
+            }
+        });
     }
 
     /**
