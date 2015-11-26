@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -79,5 +80,15 @@ public class OutgoingOfferActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * This should cancel the trade. Only the borrower in the trade can cancel a trade. It should
+     * set the trade state to cancelled. The trade should not be removed from the users because we
+     * want to be able to see all their past trades.
+     * @param view cancel button that was pressed
+     */
+    public void cancelTrade(View view) {
+        //need to cancel the trade here
     }
 }
