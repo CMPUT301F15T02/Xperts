@@ -148,9 +148,8 @@ public class Service implements IObservable {
 	}
 
 	protected boolean isEditable() {
-		// Compare two different objects
-		//return Constants.isTest || this.getOwner().getEmail().equals(MyApplication.getLocalUser().getEmail());
-		return Constants.isTest || this.getOwner() == MyApplication.getLocalUser();
+		// Compare two different objects, one offline and one online
+		return Constants.isTest || this.getOwner().getEmail().equals(MyApplication.getLocalUser().getEmail());
 	}
 
 	// IObservable

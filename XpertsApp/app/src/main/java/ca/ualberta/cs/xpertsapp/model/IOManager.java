@@ -56,11 +56,11 @@ public class IOManager {
 
 		protected HttpResponse doInBackground(HttpUriRequest... request) {
 			HttpClient httpClient = new DefaultHttpClient();
-			HttpResponse response;
+			HttpResponse response = null;
 			try {
 				response = httpClient.execute(request[0]);
 			} catch (Exception e) {
-				throw new RuntimeException(e);
+				//throw new RuntimeException(e);
 			}
 			return response;
 		}
@@ -163,13 +163,15 @@ public class IOManager {
 	/**
 	 * Push changes of local user
 	 */
-	public void pushMe() {
+	/*public void pushMe() {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				User user = MyApplication.getLocalUser();
 
 				IOManager.sharedManager().storeData(user, Constants.serverUserExtension() + user.getEmail());
+				System.out.println("push " + user.toString());
+
 				for (Service service : user.getServices()) {
 					IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
 					System.out.println("push " + service.getName());
@@ -179,12 +181,12 @@ public class IOManager {
 				}
 			}
 		}).start();
-	}
+	}*/
 
 	/**
 	 * Cache users, services, trades, my services, my trades
 	 */
-	public void cacheAll() {
+	/*public void cacheAll() {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -193,5 +195,5 @@ public class IOManager {
 				TradeManager.sharedManager().setTrades(TradeManager.sharedManager().findTrades("*"));
 			}
 		}).start();
-	}
+	}*/
 }

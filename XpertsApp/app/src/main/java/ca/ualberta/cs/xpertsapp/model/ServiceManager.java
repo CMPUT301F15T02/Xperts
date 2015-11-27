@@ -4,6 +4,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,14 +26,14 @@ import ca.ualberta.cs.xpertsapp.views.MainActivity;
 public class ServiceManager implements IObserver {
 
 	private Map<String, Service> services = new HashMap<String, Service>();
+	private ArrayList<Service> offlineServices = new ArrayList<Service>();
 
 	/**
 	 * For cache services
 	 */
-	public void setServices(List<Service> services) {
+	public void etServices(List<Service> services) {
 		for (Service service : services) {
 			addService(service);
-			System.out.println("333" + service.getID());
 		}
 	}
 
@@ -48,12 +49,43 @@ public class ServiceManager implements IObserver {
 	 * @return the service or null if it doesn't exist
 	 */
 	public Service getService(String id) {
+		if (Constants.servicesSync) {
+			try {
+				for (Service service : offlineServices) {
+					IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
+				}
+				Constants.servicesSync = false;
+			} catch (Exception e) {
+				// No internet
+				System.out.println("System is offline");
+			}
+		}
+
 		// If service is loaded
-		System.out.println("33333"+this.services.keySet());
 		if (this.services.containsKey(id)) {
 			return this.services.get(id);
 		}
-		System.out.println("3334 " + id);
+
+		try {
+			SearchHit<Service> loadedService = IOManager.sharedManager().fetchData(Constants.serverServiceExtension() + id, new TypeToken<SearchHit<Service>>() {
+			});
+			if (loadedService.isFound()) {
+				this.addService(loadedService.getSource());
+				return loadedService.getSource();
+			} else {
+				// TODO:
+				return null;
+			}
+		} catch (JsonIOException e) {
+			throw new RuntimeException(e);
+		} catch (JsonSyntaxException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalStateException e) {
+			throw new RuntimeException(e);
+		} catch (RuntimeException e) {
+			// no internet
+		}
+
 		return null;
 	}
 
@@ -130,10 +162,13 @@ public class ServiceManager implements IObserver {
 	@Override
 	/** gets notified by observables */
 	public void notify(IObservable observable) {
-		if (Constants.isOnline) {
+		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverServiceExtension() + ((Service) observable).getID());
-		} else {
-			Constants.refreshSync = true;
+			Constants.servicesSync = false;
+		} catch (RuntimeException e) {
+			// Means no internet
+			offlineServices.add((Service) observable);
+			Constants.servicesSync = true;
 		}
 	}
 }

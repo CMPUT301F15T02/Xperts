@@ -111,10 +111,10 @@ public class TradeManager implements IObserver {
 	@Override
 	/** gets notified by things its watching */
 	public void notify(IObservable observable) {
-		if (Constants.isOnline) {
+		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverTradeExtension() + ((Trade) observable).getID());
-		} else {
-			Constants.refreshSync = true;
+		} catch (Exception e) {
+			Constants.tradesSync = true;
 		}
 	}
 }

@@ -21,7 +21,9 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
 import ca.ualberta.cs.xpertsapp.model.Constants;
+import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 
 /**
@@ -97,24 +99,10 @@ public class ViewProfileActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        final User user = MyApplication.getLocalUser();
-        System.out.println("1111" +user.getEmail()+user.getServices());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                services = user.getServices();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        serviceListAdapter = new ServiceListAdapter(ViewProfileActivity.this, services);
-                        serviceList.setAdapter(serviceListAdapter);
-                    }
-                });
-            }
-        }).start();
-        //List<Service> services = user.getServices();
-        //serviceListAdapter = new ServiceListAdapter(this, services);
-        //serviceList.setAdapter(serviceListAdapter);
+        User user = MyApplication.getLocalUser();
+        List<Service> Services = user.getServices();
+        serviceListAdapter = new ServiceListAdapter(this,Services);
+        serviceList.setAdapter(serviceListAdapter);
     }
 
     @Override

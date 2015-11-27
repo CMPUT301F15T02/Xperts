@@ -1,6 +1,7 @@
 package ca.ualberta.cs.xpertsapp.model;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
@@ -29,17 +30,8 @@ import ca.ualberta.cs.xpertsapp.views.MainActivity;
 public class UserManager implements IObserver {
 	private Map<String, User> users = new HashMap<String, User>();
 
+	private User offlineUser = null;
 	// Get/Set
-
-	/**
-	 * @param users Cache users
-	 */
-	public void setUsers(List<User> users) {
-		for (User user : users) {
-			System.out.println("llll" + user.getEmail());
-			addUser(user);
-		}
-	}
 
 	/**
 	 * @return A List of loaded Users
@@ -62,18 +54,27 @@ public class UserManager implements IObserver {
 	 * @return The User with that email or null
 	 */
 	public User getUser(String email) {
+		if (Constants.usersSync) {
+			// This is bad practice to ignore exception, but check internet will freeze few seconds
+			try {
+				Constants.usersSync = false;
+				//if (!email.equals(offlineUser.getEmail())) {
+					IOManager.sharedManager().storeData(offlineUser, Constants.serverUserExtension() + offlineUser.getEmail());
+					System.out.println("pushuser" + offlineUser.toString());
+				//}
+			} catch (Exception e) {
+				// no internet
+				Constants.usersSync = true;
+				Toast.makeText(MyApplication.getContext(), "Offline", Toast.LENGTH_SHORT).show();
+				//System.out.println("System offline");
+			}
+		}
+
 		if (email == null) {
 			return null;
 		}
 
-		// If we have the user loaded
-		if (this.users.containsKey(email)) {
-			return this.users.get(email);
-		}
-		return null;
-
-		/*
-		// TODO: Only return a user if one existed
+		// Load online first, so can register new user. If has internet, next time it will load here
 		try {
 			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + email, new TypeToken<SearchHit<User>>() {
 			});
@@ -89,7 +90,18 @@ public class UserManager implements IObserver {
 			throw new RuntimeException(e);
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);
-		}*/
+		} catch (Exception e) {
+			// no internet
+			//Toast.makeText(MyApplication.getContext(), "Offline", Toast.LENGTH_SHORT).show();
+			//System.out.println("System is offline");
+		}
+
+		// If we have the user loaded
+		if (this.users.containsKey(email)) {
+			return this.users.get(email);
+		}
+
+		return null;
 	}
 
 	/**
@@ -156,10 +168,12 @@ public class UserManager implements IObserver {
 	/** Gets notified when an observable being observed is observer and changes */
 	@Override
 	public void notify(IObservable observable) {
-		if (Constants.isOnline) {
+		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
-		} else {
-			Constants.refreshSync = true;
+		} catch (Exception e) {
+			// no internet
+			// offlineUser can be new registered and override old user
+			offlineUser = (User) observable;
 		}
 	}
 

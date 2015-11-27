@@ -1,12 +1,8 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -32,7 +28,7 @@ import ca.ualberta.cs.xpertsapp.model.IOManager;
 public class MainActivity extends Activity {
 
     // The BroadcastReceiver that tracks network connectivity changes.
-    private NetworkReceiver receiver = new NetworkReceiver();
+    //private NetworkReceiver receiver = new NetworkReceiver();
 
     private Button MyProfileBtn;
     public Button getMyProfileBtn() {return MyProfileBtn;};
@@ -56,14 +52,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         // Register BroadcastReceiver to track connection changes.
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        /*IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new NetworkReceiver();
-        this.registerReceiver(receiver, filter);
+        this.registerReceiver(receiver, filter);*/
 
         // First run requires internet, otherwise write local
-        if (Constants.isOnline) {
+        /*if (MyApplication.isOnline()) {
             IOManager.sharedManager().cacheAll();
-        }
+        }*/
 
         setContentView(R.layout.activity_main);
         MyApplication.loginCheck();
@@ -109,9 +105,9 @@ public class MainActivity extends Activity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (receiver != null) {
+        /*if (receiver != null) {
             this.unregisterReceiver(receiver);
-        }
+        }*/
     }
 
     /**
@@ -122,7 +118,7 @@ public class MainActivity extends Activity {
      * Code from http://developer.android.com/training/basics/network-ops/managing.html
      *
      */
-    public class NetworkReceiver extends BroadcastReceiver {
+   /* public class NetworkReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(final Context context, Intent intent) {
@@ -178,6 +174,7 @@ public class MainActivity extends Activity {
             }
         }
     }
+*/
 
 
     @Override
