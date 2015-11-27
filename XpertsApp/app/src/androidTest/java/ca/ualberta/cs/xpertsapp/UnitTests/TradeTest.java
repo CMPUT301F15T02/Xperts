@@ -23,8 +23,8 @@ public class TradeTest extends TestCase {
 	private Service service1;
 
 	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	protected void setUp2() {
+		super.setUp2();
 
 		String friend1String = "" +
 				"{" +
@@ -58,16 +58,17 @@ public class TradeTest extends TestCase {
 	}
 
 	@Override
-	protected void tearDown() throws Exception {
+	protected void tearDown2() {
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
-		super.tearDown();
+		super.tearDown2();
 	}
 
 	// Also 04.05.01
 	public void test_04_01_01() {
+		setUp2();
 		// Test offer trade to friend
 		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
@@ -97,9 +98,11 @@ public class TradeTest extends TestCase {
 
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + newTrade.getID());
+		tearDown2();
 	}
 
 	public void test_04_02_01() {
+		setUp2();
 		// Test get notified by a trade
 		User user = MyApplication.getLocalUser();
 		String tradeString = "" +
@@ -122,9 +125,11 @@ public class TradeTest extends TestCase {
 		assertEquals(user.newTrades(), 1);
 
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
+		tearDown2();
 	}
 
 	public void test_04_03_01() {
+		setUp2();
 		// Test accept and decline trades
 		User user = MyApplication.getLocalUser();
 		String trade1String = "" +
@@ -168,11 +173,13 @@ public class TradeTest extends TestCase {
 
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade2.getID());
+		tearDown2();
 	}
 
 	// 04.04.01 is not model
 
 	public void test_04_06_01() {
+		setUp2();
 		// Test delete trade when composing
 		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
@@ -201,12 +208,14 @@ public class TradeTest extends TestCase {
 		assertEquals(oldTrade, null);
 
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());
+		tearDown2();
 	}
 
 	// 04.07.01 is not model
 
 	// Also 04_09_01
 	public void test_04_08_01() {
+		setUp2();
 		// Test browse past and current trades involving me
 		User user = MyApplication.getLocalUser();
 		String trade1String = "" +
@@ -247,5 +256,6 @@ public class TradeTest extends TestCase {
 
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade2.getID());
+		tearDown2();
 	}
 }

@@ -1,6 +1,7 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -12,24 +13,25 @@ import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 import ca.ualberta.cs.xpertsapp.views.EditProfileActivity;
 
-public class ConfigTest extends ActivityInstrumentationTestCase2 {
+public class ConfigTest extends TestCase {
 	public ConfigTest() {
 		super(EditProfileActivity.class);
 	}
 
 	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	protected void setUp2() {
+		super.setUp2();
 	}
 
 	@Override
-	protected void tearDown() throws Exception {
+	protected void tearDown2() {
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
-		super.tearDown();
+		super.tearDown2();
 	}
 
 	public void test_10_01_01() {
+		setUp2();
 		// Test toggle image download
 		EditProfileActivity mActivity = (EditProfileActivity) getActivity();
 		final Switch switch1 = mActivity.getSwitch1();
@@ -44,6 +46,8 @@ public class ConfigTest extends ActivityInstrumentationTestCase2 {
 		user.setLocation(newLocation);
 		user.setDownloadsEnabled(false);
 
+		Log.i("", "PART 1");
+
 		// Toggle switch
 		mActivity.runOnUiThread(new Runnable() {
 			@Override
@@ -56,6 +60,8 @@ public class ConfigTest extends ActivityInstrumentationTestCase2 {
 			}
 		});
 
+		Log.i("", "PART 2");
+
 		getInstrumentation().waitForIdleSync();
 
 		//UserManager.sharedManager().clearCache();
@@ -65,9 +71,14 @@ public class ConfigTest extends ActivityInstrumentationTestCase2 {
 		} else {
 			assertTrue(user.getDownloadsEnabled());
 		}
+
+		Log.i("", "PART 3");
+
+		tearDown2();
 	}
 
 	public void test_10_02_01() {
+		setUp2();
 		// Test edit profile
 		EditProfileActivity mActivity = (EditProfileActivity) getActivity();
 		final EditText email = mActivity.getEmail();
@@ -94,5 +105,7 @@ public class ConfigTest extends ActivityInstrumentationTestCase2 {
 		User user = MyApplication.getLocalUser();
 		assertEquals(user.getName(), newName);
 		assertEquals(user.getLocation(), newLocation);
+
+		tearDown2();
 	}
 }

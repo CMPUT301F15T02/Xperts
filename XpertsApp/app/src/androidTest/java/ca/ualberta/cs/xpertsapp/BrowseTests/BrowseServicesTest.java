@@ -49,8 +49,8 @@ public class BrowseServicesTest extends TestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    protected void setUp2() {
+        super.setUp2();
         UserManager.sharedManager().clearCache();
         ServiceManager.sharedManager().clearCache();
         TradeManager.sharedManager().clearCache();
@@ -76,15 +76,17 @@ public class BrowseServicesTest extends TestCase {
     }
 
     @Override
-    protected void tearDown() throws Exception {
+    protected void tearDown2() {
         instrumentation.removeMonitor(monitor);
-        super.tearDown();
+        super.tearDown2();
     }
 
     /**
      * UC03.01.01
      */
     public void testServiceSearch() {
+        setUp2();
+
         setActivityInitialTouchMode(true);
         //Navigate from Main menu
         MainActivity activity = (MainActivity) getActivity();
@@ -115,6 +117,8 @@ public class BrowseServicesTest extends TestCase {
             assertTrue(friendsServices.contains(s));
         }
         browseActivity.finish();
+
+        tearDown2();
     }
 
 }

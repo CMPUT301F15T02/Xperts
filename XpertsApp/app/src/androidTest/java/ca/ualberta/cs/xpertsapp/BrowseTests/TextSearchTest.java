@@ -48,8 +48,8 @@ public class TextSearchTest extends TestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    protected void setUp2() {
+        super.setUp2();
         UserManager.sharedManager().clearCache();
         ServiceManager.sharedManager().clearCache();
         TradeManager.sharedManager().clearCache();
@@ -75,15 +75,17 @@ public class TextSearchTest extends TestCase {
     }
 
     @Override
-    protected void tearDown() throws Exception {
+    protected void tearDown2() {
         instrumentation.removeMonitor(monitor);
-        super.tearDown();
+        super.tearDown2();
     }
 
     /**
      * UC03.02.01
      */
-    public void testServiceTextSearch(){
+    public void testServiceTextSearch() {
+        setUp2();
+
         setActivityInitialTouchMode(true);
 
         User friend = localUser.getFriends().get(0);
@@ -139,5 +141,6 @@ public class TextSearchTest extends TestCase {
         assertEquals(testService2, serviceList.getAdapter().getItem(0));
         browseActivity.finish();
 
+        tearDown2();
     }
 }

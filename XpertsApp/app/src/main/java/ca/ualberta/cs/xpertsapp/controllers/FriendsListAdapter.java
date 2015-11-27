@@ -50,7 +50,6 @@ public class FriendsListAdapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return friendData.size();
     }
 
@@ -60,13 +59,11 @@ public class FriendsListAdapter extends BaseAdapter {
      */
     @Override
     public User getItem(int position) {
-        // TODO Auto-generated method stub
         return friendData.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
         return position;
     }
 
@@ -79,7 +76,6 @@ public class FriendsListAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View friendListItem, ViewGroup parent) {
-        // TODO Auto-generated method stub
         View vi = friendListItem;
         if (vi == null) {
             vi = inflater.inflate(R.layout.friend_list_item, null);

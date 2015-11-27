@@ -22,8 +22,8 @@ public class SearchTest extends TestCase {
 	private Service service1;
 
 	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	protected void setUp2() {
+		super.setUp2();
 
 		String friend1String = "" +
 				"{" +
@@ -59,16 +59,17 @@ public class SearchTest extends TestCase {
 	}
 
 	@Override
-	protected void tearDown() throws Exception {
+	protected void tearDown2(){
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
-		super.tearDown();
+		super.tearDown2();
 	}
 
 	// Also 03_01_01
 	public void test_03_01_02() {
+		setUp2();
 		// Test search inventory of friends by category
 		User user = MyApplication.getLocalUser();
 
@@ -78,16 +79,19 @@ public class SearchTest extends TestCase {
 		}
 
 		assertEquals(allOfFriendsServices.size(), 1);
+		tearDown2();
 	}
 
 	// Also 03_01_01
 	public void test_03_01_03() {
+		setUp2();
 		// Test search inventory of friends by text
 		User user = MyApplication.getLocalUser();
 
 		List<Service> friendsServices = ServiceManager.sharedManager().findServicesOfFriends("*descrip*");
 		assertEquals(friendsServices.size(), 1);
 		assertEquals(friendsServices.get(0).getID(), service1.getID());
+		tearDown2();
 	}
 
 	// 03.02.01 covered by 01.03.02

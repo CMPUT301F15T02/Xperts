@@ -79,7 +79,7 @@ public class Trade implements IObservable {
 	 */
 	public void addOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (service.getOwner() != this.getOwner()) throw new AssertionError();
+		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
 		this.ownerServices.add(service.getID());
 		this.notifyObservers();
 	}
@@ -90,7 +90,7 @@ public class Trade implements IObservable {
 	 */
 	public void removeOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (service.getOwner() != this.getOwner()) throw new AssertionError();
+		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
 		this.ownerServices.remove(service.getID());
 		this.notifyObservers();
 	}
@@ -109,7 +109,7 @@ public class Trade implements IObservable {
 	 */
 	public void addBorrowerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
+		if (service.getOwner() != this.getOwner()) throw new AssertionError();
 		this.borrowerServices.add(service.getID());
 		this.notifyObservers();
 	}
@@ -120,7 +120,7 @@ public class Trade implements IObservable {
 	 */
 	public void removeBorrowerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
+		if (service.getOwner() != this.getOwner()) throw new AssertionError();
 		this.borrowerServices.remove(service.getID());
 		this.notifyObservers();
 	}

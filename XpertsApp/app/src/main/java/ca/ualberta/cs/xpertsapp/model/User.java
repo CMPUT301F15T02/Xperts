@@ -98,7 +98,10 @@ public class User implements IObservable {
 	public List<User> getFriends() {
 		List<User> friends = new ArrayList<User>();
 		for (String friendID : this.friends) {
-			friends.add(UserManager.sharedManager().getUser(friendID));
+			User u = UserManager.sharedManager().getUser(friendID);
+			if (u != null) {
+				friends.add(u);
+			}
 		}
 		return friends;
 	}

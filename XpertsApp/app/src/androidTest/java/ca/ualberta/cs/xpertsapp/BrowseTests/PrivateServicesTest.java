@@ -50,8 +50,8 @@ public class PrivateServicesTest extends TestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    protected void setUp2() {
+        super.setUp2();
         UserManager.sharedManager().clearCache();
         ServiceManager.sharedManager().clearCache();
         TradeManager.sharedManager().clearCache();
@@ -79,16 +79,18 @@ public class PrivateServicesTest extends TestCase {
     }
 
     @Override
-    protected void tearDown() throws Exception {
+    protected void tearDown2() {
         browseActivity.finish();
         instrumentation.removeMonitor(monitor);
-        super.tearDown();
+        super.tearDown2();
     }
 
     /**
      * UC03.04.01
      */
     public void testPrivateServices() {
+        setUp2();
+
         setActivityInitialTouchMode(true);
 
         //Navigate from Main menu
@@ -112,6 +114,8 @@ public class PrivateServicesTest extends TestCase {
             Service s = (Service) serviceList.getAdapter().getItem(i);
             assertNotSame(privateService, s);
         }
+
+        tearDown2();
     }
 
 }

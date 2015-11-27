@@ -23,8 +23,8 @@ public class MockDataTest extends TestCase {
 	final String testEmail6 = "hammad@xperts.com";
 
 	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	protected void setUp2() {
+		super.setUp2();
 		User u1 = newTestUser(testEmail1,"David Skrundz","Calgary");
 		User u2 = newTestUser(testEmail2,"Seann Murdock","Vancouver");
 		User u3 = newTestUser(testEmail3,"Kathleen Baker","Toronto");
@@ -101,18 +101,21 @@ public class MockDataTest extends TestCase {
 	}
 
 	@Override
-	protected void tearDown() throws Exception {
-
-		super.tearDown();
+	protected void tearDown2(){
+		super.tearDown2();
 	}
 
 	public void testMockData() {
+		setUp2();
+
 		User user = MyApplication.getLocalUser();
 		User friend = UserManager.sharedManager().getUser(testEmail1);
 		assertEquals(user.getEmail(), testLocalEmail);
 
 		user.addFriend(friend);
 		assertEquals(user.getFriends().get(0), friend);
+
+		tearDown2();
 	}
 
 }

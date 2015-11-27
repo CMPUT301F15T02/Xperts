@@ -17,18 +17,20 @@ public class OfflineTest extends TestCase {
 	}
 
 	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	protected void setUp2() {
+		super.setUp2();
 	}
 
 	@Override
-	protected void tearDown() throws Exception {
+	protected void tearDown2(){
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().toString());
 
-		super.tearDown();
+		super.tearDown2();
 	}
 
 	public void test_09_01_01() {
+		setUp2();
+
 		// Test add service while offline and push while online
 		// Disable internet
 		Constants.isOnline = false;
@@ -53,15 +55,25 @@ public class OfflineTest extends TestCase {
 		assertEquals(offlineService.getID(), onlineService.getID());
 
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + offlineService.getID());
+
+		tearDown2();
 	}
 
 	public void test_09_02_01() {
+		setUp2();
+
 		// TODO: Test make trade while offline and push while online
 		assertTrue(false);
+
+		tearDown2();
 	}
 
 	public void test_09_03_01() {
+		setUp2();
+
 		// TODO: Test cache friends and servies for offline use
 		assertTrue(false);
+
+		tearDown2();
 	}
 }

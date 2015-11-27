@@ -25,8 +25,8 @@ public class InventoryTest extends TestCase {
 	private static Service service2;
 
 	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
+	protected void setUp2() {
+		super.setUp2();
 
 		String friend1String = "" +
 				"{" +
@@ -77,19 +77,21 @@ public class InventoryTest extends TestCase {
 	}
 
 	@Override
-	protected void tearDown() throws Exception {
+	protected void tearDown2(){
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + friend1.getEmail());
 		Log.i("?>???????", service1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + service2.getID());
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension() + MyApplication.getLocalUser().getEmail());
 
-		super.tearDown();
+		super.tearDown2();
 	}
 
 	// test_01_04_01 and test_01_05_01 cover the rest of this case
 	// Also 01.02.01
 	public void test_01_01_01() {
+		setUp2();
+
 		// Test adding a service
 		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
@@ -101,6 +103,8 @@ public class InventoryTest extends TestCase {
 		assertTrue(ServiceManager.sharedManager().getServices().contains(newService));
 
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());
+
+		tearDown2();
 	}
 
 	// 01.02.01 is not model
@@ -108,6 +112,8 @@ public class InventoryTest extends TestCase {
 	// 01.03.01 is not model
 
 	public void test_01_03_02() {
+		setUp2();
+
 		// Test not listing items that are private
 		User friend = UserManager.sharedManager().getUser("1");
 
@@ -116,9 +122,13 @@ public class InventoryTest extends TestCase {
 		Constants.isTest = true;
 
 		assertEquals(friendServices.size(), 1);
+
+		tearDown2();
 	}
 
 	public void test_01_04_01() {
+		setUp2();
+
 		// Test editing a service
 		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
@@ -138,9 +148,13 @@ public class InventoryTest extends TestCase {
 		assertEquals(newwerrService22222.getName(), newName);
 
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newwerrService22222.getID());
+
+		tearDown2();
 	}
 
 	public void test_01_05_01() {
+		setUp2();
+
 		// Test removing a service
 		User user = MyApplication.getLocalUser();
 		Service newService = ServiceManager.sharedManager().newService();
@@ -152,15 +166,21 @@ public class InventoryTest extends TestCase {
 		assertEquals(user.getServices().size(), 0);
 
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + newService.getID());
+
+		tearDown2();
 	}
 
 	public void test_01_06_01() {
+		setUp2();
+
 		// Test settings a category and make sure there are only 10
 		Service newService = ServiceManager.sharedManager().newService();
 		newService.setCategory(CategoryList.sharedCategoryList().getCategories().get(3));
 
 		assertEquals(newService.getCategory(), CategoryList.sharedCategoryList().getCategories().get(3));
 		assertEquals(CategoryList.sharedCategoryList().getCategories().size(), 10);
+
+		tearDown2();
 	}
 
 	// 01_07_01 is not model

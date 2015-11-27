@@ -7,13 +7,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
 import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
 import ca.ualberta.cs.xpertsapp.views.AddServiceActivity;
 import ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 import ca.ualberta.cs.xpertsapp.views.ViewProfileActivity;
 
-public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
+public class AddInventoryServiceTest extends TestCase {
         private AddServiceController asc = new AddServiceController();
         private Spinner Categories;
         private EditText Title;
@@ -29,23 +30,23 @@ public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
         private static final int TIME_OUT = 5000;
 
         public AddInventoryServiceTest() {
-                super(MainActivity.class);
+                super();
 
         }
 
         @Override
-        protected void setUp() throws Exception {
-                super.setUp();
+        protected void setUp2() {
+                super.setUp2();
                 instrumentation = getInstrumentation();
                 monitor = instrumentation.addMonitor(ViewProfileActivity.class.getName(), null, false);
                 monitor2 = instrumentation.addMonitor(AddServiceActivity.class.getName(), null, false);
         }
 
         @Override
-        protected void tearDown() throws Exception {
+        protected void tearDown2() {
                 activity2.finish();
                 getInstrumentation().removeMonitor(monitor);
-                super.tearDown();
+                super.tearDown2();
         }
 
         /**
@@ -54,6 +55,8 @@ public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
 
 
         public void testAddService(){
+                setUp2();
+
                 setActivityInitialTouchMode(true);
                 //Navigate from Main menu
                 MainActivity activity = (MainActivity) getActivity();
@@ -116,5 +119,7 @@ public class AddInventoryServiceTest extends ActivityInstrumentationTestCase2 {
                         }
                 });
                 getInstrumentation().waitForIdleSync(); // makes sure that all the threads finish
+
+                tearDown2();
         }
 }
