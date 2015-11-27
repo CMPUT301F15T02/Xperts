@@ -211,7 +211,7 @@ public class User implements IObservable {
 	 */
 	public void removeTrade(Trade trade) {
 		this.trades.remove(trade.getID());
-		trade.getOwner().removeTradeFromOwner(trade);
+		//trade.getOwner().removeTradeFromOwner(trade);
 		TradeManager.sharedManager().removeTrade(trade);
 		this.notifyObservers();
 	}

@@ -45,7 +45,7 @@ public class TradeTest extends TestCase {
 				"\"description\":\"\"," +
 				"\"id\":\"1\"," +
 				"\"name\":\"\"," +
-				"\"owner\":\"1\"," +
+				"\"owner\":\"test@email.com\"," +
 				"\"pictures\":[]," +
 				"\"shareable\":true" +
 				"}";
