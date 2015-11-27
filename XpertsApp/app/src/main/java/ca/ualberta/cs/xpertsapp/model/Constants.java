@@ -62,6 +62,16 @@ public class Constants {
 	}
 
 	/**
+	 * @return The URL extension for Images
+	 */
+	public static String serverImageExtensino() {
+		if (isTest) {
+			return "images_test/";
+		}
+		return "images/";
+	}
+
+	/**
 	 * @return The URL extension for searching
 	 */
 	public static String serverSearchExtension() {
