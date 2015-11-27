@@ -38,4 +38,20 @@ public class TradeController {
         Trade deletedTrade = TradeManager.sharedManager().getTrade(id);
         MyApplication.getLocalUser().removeTrade(deletedTrade);
     }
+
+    /**
+     * Get the count of pending trades a user has. This is used for the notifications on the main
+     * menu screen.
+     * @return the count of pending trades the user has.
+     */
+    public Integer getPendingTrades() {
+        Integer pending = 0;
+        User user = MyApplication.getLocalUser();
+        for (Trade trade: user.getTrades()) {
+            if (trade.getOwner().equals(user) && trade.getStatus()==0) {
+                pending++;
+            }
+        }
+        return pending;
+    }
 }
