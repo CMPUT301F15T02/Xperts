@@ -49,7 +49,7 @@ public class TradeController {
         Integer pending = 0;
         User user = MyApplication.getLocalUser();
         for (Trade trade: user.getTrades()) {
-            if (trade.getBorrower().equals(user) && trade.getStatus()==0) {
+            if (trade.getOwner().equals(user) && trade.getStatus()==0) {
                 pending++;
             }
         }

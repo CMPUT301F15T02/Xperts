@@ -153,7 +153,8 @@ public class TradeControllerTest extends TestCase {
         assertEquals(u1.getTrades().size(), 1);
 
         int pending = tc.getPendingTrades();
-        assertEquals(pending, 1);
+        //pending should be 0 because user sent the trade
+        assertEquals(pending, 0);
         Trade newTrade = user.getTrades().get(0);
         TradeManager.sharedManager().clearCache();
         Trade oldTrade = TradeManager.sharedManager().getTrade(user.getTrades().get(0).getID());
