@@ -22,13 +22,17 @@ import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
 /**
- * Activity to handle trades. Not finished yet. It is called from MainActivity.
+ * Activity to view incoming and outgoing trades a user has. It is called from MainActivity. By
+ * clicking on a trade, the user can view the trade details.
  */
 public class TradeListActivity extends Activity {
     private TradeListActivity activity = this;
     private TradeListAdapter tradeListAdapter;
     private ListView tradesListView;
 
+    /**
+     * This sets the click listener for the trade listView.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,6 +116,11 @@ public class TradeListActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * This changes the list of trades that's displayed on the screen to the ones the current user
+     * has sent.
+     * @param view The button Outgoing that is clicked
+     */
     public void viewOutgoing(View view) {
         UserManager.sharedManager().clearCache();
         User user = MyApplication.getLocalUser();
@@ -125,6 +134,11 @@ public class TradeListActivity extends Activity {
         tradeListAdapter.updateTradeList(outgoing);
     }
 
+    /**
+     * This changes the list of trades that's displayed on the screen to the ones the current user
+     * has received.
+     * @param view The button Incoming that is clicked
+     */
     public void viewIncoming(View view) {
         User user = MyApplication.getLocalUser();
         List<Trade> trades = user.getTrades();

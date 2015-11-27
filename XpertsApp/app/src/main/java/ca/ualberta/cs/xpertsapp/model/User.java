@@ -214,9 +214,11 @@ public class User implements IObservable {
 	}
 
 	/**
-	 * to test //TODO
+	 * This is called from removeTrade() and is used to remove the trade from the owner as well.
+	 * @param trade the trade that's being removed
 	 */
 	public void removeTradeFromOwner(Trade trade) {
+		//TODO
 		this.trades.remove(trade.getID());
 		TradeManager.sharedManager().removeTrade(trade);
 		this.notifyObservers();

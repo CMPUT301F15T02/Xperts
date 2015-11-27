@@ -26,7 +26,7 @@
 
     <TextView android:id="@+id/trade_list_category"
         android:text="Category"
-        android:textSize="14sp"
+        android:textSize="12sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
@@ -43,7 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:textColor="@color/darkGrey"
-        android:layout_marginEnd="42dp"
         android:layout_alignBottom="@+id/trade_list_category"
         android:layout_alignParentEnd="true" />
 

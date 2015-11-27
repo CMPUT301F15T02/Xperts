@@ -11,8 +11,16 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
 
 /**
  * Created by kmbaker on 11/23/15.
+ * This can create a trade or delete a trade. It is used in OfferTradeActivity and OutgoingOfferActivity.
  */
 public class TradeController {
+    /**
+     * This creates a trade by making a new trade and adding the borrower services to the trade
+     * and the owner service.
+     * @param owner The owner of the trade
+     * @param borrowerServices A list of services the borrower is offering in this trade.
+     * @param ownerService The service the borrower is asking for from the owner.
+     */
     public void createTrade(User owner,ArrayList<Service> borrowerServices, Service ownerService) {
         Trade newTrade = TradeManager.sharedManager().newTrade(owner, false);
         for (Service service : borrowerServices) {
@@ -23,8 +31,8 @@ public class TradeController {
     }
 
     /**
-     * This function deletes a trade given by the id.
-     * @param id The id of the trade to be deleted. It must not be null
+     * This function deletes a trade from the system, given by the id.
+     * @param id The id of the trade to be deleted. It must not be null.
      */
     public void deleteTrade(String id) {
         Trade deletedTrade = TradeManager.sharedManager().getTrade(id);

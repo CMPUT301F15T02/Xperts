@@ -79,6 +79,10 @@ public class TradeManager implements IObserver {
 		this.trades.put(trade.getID(), trade);
 	}
 
+	/**
+	 * Remove the trade from the system and users. Trade should not be null.
+	 * @param trade The trade to be removed from the system
+	 */
 	void removeTrade(Trade trade) {
 		trade.removeObserver(this);
 		this.trades.remove(trade.getID());

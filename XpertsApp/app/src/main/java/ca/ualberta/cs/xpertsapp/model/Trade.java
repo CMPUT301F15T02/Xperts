@@ -170,6 +170,17 @@ public class Trade implements IObservable {
 	}
 
 	/**
+	 * status = 0 -> pending
+	 * status = 1 -> accepted
+	 * status = 2 -> cancelled
+	 * status = 3 -> declined
+	 * @return an int saying the state the trade is in
+	 */
+	public int getStatus() {
+		return status;
+	}
+
+	/**
 	 * @return true if editable, false if not
 	 */
 	private boolean isEditable() {

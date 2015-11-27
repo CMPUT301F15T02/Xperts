@@ -97,7 +97,25 @@ public class TradeListAdapter extends BaseAdapter {
         }
         service.setText(trade.getOwnerServices().get(0).getName());
         category.setText(trade.getOwnerServices().get(0).getCategory().toString());
-        //state.setText(trade.getState().getString());
+
+
+        //status = 0 -> pending
+        //status = 1 -> accepted
+        //status = 2 -> cancelled
+        //status = 3 -> declined
+        if (trade.getStatus()==0) {
+            state.setText("Pending");
+            state.setTextColor(Color.parseColor("#ff0C2233"));
+        } else if (trade.getStatus()==1) {
+            state.setText("In progress");
+            state.setTextColor(Color.parseColor("#ffFFC045"));
+        } else if (trade.getStatus()==2) {
+            state.setText("Cancelled");
+            state.setTextColor(Color.parseColor("#ffE15258"));
+        } else if (trade.getStatus()==3) {
+            state.setText("Declined");
+            state.setTextColor(Color.parseColor("#ffE15258"));
+        }
 
         if (trade.getBorrower().equals(MyApplication.getLocalUser())) {
             incoming.setTextColor(Color.TRANSPARENT);

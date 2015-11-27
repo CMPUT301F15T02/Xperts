@@ -19,6 +19,11 @@ import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.Trade;
 import ca.ualberta.cs.xpertsapp.model.TradeManager;
 
+/**
+ * This displays the trade details of an outgoing offer. The user is able to delete the trade
+ * here by clicking the Cancel button. This removes the trade from the system and from the borrower
+ * and owner.
+ */
 public class OutgoingOfferActivity extends Activity {
     private ServiceListAdapter serviceOwnerAdapter;
     private ServiceListAdapter serviceBorrowerAdapter;
@@ -31,6 +36,9 @@ public class OutgoingOfferActivity extends Activity {
     private Trade trade;
     private TradeController tradeController = new TradeController();
 
+    /**
+     * This sets the owner name and gets the trade from the intent.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +55,7 @@ public class OutgoingOfferActivity extends Activity {
     }
 
     /**
-     * Updates the serviceListAdapter with new services.
+     * Updates the serviceListAdapters with new services.
      */
     @Override
     protected void onStart() {
@@ -85,10 +93,9 @@ public class OutgoingOfferActivity extends Activity {
     }
 
     /**
-     * This should cancel the trade. Only the borrower in the trade can cancel a trade. It should
-     * set the trade state to cancelled. The trade should not be removed from the users because we
-     * want to be able to see all their past trades.
-     * @param view cancel button that was pressed
+     * This should cancel the trade. Only the borrower in the trade can cancel a trade. It deletes
+     * the trade from the system and from both the owner and borrower.
+     * * @param view cancel button that was pressed
      */
     public void cancelTrade(View view) {
         //need to cancel the trade here
