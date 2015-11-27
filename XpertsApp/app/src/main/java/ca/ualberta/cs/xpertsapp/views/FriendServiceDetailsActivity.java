@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
@@ -18,6 +21,8 @@ import ca.ualberta.cs.xpertsapp.model.ServiceManager;
  * It is called from FriendProfileActivity.
  */
 public class FriendServiceDetailsActivity extends Activity {
+
+    private AddServiceController asc = new AddServiceController();
     private TextView theTitle;
     public TextView getTheTitle() {return theTitle;}
     private TextView category;
@@ -27,6 +32,7 @@ public class FriendServiceDetailsActivity extends Activity {
     private Intent intent;
     private FriendServiceDetailsActivity activity = this;
     private Service service;
+    private CheckBox cb;
 
     /**
      * This sets all the TextViews with the service information.
@@ -50,7 +56,7 @@ public class FriendServiceDetailsActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
+        getMenuInflater().inflate(R.menu.menu_friend_service_details, menu);
         return true;
     }
 
@@ -62,7 +68,8 @@ public class FriendServiceDetailsActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.clone_service) {
+            asc.cloneService(service.getName(), service.getDescription(), service.getCategory(), service.getPictures());
             return true;
         }
 

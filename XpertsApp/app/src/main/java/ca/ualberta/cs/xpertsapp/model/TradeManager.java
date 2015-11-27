@@ -80,6 +80,16 @@ public class TradeManager implements IObserver {
 	}
 
 	/**
+	 * Remove the trade from the system and users. Trade should not be null.
+	 * @param trade The trade to be removed from the system
+	 */
+	void removeTrade(Trade trade) {
+		trade.removeObserver(this);
+		this.trades.remove(trade.getID());
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
+	}
+
+	/**
 	 * Clear the loaded trades so they get reloaded
 	 */
 	public void clearCache() {

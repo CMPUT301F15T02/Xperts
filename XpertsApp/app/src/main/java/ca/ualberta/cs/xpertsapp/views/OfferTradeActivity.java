@@ -1,6 +1,7 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -72,7 +74,7 @@ public class OfferTradeActivity extends Activity {
                 View v = parent.getChildAt(position);
                 if (colouredItems.contains(v)) {
                     colouredItems.remove(v);
-                    view.setBackgroundColor(Color.WHITE);
+                    view.setBackgroundColor(Color.TRANSPARENT);
                     borrowerServices.remove(serviceListAdapter.getItem(position));
                 }
                 else {
@@ -125,12 +127,15 @@ public class OfferTradeActivity extends Activity {
      * starts the next activity, which is BrowseServicesActivity.
      */
     public void makeTrade(View view) {
-        //need to check that at least one service was selected - probably make toast to let user know
-        if (!borrowerServices.isEmpty()) {
-            tradeController.createTrade(initialService.getOwner(), borrowerServices, initialService);
-            //make a toast to say sent trade
-            //return to activity
-            finish();
-        }
+        //can make a trade without any borrower services
+        tradeController.createTrade(initialService.getOwner(), borrowerServices, initialService);
+        //make a toast to say sent trade
+        Context context = getApplicationContext();
+        CharSequence text = "Trade request sent";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+        //return to activity
+        finish();
     }
 }
