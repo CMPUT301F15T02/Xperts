@@ -13,6 +13,7 @@ import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
+import ca.ualberta.cs.xpertsapp.controllers.TradeController;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.Trade;
@@ -28,6 +29,7 @@ public class OutgoingOfferActivity extends Activity {
     private ListView ownerServices;
     private Intent intent;
     private Trade trade;
+    private TradeController tradeController = new TradeController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,5 +92,7 @@ public class OutgoingOfferActivity extends Activity {
      */
     public void cancelTrade(View view) {
         //need to cancel the trade here
+        tradeController.deleteTrade(trade.getID());
+        finish();
     }
 }

@@ -197,6 +197,28 @@ public class User implements IObservable {
 	 */
 	public void addTrade(Trade trade) {
 		this.trades.add(trade.getID());
+		TradeManager.sharedManager().addTrade(trade);
+		TradeManager.sharedManager().notify(trade);
+		this.notifyObservers();
+	}
+
+	/**
+	 * remove trade from use. The trade still exists but is unlinked.
+	 * @param trade the trade to be removed
+	 */
+	public void removeTrade(Trade trade) {
+		this.trades.remove(trade.getID());
+		trade.getOwner().removeTradeFromOwner(trade);
+		TradeManager.sharedManager().removeTrade(trade);
+		this.notifyObservers();
+	}
+
+	/**
+	 * to test //TODO
+	 */
+	public void removeTradeFromOwner(Trade trade) {
+		this.trades.remove(trade.getID());
+		TradeManager.sharedManager().removeTrade(trade);
 		this.notifyObservers();
 	}
 

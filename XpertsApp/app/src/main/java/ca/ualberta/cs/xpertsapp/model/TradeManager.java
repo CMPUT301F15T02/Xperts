@@ -79,6 +79,12 @@ public class TradeManager implements IObserver {
 		this.trades.put(trade.getID(), trade);
 	}
 
+	void removeTrade(Trade trade) {
+		trade.removeObserver(this);
+		this.trades.remove(trade.getID());
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
+	}
+
 	/**
 	 * Clear the loaded trades so they get reloaded
 	 */

@@ -21,4 +21,13 @@ public class TradeController {
         newTrade.addOwnerService(ownerService);
         newTrade.commit();
     }
+
+    /**
+     * This function deletes a trade given by the id.
+     * @param id The id of the trade to be deleted. It must not be null
+     */
+    public void deleteTrade(String id) {
+        Trade deletedTrade = TradeManager.sharedManager().getTrade(id);
+        MyApplication.getLocalUser().removeTrade(deletedTrade);
+    }
 }

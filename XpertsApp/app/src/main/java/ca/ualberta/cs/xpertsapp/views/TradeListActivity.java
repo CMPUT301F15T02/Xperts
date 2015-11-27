@@ -60,6 +60,27 @@ public class TradeListActivity extends Activity {
         User user = MyApplication.getLocalUser();
         List<Trade> trades = user.getTrades();
         List<Trade> incoming = new ArrayList<Trade>();
+        if (!trades.isEmpty()) {
+            for (Trade trade : trades) {
+                if (trade.getOwner().equals(user)) {
+                    incoming.add(trade);
+                }
+            }
+        }
+        tradeListAdapter = new TradeListAdapter(this,incoming);
+        tradesListView.setAdapter(tradeListAdapter);
+    }
+
+    /**
+     * This initializes the tradeListAdapter to display the trades a user has.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        UserManager.sharedManager().clearCache();
+        User user = MyApplication.getLocalUser();
+        List<Trade> trades = user.getTrades();
+        List<Trade> incoming = new ArrayList<Trade>();
         for (Trade trade :trades) {
             if (trade.getOwner().equals(user)) {
                 incoming.add(trade);
