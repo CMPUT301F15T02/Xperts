@@ -1,7 +1,6 @@
-package ca.ualberta.cs.xpertsapp.InventoryTests;
+package ca.ualberta.cs.xpertsapp.UITests.InventoryTests;
 
 import android.app.Instrumentation;
-import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -10,7 +9,6 @@ import android.widget.Spinner;
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
 import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
 import ca.ualberta.cs.xpertsapp.views.AddServiceActivity;
-import ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 import ca.ualberta.cs.xpertsapp.views.ViewProfileActivity;
 

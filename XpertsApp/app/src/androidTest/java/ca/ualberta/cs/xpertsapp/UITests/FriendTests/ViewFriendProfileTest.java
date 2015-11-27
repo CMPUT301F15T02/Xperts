@@ -1,25 +1,13 @@
-package ca.ualberta.cs.xpertsapp.FriendTests;
+package ca.ualberta.cs.xpertsapp.UITests.FriendTests;
 
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
 import android.widget.Button;
-
-import com.google.gson.Gson;
-
-import junit.framework.Test;
-
-import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
-import ca.ualberta.cs.xpertsapp.model.Constants;
-import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
-import ca.ualberta.cs.xpertsapp.model.UserManager;
-import ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity;
 import ca.ualberta.cs.xpertsapp.views.FriendsActivity;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 

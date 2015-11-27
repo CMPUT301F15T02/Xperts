@@ -1,8 +1,4 @@
-package ca.ualberta.cs.xpertsapp.FriendTests;
-
-import com.google.gson.Gson;
-
-import java.util.List;
+package ca.ualberta.cs.xpertsapp.UITests.FriendTests;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
