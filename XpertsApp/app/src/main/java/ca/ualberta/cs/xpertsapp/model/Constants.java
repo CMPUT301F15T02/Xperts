@@ -36,7 +36,7 @@ public class Constants {
 	 */
 	public static String serverUserExtension() {
 		if (isTest) {
-			return "users_test/";
+			return "users_test2/";
 		}
 		return "users/";
 	}
@@ -46,7 +46,7 @@ public class Constants {
 	 */
 	public static String serverServiceExtension() {
 		if (isTest) {
-			return "services_test/";
+			return "services_test2/";
 		}
 		return "services/";
 	}
@@ -56,7 +56,7 @@ public class Constants {
 	 */
 	public static String serverTradeExtension() {
 		if (isTest) {
-			return "trades_test/";
+			return "trades_test2/";
 		}
 		return "trades/";
 	}
@@ -66,7 +66,7 @@ public class Constants {
 	 */
 	public static String serverImageExtensino() {
 		if (isTest) {
-			return "images_test/";
+			return "images_test2/";
 		}
 		return "images/";
 	}

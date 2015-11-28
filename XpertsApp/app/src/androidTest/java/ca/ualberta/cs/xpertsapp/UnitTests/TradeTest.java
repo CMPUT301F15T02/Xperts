@@ -45,7 +45,7 @@ public class TradeTest extends TestCase {
 				"\"description\":\"\"," +
 				"\"id\":\"1\"," +
 				"\"name\":\"\"," +
-				"\"owner\":\"test@email.com\"," +
+				"\"owner\":\"1\"," +
 				"\"pictures\":[]," +
 				"\"shareable\":true" +
 				"}";
@@ -83,8 +83,8 @@ public class TradeTest extends TestCase {
 		Trade newTrade = TradeManager.sharedManager().newTrade(myFriend, false);
 
 		// Edit the trade
-		newTrade.addOwnerService(newService);
-		newTrade.addBorrowerService(service1);
+		newTrade.addBorrowerService(newService);
+		newTrade.addOwnerService(service1);
 
 		// Finalize it
 		newTrade.commit();
@@ -194,8 +194,8 @@ public class TradeTest extends TestCase {
 		Trade newTrade = TradeManager.sharedManager().newTrade(myFriend, false);
 
 		// Edit the trade
-		newTrade.addOwnerService(newService);
-		newTrade.addBorrowerService(service1);
+		newTrade.addBorrowerService(newService);
+		newTrade.addOwnerService(service1);
 
 		// Don't commit
 
