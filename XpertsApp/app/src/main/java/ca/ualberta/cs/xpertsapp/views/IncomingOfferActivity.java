@@ -98,7 +98,44 @@ public class IncomingOfferActivity extends Activity {
      */
     public void acceptTrade(View view) {
         trade.accept();
+
+        //send email
+        /* http://developer.android.com/guide/components/intents-filters.html */
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.setType("message/rfc822");
+        sendIntent.putExtra(Intent.EXTRA_EMAIL, new String[] {trade.getOwner().getEmail(), trade.getBorrower().getEmail()});
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Your trade has been accepted!");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, getEmailText());
+        startActivity(Intent.createChooser(sendIntent, "send email"));
+
+
         finish();
+    }
+
+    /**
+     * This is for getting the body of the email for an acceptance email.
+     * @return A string for the body of the email text.
+     */
+    public String getEmailText() {
+        String email = "Congrats on the trade!\n"+
+            "Your trade is for:\n";
+        for (Service service : trade.getOwnerServices()) {
+            email+=service.getName();
+            email+="\n";
+        }
+        email+="from "+trade.getOwner().getName();
+        email+=", in exchange for:\n";
+        for (Service service : trade.getBorrowerServices()) {
+            email+=service.getName();
+            email+="\n";
+        }
+        if (trade.getBorrowerServices().isEmpty()) {
+            email+="no services\n";
+        }
+        email+="from "+trade.getBorrower().getName()+".";
+        email+=" Once you have both exchanged services, you can set the trade to complete.";
+        return email;
     }
 
     /**

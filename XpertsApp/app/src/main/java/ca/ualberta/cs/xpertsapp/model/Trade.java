@@ -85,7 +85,7 @@ public class Trade implements IObservable {
 	 */
 	public void addOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
+		if (service.getOwner() != this.getOwner()) throw new AssertionError();
 		this.ownerServices.add(service.getID());
 		this.notifyObservers();
 	}
