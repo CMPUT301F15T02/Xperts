@@ -39,22 +39,6 @@ public class IOManager {
 	// When writing to the server, we need to sleep to make sure the server can update before we fetch
 	private static final int sleepTime = 500;
 
-	private List<User> users = new ArrayList<User>();
-	private List<Service> services = new ArrayList<Service>();
-	private List<Trade> trades = new ArrayList<Trade>();
-
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public List<Service> getServices() {
-		return services;
-	}
-
-	public List<Trade> getTrades() {
-		return trades;
-	}
-
 	/**
 	 * Does Network Requests Asynchronously
 	 * this is where the magic happens

@@ -57,7 +57,7 @@ public class UserManager implements IObserver {
 			} catch (Exception e) {
 				// no internet
 				Constants.usersSync = true;
-				Toast.makeText(MyApplication.getContext(), "Offline", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(MyApplication.getContext(), "Offline", Toast.LENGTH_SHORT).show();
 				//System.out.println("System offline");
 			}
 		}
