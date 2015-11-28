@@ -40,7 +40,7 @@ public class Constants {
 		if (isTest) {
 			return "users_test/";
 		}
-		return "usershuy/";
+		return "users/";
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Constants {
 		if (isTest) {
 			return "services_test/";
 		}
-		return "serviceshuy/";
+		return "services/";
 	}
 
 	/**
@@ -60,7 +60,17 @@ public class Constants {
 		if (isTest) {
 			return "trades_test/";
 		}
-		return "tradeshuy/";
+		return "trades/";
+	}
+
+	/**
+	 * @return The URL extension for Images
+	 */
+	public static String serverImageExtensino() {
+		if (isTest) {
+			return "images_test/";
+		}
+		return "images/";
 	}
 
 	/**

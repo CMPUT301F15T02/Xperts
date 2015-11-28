@@ -1,8 +1,4 @@
-package ca.ualberta.cs.xpertsapp.FriendTests;
-
-import com.google.gson.Gson;
-
-import java.util.List;
+package ca.ualberta.cs.xpertsapp.UITests.FriendTests;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
@@ -34,8 +30,8 @@ public class ProfileControllerTest extends TestCase {
     private User u3;
 
     @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    protected void setUp2() {
+        super.setUp2();
         UserManager.sharedManager().clearCache();
         ServiceManager.sharedManager().clearCache();
         TradeManager.sharedManager().clearCache();
@@ -46,15 +42,16 @@ public class ProfileControllerTest extends TestCase {
         u1 = newTestUser(testEmail1,"David Skrundz","Calgary");
         u2 = newTestUser(testEmail2, "Seann Murdock", "Vancouver");
         u3 = newTestUser(testEmail3, "Kathleen Baker", "Toronto");
-
     }
 
     @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    protected void tearDown2() {
+        super.tearDown2();
     }
 
     public void testAddFriend() {
+        setUp2();
+
         // Test add friends by searching for email
         User user = MyApplication.getLocalUser();
         String email = "email1@u.ca";
@@ -68,21 +65,27 @@ public class ProfileControllerTest extends TestCase {
         //should exist
         friend = pc.addFriend(email2);
         assertEquals(user.getFriends().contains(u3), true);
-        assertEquals(u3.getFriends().contains(user),true);
+        assertEquals(u3.getFriends().contains(user), false);
+
+        tearDown2();
     }
 
     public void testDeleteFriend() {
+        setUp2();
+
         // Test delete friend
         User user = MyApplication.getLocalUser();
         String email = "david@xperts.com";
         ProfileController pc = new ProfileController();
         User friend = pc.addFriend(email);
         assertEquals(user.getFriends().contains(u1),true);
-        assertEquals(u1.getFriends().contains(user),true);
+        assertEquals(u1.getFriends().contains(user),false);
         assertEquals(user.getFriends().contains(u3),false);
         assertEquals(user.getFriends().size() == 1, true);
         pc.deleteFriend(friend);
         assertEquals(user.getFriends().size() == 0, true);
         assertEquals(friend.getFriends().size() == 0, true);
+
+        tearDown2();
     }
 }

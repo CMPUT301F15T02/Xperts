@@ -53,10 +53,7 @@ public class UserManager implements IObserver {
 			// This is bad practice to ignore exception, but check internet will freeze few seconds
 			try {
 				Constants.usersSync = false;
-				//if (!email.equals(offlineUser.getEmail())) {
-					IOManager.sharedManager().storeData(offlineUser, Constants.serverUserExtension() + offlineUser.getEmail());
-					System.out.println("pushuser" + offlineUser.toString());
-				//}
+				IOManager.sharedManager().storeData(offlineUser, Constants.serverUserExtension() + offlineUser.getEmail());
 			} catch (Exception e) {
 				// no internet
 				Constants.usersSync = true;
@@ -87,7 +84,6 @@ public class UserManager implements IObserver {
 			throw new RuntimeException(e);
 		} catch (Exception e) {
 			// no internet
-			//Toast.makeText(MyApplication.getContext(), "Offline", Toast.LENGTH_SHORT).show();
 			//System.out.println("System is offline");
 		}
 

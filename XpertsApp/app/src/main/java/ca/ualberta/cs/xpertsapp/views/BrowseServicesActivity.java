@@ -42,6 +42,8 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
     private int currentCategory;
     private String currentQuery;
 
+    private BrowseServicesActivity activity = this;
+
 
     /**
      * Sets the category spinner and search view in the options menu.
@@ -124,6 +126,16 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
                 android.R.layout.simple_spinner_dropdown_item, Controller.getCategoryNames());
         serviceList = (ListView) findViewById(R.id.serviceList);
         serviceList.setAdapter(serviceAdapter);
+
+        //set click listener to start OfferTradeActivity when service is clicked
+        serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(activity, BrowseServiceDetailsActivity.class);
+                intent.putExtra("INTENT_SERVICEID", serviceAdapter.getItem(position).getID());
+                startActivity(intent);
+            }
+        });
     }
 
     /**

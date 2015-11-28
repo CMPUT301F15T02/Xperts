@@ -71,7 +71,7 @@ public class ServiceManager implements IObserver {
 			throw new RuntimeException(e);
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);
-		} catch (RuntimeException e) {
+		} catch (Exception e) {
 			// no internet
 		}
 
@@ -154,7 +154,7 @@ public class ServiceManager implements IObserver {
 		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverServiceExtension() + ((Service) observable).getID());
 			Constants.servicesSync = false;
-		} catch (RuntimeException e) {
+		} catch (Exception e) {
 			// Means no internet
 			offlineServices.add((Service) observable);
 			Constants.servicesSync = true;

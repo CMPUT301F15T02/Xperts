@@ -17,7 +17,7 @@ public class Service implements IObservable {
 	private String name = "";
 	private String description = "";
 	private Category category = CategoryList.sharedCategoryList().otherCategory();
-	private List<Bitmap> pictures = new ArrayList<Bitmap>();
+	private List<String> pictures = new ArrayList<String>();
 	private boolean shareable = true;
 	private String owner = "";
 
@@ -103,7 +103,11 @@ public class Service implements IObservable {
 	 * @return the list of images
 	 */
 	public List<Bitmap> getPictures() {
-		return pictures;
+		List<Bitmap> bm = new ArrayList<Bitmap>();
+		for (String id : this.pictures) {
+			bm.add(ImageManager.sharedManager().getImage(id));
+		}
+		return bm;
 	}
 
 	/**
@@ -111,16 +115,16 @@ public class Service implements IObservable {
 	 */
 	public void addPicture(Bitmap picture) {
 		if (!this.isEditable()) throw new AssertionError();
-		pictures.add(picture);
+		pictures.add(ImageManager.sharedManager().registerImage(picture));
 		this.notifyObservers();
 	}
 
 	/**
-	 * @param picture the image to remove
+	 * @param id the id of the image to remove
 	 */
-	public void removePicture(Bitmap picture) {
+	public void removePicture(String id) {
 		if (!this.isEditable()) throw new AssertionError();
-		pictures.remove(picture);
+		pictures.remove(id);
 		this.notifyObservers();
 	}
 

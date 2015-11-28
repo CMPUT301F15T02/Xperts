@@ -98,7 +98,10 @@ public class User implements IObservable {
 	public List<User> getFriends() {
 		List<User> friends = new ArrayList<User>();
 		for (String friendID : this.friends) {
-			friends.add(UserManager.sharedManager().getUser(friendID));
+			User u = UserManager.sharedManager().getUser(friendID);
+			if (u != null) {
+				friends.add(u);
+			}
 		}
 		return friends;
 	}
@@ -195,8 +198,33 @@ public class User implements IObservable {
 	 * add a new trade that the user will maybe be participating in.
 	 * @param trade The new trade
 	 */
-	void addTrade(Trade trade) {
+	public void addTrade(Trade trade) {
 		this.trades.add(trade.getID());
+		Constants.usersSync = true;
+		TradeManager.sharedManager().addTrade(trade);
+		TradeManager.sharedManager().notify(trade);
+		this.notifyObservers();
+	}
+
+	/**
+	 * remove trade from use. The trade still exists but is unlinked.
+	 * @param trade the trade to be removed
+	 */
+	public void removeTrade(Trade trade) {
+		this.trades.remove(trade.getID());
+		//trade.getOwner().removeTradeFromOwner(trade);
+		TradeManager.sharedManager().removeTrade(trade);
+		this.notifyObservers();
+	}
+
+	/**
+	 * This is called from removeTrade() and is used to remove the trade from the owner as well.
+	 * @param trade the trade that's being removed
+	 */
+	public void removeTradeFromOwner(Trade trade) {
+		//TODO
+		this.trades.remove(trade.getID());
+		TradeManager.sharedManager().removeTrade(trade);
 		this.notifyObservers();
 	}
 

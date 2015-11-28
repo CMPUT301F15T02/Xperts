@@ -66,11 +66,17 @@ public class Trade implements IObservable {
 	}
 
 	/**
+	 * This should only ever have one item in the list for non counter trades
 	 * @return The services the borrower wants
 	 */
 	public List<Service> getOwnerServices() {
 		// TODO:
-		return null;
+		List<Service> services = new ArrayList<Service>();
+		ServiceManager sm = ServiceManager.sharedManager();
+		for (String id : ownerServices) {
+			services.add(sm.getService(id));
+		}
+		return services;
 	}
 
 	/**
@@ -79,7 +85,7 @@ public class Trade implements IObservable {
 	 */
 	public void addOwnerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (service.getOwner() != this.getOwner()) throw new AssertionError();
+		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
 		this.ownerServices.add(service.getID());
 		this.notifyObservers();
 	}
@@ -100,7 +106,12 @@ public class Trade implements IObservable {
 	 */
 	public List<Service> getBorrowerServices() {
 		// TODO:
-		return null;
+		List<Service> services = new ArrayList<Service>();
+		ServiceManager sm = ServiceManager.sharedManager();
+		for (String id : borrowerServices) {
+			services.add(sm.getService(id));
+		}
+		return services;
 	}
 
 	/**
@@ -120,7 +131,7 @@ public class Trade implements IObservable {
 	 */
 	public void removeBorrowerService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
-		if (service.getOwner() != this.getBorrower()) throw new AssertionError();
+		if (service.getOwner() != this.getOwner()) throw new AssertionError();
 		this.borrowerServices.remove(service.getID());
 		this.notifyObservers();
 	}
@@ -159,10 +170,21 @@ public class Trade implements IObservable {
 	}
 
 	/**
+	 * status = 0 -> pending
+	 * status = 1 -> accepted
+	 * status = 2 -> cancelled
+	 * status = 3 -> declined
+	 * @return an int saying the state the trade is in
+	 */
+	public int getStatus() {
+		return status;
+	}
+
+	/**
 	 * @return true if editable, false if not
 	 */
 	private boolean isEditable() {
-		return this.getOwner() == MyApplication.getLocalUser();
+		return this.getBorrower() == MyApplication.getLocalUser();
 	}
 
 	/**

@@ -1,19 +1,28 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.net.InetAddress;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
-
+import ca.ualberta.cs.xpertsapp.controllers.TradeController;
+import ca.ualberta.cs.xpertsapp.model.Constants;
+import ca.ualberta.cs.xpertsapp.model.IOManager;
 
 /**
  * Activity that displays the menu with My Profile, Browse Services, Trades, and Friends buttons.
@@ -32,6 +41,7 @@ public class MainActivity extends Activity {
     public Button getLogoutBtn() {
         return LogoutBtn;
     }
+    private TextView notifications;
 
     /**
      * Sets the onClickListeners for My Profile, Browse Services, Trades, and Friends buttons.
@@ -79,6 +89,47 @@ public class MainActivity extends Activity {
             }
         });
 
+        notifications = (TextView) findViewById(R.id.notifications);
+        TradeController tradeController = new TradeController();
+        Integer pending = tradeController.getPendingTrades();
+        notifications.setText(pending.toString());
+        if (pending == 0) {
+            notifications.setVisibility(View.INVISIBLE);
+        } else {
+            notifications.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Sets the notification of how many pending trades the user has
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        TradeController tradeController = new TradeController();
+        Integer pending = tradeController.getPendingTrades();
+        notifications.setText(pending.toString());
+        if (pending == 0) {
+            notifications.setVisibility(View.INVISIBLE);
+        } else {
+            notifications.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Sets the notification of how many pending trades the user has
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TradeController tradeController = new TradeController();
+        Integer pending = tradeController.getPendingTrades();
+        notifications.setText(pending.toString());
+        if (pending == 0) {
+            notifications.setVisibility(View.INVISIBLE);
+        } else {
+            notifications.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

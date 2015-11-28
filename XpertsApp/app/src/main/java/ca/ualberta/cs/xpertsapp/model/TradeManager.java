@@ -22,17 +22,9 @@ import ca.ualberta.cs.xpertsapp.views.MainActivity;
  */
 public class TradeManager implements IObserver {
 	private Map<String, Trade> trades = new HashMap<String, Trade>();
+	private ArrayList<Trade> offlineTrades = new ArrayList<Trade>();
 
 	// Get/Set
-
-	/**
-	 * For cache services
-	 */
-	public void setTrades(List<Trade> trades) {
-		for (Trade trade: trades) {
-			addTrade(trade);
-		}
-	}
 
 	/**
 	 * @return A list of loaded trades
@@ -50,20 +42,53 @@ public class TradeManager implements IObserver {
 	 * @return the trade or null if not found
 	 */
 	public Trade getTrade(String id) {
+		if (Constants.tradesSync) {
+			try {
+				for (Trade trade: offlineTrades) {
+					IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
+				}
+				Constants.tradesSync = false;
+			} catch (Exception e) {
+				// No internet
+				System.out.println("System is offline");
+			}
+		}
+
 		// If we have the trade loaded
 		if (this.trades.containsKey(id)) {
 			return this.trades.get(id);
 		}
+
+		try {
+			SearchHit<Trade> loadedTrade = IOManager.sharedManager().fetchData(Constants.serverTradeExtension() + id, new TypeToken<SearchHit<Trade>>() {
+			});
+			if (loadedTrade.isFound()) {
+				this.addTrade(loadedTrade.getSource());
+				return loadedTrade.getSource();
+			} else {
+				// TODO:
+				return null;
+			}
+		} catch (JsonIOException e) {
+			throw new RuntimeException(e);
+		} catch (JsonSyntaxException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalStateException e) {
+			throw new RuntimeException(e);
+		} catch (Exception e) {
+			// no internet
+		}
+
 		return null;
 	}
 
 	/**
-	 * @param borrower  the borrower of the trade
+	 * @param owner  the owner of the service the borrower wants
 	 * @param isCounter if its a counter offer or not
 	 * @return an empty trade that should be modified then committed
 	 */
-	public Trade newTrade(User borrower, boolean isCounter) {
-		Trade trade = new Trade(UUID.randomUUID().toString(), isCounter, MyApplication.getLocalUser().getEmail(), borrower.getEmail());
+	public Trade newTrade(User owner, boolean isCounter) {
+		Trade trade = new Trade(UUID.randomUUID().toString(), isCounter, owner.getEmail(), MyApplication.getLocalUser().getEmail());
 		return trade;
 	}
 
@@ -74,26 +99,21 @@ public class TradeManager implements IObserver {
 	}
 
 	/**
+	 * Remove the trade from the system and users. Trade should not be null.
+	 * @param trade The trade to be removed from the system
+	 */
+	void removeTrade(Trade trade) {
+		trade.removeObserver(this);
+		this.trades.remove(trade.getID());
+		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
+	}
+
+	/**
 	 * Clear the loaded trades so they get reloaded
 	 */
 	public void clearCache() {
 		this.trades.clear();
 		// TODO:
-	}
-
-	/**
-	 * @param meta the meta to search for
-	 * @return the list of found trades
-	 */
-	public List<Trade> findTrades(String meta) {
-		List<SearchHit<Trade>> found = IOManager.sharedManager().searchData(Constants.serverTradeExtension() + meta, new TypeToken<SearchResponse<Trade>>() {
-		});
-		List<Trade> trades = new ArrayList<Trade>();
-		for (SearchHit<Trade> trade : found) {
-			//trades.add(this.getTrade(trade.getSource().getID()));
-			trades.add(trade.getSource());
-		}
-		return trades;
 	}
 
 	// Singleton
@@ -114,6 +134,8 @@ public class TradeManager implements IObserver {
 		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverTradeExtension() + ((Trade) observable).getID());
 		} catch (Exception e) {
+			// Means no internet
+			offlineTrades.add((Trade) observable);
 			Constants.tradesSync = true;
 		}
 	}

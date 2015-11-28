@@ -22,19 +22,19 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		super(MainActivity.class);
 	}
 
+	public TestCase(Class c) {
+		super(c);
+	}
+
 	static final String testLocalEmail =  Constants.testEmail;
 	protected static SharedPreferences pref;
 
-	@Override
-	protected void setUp() throws Exception {
-		super.setUp();
-
+	protected void setUp2() {
 		Constants.isTest = true;
 		Constants.isOnline = true;
 	}
 
-	@Override
-	protected void tearDown() throws Exception {
+	protected void tearDown2() {
 		// Cleanup
 		UserManager.sharedManager().clearCache();
 		ServiceManager.sharedManager().clearCache();
@@ -45,7 +45,6 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
 
 		Constants.isTest = false;
-		super.tearDown();
 	}
 
 	protected User newTestUser(String email) {

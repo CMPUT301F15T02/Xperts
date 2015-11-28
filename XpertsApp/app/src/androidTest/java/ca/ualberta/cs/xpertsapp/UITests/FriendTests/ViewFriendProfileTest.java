@@ -1,25 +1,13 @@
-package ca.ualberta.cs.xpertsapp.FriendTests;
+package ca.ualberta.cs.xpertsapp.UITests.FriendTests;
 
 
 import android.app.Activity;
 import android.app.Instrumentation;
-import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
 import android.widget.Button;
-
-import com.google.gson.Gson;
-
-import junit.framework.Test;
-
-import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
-import ca.ualberta.cs.xpertsapp.model.Constants;
-import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.User;
-import ca.ualberta.cs.xpertsapp.model.UserManager;
-import ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity;
 import ca.ualberta.cs.xpertsapp.views.FriendsActivity;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
@@ -45,24 +33,28 @@ public class ViewFriendProfileTest extends TestCase {
     private User friend1;
 
     @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    protected void setUp2() {
+        super.setUp2();
         friend1 = newTestUser("a@ualberta.ca","Matt Damon", "outer space");
         monitor = getInstrumentation().addMonitor(FriendsActivity.class.getName(), null, false);
 
     }
 
     @Override
-    protected void tearDown() throws Exception {
+    protected void tearDown2() {
         getInstrumentation().removeMonitor(monitor);
-        super.tearDown();
+        super.tearDown2();
     }
 
     public void testStart() throws Exception {
+        setUp2();
         Activity activity = getActivity();
+        tearDown2();
     }
 
     public void testViewFriend() {
+		setUp2();
+
         //starts FriendsActivity
         MainActivity activity = (MainActivity) getActivity();
         friendsButton = activity.getFriendsBtn();
@@ -86,6 +78,8 @@ public class ViewFriendProfileTest extends TestCase {
         user.addFriend(friend1);
         assertEquals(user.getFriends().size(), 1);
         friendsActivity.finish();
+
+		tearDown2();
     }
 
 
