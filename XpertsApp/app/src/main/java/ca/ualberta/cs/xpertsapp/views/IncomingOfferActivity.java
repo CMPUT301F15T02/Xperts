@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,6 +29,8 @@ public class IncomingOfferActivity extends Activity {
     private ListView ownerServices;
     private Intent intent;
     private Trade trade;
+    private Button accept;
+    private Button decline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,12 @@ public class IncomingOfferActivity extends Activity {
         String tradeID = intent.getStringExtra("INTENT_ID");
         trade = tradeManager.getTrade(tradeID);
 
+        accept = (Button) findViewById(R.id.acceptButton);
+        decline = (Button) findViewById(R.id.declineButton);
+        if (trade.getStatus() != 0) {
+            accept.setVisibility(View.INVISIBLE);
+            decline.setVisibility(View.INVISIBLE);
+        }
 
         borrowerName = (TextView) findViewById(R.id.incomingBorrowerName);
         borrowerServices = (ListView) findViewById(R.id.borrowerServicesIn);
@@ -80,5 +90,23 @@ public class IncomingOfferActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Accepts a trade. Only possible for the owner in the trade.
+     * @param view The accept button
+     */
+    public void acceptTrade(View view) {
+        trade.accept();
+        finish();
+    }
+
+    /**
+     * Declines a trade. Only possible for the owner in the trade.
+     * @param view The decline button
+     */
+    public void declineTrade(View view) {
+        trade.decline();
+        finish();
     }
 }
