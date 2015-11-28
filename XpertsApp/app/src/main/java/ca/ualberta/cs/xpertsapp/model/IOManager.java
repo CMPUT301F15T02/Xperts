@@ -2,6 +2,7 @@ package ca.ualberta.cs.xpertsapp.model;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -16,6 +17,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -183,6 +185,12 @@ public class IOManager {
 			}
 		});
 		return hits;
+	}
+
+	public void clearCache() {
+		for (File file : MyApplication.getContext().getFilesDir().listFiles()) {
+			file.delete();
+		}
 	}
 
 	// Helper
