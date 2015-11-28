@@ -1,5 +1,6 @@
 package ca.ualberta.cs.xpertsapp.model;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -15,6 +16,8 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +30,8 @@ import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
 /**
  * Manages loading and saving data from disk and the network
+ *
+ * Limitation: does not delete local stuff when the server deletes it
  */
 public class IOManager {
 	// When writing to the server, we need to sleep to make sure the server can update before we fetch
@@ -119,7 +124,6 @@ public class IOManager {
 	}
 
 	public <T> void storeData(T data, String meta) {
-		// TODO: STORE LOCALLY
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpPost addRequest = new HttpPost(Constants.serverBaseURL() + meta);
@@ -129,14 +133,36 @@ public class IOManager {
 			String status = response.getStatusLine().toString();
 			Log.i("STORE STATUS: ", status);
 //			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
+			// Cache locally
+			FileOutputStream outputStream = MyApplication.getContext().openFileOutput(meta.replace('/', '_'), Context.MODE_PRIVATE);
+			String outputString = "" +
+					"{" +
+					"	\"took\":0," +
+					"	\"timed_out\":false," +
+					"	\"_shards\":" +
+					"		{" +
+					"			\"total\":1," +
+					"			\"successful\":1," +
+					"			\"failed\":0" +
+					"		}," +
+					"	\"hits\":" +
+					"		{" +
+					"			\"total\":1," +
+					"			\"max_score\":1," +
+					"			\"hits\":" +
+					"				[" +
+					new StringEntity((new Gson()).toJson(data)) +
+					"				]" +
+					"		}" +
+					"}";
+			outputStream.write(outputString.getBytes());
+			outputStream.close();
 		} catch (Exception e) {
-			// TODO:
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void deleteData(String meta) {
-		// TODO: Delete locally
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpDelete deleteRequest = new HttpDelete(Constants.serverBaseURL() + meta);
@@ -145,24 +171,40 @@ public class IOManager {
 			String status = response.getStatusLine().toString();
 			Log.i("Delete Status: ", status);
 //			Thread.sleep(sleepTime); // Sleep for 10ms because we need to let the server update
+			MyApplication.getContext().deleteFile(meta.replace('/', '_'));
 		} catch (Exception e) {
-			// TODO:
 			throw new RuntimeException(e);
 		}
 	}
 
 	public <T> List<SearchHit<T>> searchData(String searchMeta, TypeToken<SearchResponse<T>> typeToken) {
-		// TODO: Search locally
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + searchMeta);
 		String loadedData;
-		try {
-			HttpResponse response = new AsyncRequest().execute(httpGet).get(); // Tier 1
-			loadedData = convertStreamToString(response.getEntity().getContent());
-		} catch (Exception e) {
-			// TODO:
-			throw new RuntimeException(e);
+		if (Constants.isOnline) {
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + searchMeta);
+			try {
+				HttpResponse response = new AsyncRequest().execute(httpGet).get(); // Tier 1
+				loadedData = convertStreamToString(response.getEntity().getContent());
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			// Cache locally
+			try {
+				FileOutputStream outputStream = MyApplication.getContext().openFileOutput(searchMeta.replace('/', '_'), Context.MODE_PRIVATE);
+				outputStream.write(loadedData.getBytes());
+				outputStream.close();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			try {
+				FileInputStream inputStream = MyApplication.getContext().openFileInput(searchMeta.replace('/', '_'));
+				loadedData = convertStreamToString(inputStream);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
+		// Return found
 		SearchResponse<T> loadedThings = (new Gson()).fromJson(loadedData, typeToken.getType());
 		List<SearchHit<T>> hits = new ArrayList<SearchHit<T>>(loadedThings.getHits().getHits());
 		Collections.sort(hits, new Comparator<SearchHit<T>>() {

@@ -1,6 +1,5 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
