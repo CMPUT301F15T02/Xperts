@@ -9,11 +9,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
@@ -132,39 +127,5 @@ public class MyApplication extends Application {
 		NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
 		return netInfo != null && netInfo.isConnected();
-	}*/
-
-	// http://stackoverflow.com/a/26056466
-	/*public static boolean isOnline() {
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					URL url = new URL("http://www.google.com");
-					HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
-					urlc.setConnectTimeout(500);
-					urlc.connect();
-					if (urlc.getResponseCode() == HttpURLConnection.HTTP_OK) {
-						online = true;
-					}
-				} catch (MalformedURLException mue) {
-					// TODO Auto-generated catch block
-					mue.printStackTrace();
-					online = false;
-				} catch (IOException ie) {
-					// TODO Auto-generated catch block
-					ie.printStackTrace();
-					online = false;
-				}
-			}
-		});
-		thread.start();
-		try {
-			thread.join();
-		} catch (Exception e) {
-		}
-
-		System.out.println("online=" + online);
-		return online;
 	}*/
 }

@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
@@ -27,15 +25,6 @@ public class ServiceManager implements IObserver {
 
 	private Map<String, Service> services = new HashMap<String, Service>();
 	private ArrayList<Service> offlineServices = new ArrayList<Service>();
-
-	/**
-	 * For cache services
-	 */
-	public void etServices(List<Service> services) {
-		for (Service service : services) {
-			addService(service);
-		}
-	}
 
 	/**
 	 * @return the list of loaded services

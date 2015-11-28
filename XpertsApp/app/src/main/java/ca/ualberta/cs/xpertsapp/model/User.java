@@ -129,13 +129,10 @@ public class User implements IObservable {
 	 */
 	public List<Service> getServices() {
 		List<Service> services = new ArrayList<Service>();
-		System.out.println("00000user size=" + this.services.size() + "     " + this.services.toString());
 		for (String service : this.services) {
 			Service s = ServiceManager.sharedManager().getService(service);
-			System.out.println("nullnull" + s);
 			if (this.isOwner() || s.isShareable()) {
 				services.add(s);
-				System.out.println("000000000" + s.toString());
 			}
 		}
 		return services;
