@@ -11,31 +11,10 @@
         android:layout_height="wrap_content"
         android:text="YOU SENT A REQUEST FOR"
         android:id="@+id/constantText3"
+        android:textColor="@color/darkBlue"
+        android:theme="@style/headerText"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="18dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OFFERED BY"
-        android:id="@+id/constantText4"
-        android:layout_below="@+id/ownerServicesOut"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textSize="12sp"
-        android:textColor="@color/grey"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Owner Name"
-        android:id="@+id/outgoingOwnerName"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/constantText4"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:textColor="@color/blue" />
+        android:layout_centerHorizontal="true" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -43,16 +22,17 @@
         android:id="@+id/ownerServicesOut"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/constantText3"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="IN EXCHANGE FOR:"
         android:id="@+id/constantText5"
+        android:layout_below="@+id/ownerServicesOut"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="250dp"/>
+        android:theme="@style/headerText"
+        android:layout_marginTop="10dp" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -61,16 +41,20 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/constantText5"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_above="@+id/cancelButton"/>
+        android:layout_above="@+id/cancelButton" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:text="CANCEL TRADE"
         android:id="@+id/cancelButton"
+        android:background="@color/red"
+        android:textColor="@color/white50"
+        android:singleLine="false"
+        android:textSize="16sp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="cancelTrade"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/borrowerServicesOut"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

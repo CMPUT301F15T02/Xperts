@@ -9,6 +9,7 @@
     <string name="Trades">Trades</string>
     <string name="Friends">Friends</string>
     <string name="title_activity_friends">Friends</string>
+    <string name="title_activity_top_traders">Top Traders</string>
     <string name="title_activity_trades">Trades</string>
     <string name="title_activity_view_profile">Profile</string>
     <string name="action_delete">Remove Friend</string>

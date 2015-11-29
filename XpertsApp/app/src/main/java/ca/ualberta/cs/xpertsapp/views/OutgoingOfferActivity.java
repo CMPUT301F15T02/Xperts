@@ -32,7 +32,6 @@ public class OutgoingOfferActivity extends Activity {
     private ServiceListAdapter serviceBorrowerAdapter;
     private ServiceManager serviceManager = ServiceManager.sharedManager();
     private TradeManager tradeManager = TradeManager.sharedManager();
-    private TextView ownerName;
     private ListView borrowerServices;
     private ListView ownerServices;
     private Intent intent;
@@ -51,11 +50,9 @@ public class OutgoingOfferActivity extends Activity {
         String tradeID = intent.getStringExtra("INTENT_ID");
         trade = tradeManager.getTrade(tradeID);
 
-        ownerName = (TextView) findViewById(R.id.outgoingOwnerName);
         borrowerServices = (ListView) findViewById(R.id.borrowerServicesOut);
         ownerServices = (ListView) findViewById(R.id.ownerServicesOut);
 
-        ownerName.setText(trade.getOwner().getName());
 
         cancel = (Button) findViewById(R.id.cancelButton);
         if (trade.getStatus() != 0) {

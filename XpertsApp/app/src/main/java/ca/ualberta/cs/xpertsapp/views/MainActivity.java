@@ -40,6 +40,8 @@ public class MainActivity extends Activity {
     public Button getTradesBtn() {return TradesBtn;};
     private Button FriendsBtn;
     public Button getFriendsBtn() {return FriendsBtn;};
+    private Button TopTradersBtn;
+    public Button getTopTradersBtn() {return TopTradersBtn;};
     private Button LogoutBtn;
     public Button getLogoutBtn() {
         return LogoutBtn;
@@ -87,6 +89,13 @@ public class MainActivity extends Activity {
         FriendsBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, FriendsActivity.class));
+            }
+        });
+
+        TopTradersBtn = (Button) findViewById(R.id.TopTradersBtn);
+        TopTradersBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, TopTradersActivity.class));
             }
         });
 

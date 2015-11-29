@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,10 @@ import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 public class BrowseServiceDetailsActivity extends Activity {
     private TextView theTitle;
     public TextView getTheTitle() {return theTitle;}
+    private Button cloneBtn;
+    public Button getCloneBtn() {return cloneBtn;}
+    private Button tradeBtn;
+    public Button getTradeBtn() {return tradeBtn;}
     private TextView category;
     public TextView getCategory() {return category;}
     private TextView description;
@@ -41,6 +46,19 @@ public class BrowseServiceDetailsActivity extends Activity {
         theTitle.setText(service.getName());
         category.setText(service.getCategory().toString());
         description.setText(service.getDescription());
+        cloneBtn = (Button) findViewById(R.id.cloneBtn);
+        cloneBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                cloneService();
+            }
+        });
+        tradeBtn = (Button) findViewById(R.id.makeATrade);
+        tradeBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                goToOfferTrade(v);
+            }
+        });
+
     }
 
     @Override
@@ -58,17 +76,16 @@ public class BrowseServiceDetailsActivity extends Activity {
         int id = item.getItemId();
 
 
-        if (id == R.id.clone_service) {
-            asc.cloneService(service.getName(), service.getDescription(), service.getCategory(), service.getPictures());
-            Context context = getApplicationContext();
-            CharSequence text = "Service Cloned";
-            int duration = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void cloneService() {
+        asc.cloneService(service.getName(), service.getDescription(), service.getCategory(), service.getPictures());
+        Context context = getApplicationContext();
+        CharSequence text = "Service Cloned";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     public void goToOfferTrade(View view) {
