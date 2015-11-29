@@ -179,5 +179,8 @@ public class IncomingOfferActivity extends Activity {
         //go to OfferTradeActivity to create new trade initialized with items from this trade
         //pass in trade id.
         //maybe make new OfferCounterTradeActivity
+        Intent intent = new Intent(this, OfferCounterTradeActivity.class);
+        intent.putExtra("INTENT_TRADEID", trade.getID());
+        startActivity(intent);
     }
 }

@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your services:"
+        android:text="Add more of your services:"
         android:id="@+id/requestTextCounter"
         android:layout_centerHorizontal="true" />
 
@@ -23,7 +23,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="In exchange for:"
+        android:text="In exchange for these additional services:"
         android:id="@+id/addServiceTextCounter"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="200dp"/>

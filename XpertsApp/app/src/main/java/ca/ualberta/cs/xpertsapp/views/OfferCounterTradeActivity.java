@@ -65,7 +65,14 @@ public class OfferCounterTradeActivity extends Activity {
 
         trade = tradeManager.getTrade(tradeID);
 
-        serviceRequestAdapter = new ServiceListAdapter(this, trade.getOwnerServices());
+        List<Service> services;
+        services = trade.getOwner().getServices();
+        //don't want the current services to be in lists
+        for (Service s: trade.getOwnerServices()) {
+            services.remove(s);
+        }
+
+        serviceRequestAdapter = new ServiceListAdapter(this, services);
         requestServices.setAdapter(serviceRequestAdapter);
         //set list adapter to display list
         requestServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -116,14 +123,26 @@ public class OfferCounterTradeActivity extends Activity {
                 }
             }
         });
+
+        //TODO set list items to dark if already part of trade - how??
+        for (Service s: trade.getBorrowerServices()) {
+            borrowerServices.add(s);
+        }
+        for (Service s: trade.getOwnerServices()) {
+            ownerServices.add(s);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        List<Service> Services;
-        Services = trade.getBorrowerServices();
-        serviceListAdapter = new ServiceListAdapter(this,Services);
+        List<Service> services;
+        services = trade.getBorrower().getServices();
+        //don't want the current services to be in lists
+        for (Service s: trade.getBorrowerServices()) {
+            services.remove(s);
+        }
+        serviceListAdapter = new ServiceListAdapter(this,services);
         yourServices.setAdapter(serviceListAdapter);
     }
 
@@ -153,7 +172,6 @@ public class OfferCounterTradeActivity extends Activity {
      * starts the next activity, which is BrowseServicesActivity.
      */
     public void makeTrade(View view) {
-        //can make a trade without any borrower services
         //TODO change what's passed into createTrade
         //createTrade(User owner, ArrayList < Service > borrowerServices, ArrayList < Service > ownerServices)
         tradeController.createTrade(trade.getBorrower(), ownerServices, borrowerServices, true);
