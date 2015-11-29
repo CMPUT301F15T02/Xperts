@@ -3,8 +3,7 @@
       tools:context="ca.ualberta.cs.xpertsapp.views.FriendServiceDetailsActivity">
 
     <item android:id="@+id/clone_service"
-          android:title="@string/action_settings"
+          android:title="@string/action_clone"
           android:orderInCategory="100"
-          android:showAsAction="ifRoom"
-          android:icon="@drawable/ic_settings"/>
+          android:showAsAction="ifRoom"/>
 </menu>

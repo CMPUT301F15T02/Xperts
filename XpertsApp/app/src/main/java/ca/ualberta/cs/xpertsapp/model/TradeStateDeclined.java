@@ -25,6 +25,7 @@ public class TradeStateDeclined implements TradeState {
 	}
 
 	@Override
+	/** complete the trade - crash */
 	public void complete(Trade context) {
 		throw new AssertionError();
 	}

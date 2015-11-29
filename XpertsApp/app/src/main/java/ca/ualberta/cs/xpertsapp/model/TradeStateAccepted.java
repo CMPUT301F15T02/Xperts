@@ -26,6 +26,7 @@ public class TradeStateAccepted implements TradeState {
 	}
 
 	@Override
+	/** complete the trade */
 	public void complete(Trade context) {
 		if (MyApplication.getLocalUser() != context.getOwner()) throw new AssertionError();
 		context.setState(new TradeStateComplete());

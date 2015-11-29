@@ -1,14 +1,17 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.ualberta.cs.xpertsapp.R;
+import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
@@ -23,6 +26,7 @@ public class BrowseServiceDetailsActivity extends Activity {
     private Intent intent;
     private BrowseServiceDetailsActivity activity = this;
     private Service service;
+    private AddServiceController asc = new AddServiceController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +57,14 @@ public class BrowseServiceDetailsActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+
+        if (id == R.id.clone_service) {
+            asc.cloneService(service.getName(), service.getDescription(), service.getCategory(), service.getPictures());
+            Context context = getApplicationContext();
+            CharSequence text = "Service Cloned";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
             return true;
         }
 

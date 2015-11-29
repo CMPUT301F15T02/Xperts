@@ -10,7 +10,7 @@ public class TradeStatePending implements TradeState {
 	@Override
 	/** accept the trade */
 	public void accept(Trade context) {
-		if (MyApplication.getLocalUser() != context.getBorrower()) throw new AssertionError();
+		if (MyApplication.getLocalUser() != context.getOwner()) throw new AssertionError();
 		context.setState(new TradeStateAccepted());
 		context.status = 1;
 	}
@@ -18,7 +18,7 @@ public class TradeStatePending implements TradeState {
 	@Override
 	/** decline the trade */
 	public void decline(Trade context) {
-		if (MyApplication.getLocalUser() != context.getBorrower()) throw new AssertionError();
+		if (MyApplication.getLocalUser() != context.getOwner()) throw new AssertionError();
 		context.setState(new TradeStateDeclined());
 		context.status = 3;
 	}
@@ -26,12 +26,13 @@ public class TradeStatePending implements TradeState {
 	@Override
 	/** cancel the trade */
 	public void cancel(Trade context) {
-		if (MyApplication.getLocalUser() != context.getOwner()) throw new AssertionError();
+		if (MyApplication.getLocalUser() != context.getBorrower()) throw new AssertionError();
 		context.setState(new TradeStateCancelled());
 		context.status = 2;
 	}
 
 	@Override
+	/** complete the trade - crash */
 	public void complete(Trade context) {
 		throw new AssertionError();
 	}
