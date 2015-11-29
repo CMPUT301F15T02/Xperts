@@ -135,11 +135,11 @@ public class TradeTest extends TestCase {
 		User user = MyApplication.getLocalUser();
 		String trade1String = "" +
 				"{" +
-				"\"borrower\":\"" + user.getEmail() + "\"," +
+				"\"owner\":\"" + user.getEmail() + "\"," +
 				"\"borrowerServices\":[]," +
 				"\"id\":\"0001\"," +
 				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
-				"\"owner\":\"1\"," +
+				"\"borrower\":\"1\"," +
 				"\"ownerServices\":[]," +
 				"\"proposedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
 				"\"isCounterOffer\":false," +
@@ -147,11 +147,11 @@ public class TradeTest extends TestCase {
 				"}";
 		String trade2String = "" +
 				"{" +
-				"\"borrower\":\"" + user.getEmail() + "\"," +
+				"\"owner\":\"" + user.getEmail() + "\"," +
 				"\"borrowerServices\":[]," +
 				"\"id\":\"0002\"," +
 				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
-				"\"owner\":\"1\"," +
+				"\"borrower\":\"1\"," +
 				"\"ownerServices\":[]," +
 				"\"proposedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
 				"\"isCounterOffer\":false," +
