@@ -76,7 +76,6 @@ public class TopTradersActivity extends Activity {
     protected void onStart() {
         super.onStart();
         UserManager.sharedManager().clearCache();
-        User user = MyApplication.getLocalUser();
         List<User> AllUsers = UserManager.sharedManager().findUsers("*");
 
         Collections.sort(AllUsers, new Comparator<User>() {
