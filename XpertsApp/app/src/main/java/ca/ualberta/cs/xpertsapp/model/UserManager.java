@@ -95,7 +95,6 @@ public class UserManager implements IObserver {
 			// no internet
 			if (diskUser != null) {
 				if (diskUser.getEmail().equals(email)) {
-					System.out.println("ssss " + diskUser);
 					return diskUser;
 				}
 			}
@@ -120,7 +119,6 @@ public class UserManager implements IObserver {
 		if (foundUser == null) {
 			User newUser = new User(email);
 			this.addUser(newUser);
-			System.out.println("sss " + newUser);
 			IOManager.sharedManager().writeUserToFile(newUser);
 			return this.getUser(email);
 		}
@@ -174,7 +172,6 @@ public class UserManager implements IObserver {
 			IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
 			//Constants.userSync = false;
 		} catch (Exception e) {
-			// no internet
 			//Constants.userSync = true;
 		}
 	}
