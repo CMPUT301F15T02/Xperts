@@ -31,6 +31,7 @@ public class IncomingOfferActivity extends Activity {
     private Trade trade;
     private Button accept;
     private Button decline;
+    private Button complete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +43,16 @@ public class IncomingOfferActivity extends Activity {
 
         accept = (Button) findViewById(R.id.acceptButton);
         decline = (Button) findViewById(R.id.declineButton);
+        complete = (Button) findViewById(R.id.completeButton);
+        complete.setVisibility(View.INVISIBLE);
+        //status = 0 means pending
         if (trade.getStatus() != 0) {
             accept.setVisibility(View.INVISIBLE);
             decline.setVisibility(View.INVISIBLE);
+        }
+        //status = 1 means accepted
+        if (trade.getStatus() == 1) {
+            complete.setVisibility(View.VISIBLE);
         }
 
         borrowerName = (TextView) findViewById(R.id.incomingBorrowerName);
@@ -144,6 +152,15 @@ public class IncomingOfferActivity extends Activity {
      */
     public void declineTrade(View view) {
         trade.decline();
+        finish();
+    }
+
+    /**
+     * Sets the trade state to complete.
+     * @param view The complete button.
+     */
+    public void completeTrade(View view) {
+        trade.complete();
         finish();
     }
 }
