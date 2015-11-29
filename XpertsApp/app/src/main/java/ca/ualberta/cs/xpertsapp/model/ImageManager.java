@@ -34,10 +34,10 @@ public class ImageManager {
 		// TODO:
 		try {
 			// Load the base64 encoded image
-			SearchHit<String> loadedImage = IOManager.sharedManager().fetchData(Constants.serverImageExtensino() + id, new TypeToken<SearchHit<String>>() {
+			SearchHit<ImageContainer> loadedImage = IOManager.sharedManager().fetchData(Constants.serverImageExtensino() + id, new TypeToken<SearchHit<ImageContainer>>() {
 			});
 			if (loadedImage.isFound()) {
-				this.loadImage(id, loadedImage.getSource());
+				this.loadImage(id, loadedImage.getSource().b64Data);
 				return this.getImage(id);
 			} else {
 				// TODO:
@@ -63,7 +63,7 @@ public class ImageManager {
 	String registerImage(Bitmap image1) {
 		// First resize
 		Bitmap image = image1;
-		while (image.getByteCount() < 65536) {
+		while (image.getByteCount() > 65536) {
 			// Shrink
 			image = Bitmap.createScaledBitmap(image, (int)(image.getWidth() * 0.9), (int)(image.getHeight() * 0.9), false);
 		}
@@ -73,9 +73,16 @@ public class ImageManager {
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
 		byte[] b = byteArrayOutputStream.toByteArray();
-		String encodedImage = Base64.encodeToString(b, 0);
-		IOManager.sharedManager().storeData(encodedImage, Constants.serverImageExtensino() + id);
+		String encodedImage = Base64.encodeToString(b, 2);
+		IOManager.sharedManager().storeData(new ImageContainer(encodedImage), Constants.serverImageExtensino() + id);
 		return id;
+	}
+
+	private class ImageContainer {
+		String b64Data;
+		ImageContainer(String b64Data) {
+			this.b64Data = b64Data;
+		}
 	}
 
 	/**
@@ -83,6 +90,7 @@ public class ImageManager {
 	 */
 	public void clearCache() {
 		this.images.clear();
+		IOManager.sharedManager().clearCache();
 	}
 
 	// Singleton

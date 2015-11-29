@@ -137,7 +137,6 @@ public class UserManager implements IObserver {
 		// TODO: store locally
 		Constants.refreshSync = true;
 		if (Constants.isOnline) {
-			System.out.println("added user " + ((User) observable).getEmail());
 			IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
 		}
 	}

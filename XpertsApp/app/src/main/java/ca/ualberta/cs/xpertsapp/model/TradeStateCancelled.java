@@ -23,4 +23,9 @@ public class TradeStateCancelled implements TradeState {
 	public void cancel(Trade context) {
 		throw new AssertionError();
 	}
+
+	@Override
+	public void complete(Trade context) {
+		throw new AssertionError();
+	}
 }

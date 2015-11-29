@@ -3,9 +3,9 @@ package ca.ualberta.cs.xpertsapp.model;
 import ca.ualberta.cs.xpertsapp.interfaces.TradeState;
 
 /**
- * Represents the Declined state of a trade
+ * Represents the Complete state of a trade
  */
-public class TradeStateDeclined implements TradeState {
+public class TradeStateComplete implements TradeState {
 	@Override
 	/** accept the trade - crash */
 	public void accept(Trade context) {

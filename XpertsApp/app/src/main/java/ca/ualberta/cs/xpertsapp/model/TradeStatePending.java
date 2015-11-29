@@ -30,4 +30,9 @@ public class TradeStatePending implements TradeState {
 		context.setState(new TradeStateCancelled());
 		context.status = 2;
 	}
+
+	@Override
+	public void complete(Trade context) {
+		throw new AssertionError();
+	}
 }

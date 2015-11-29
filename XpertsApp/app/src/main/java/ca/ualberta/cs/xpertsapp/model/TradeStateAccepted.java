@@ -1,5 +1,6 @@
 package ca.ualberta.cs.xpertsapp.model;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.TradeState;
 
 /**
@@ -22,5 +23,12 @@ public class TradeStateAccepted implements TradeState {
 	/** cancel the trade - crash */
 	public void cancel(Trade context) {
 		throw new AssertionError();
+	}
+
+	@Override
+	public void complete(Trade context) {
+		if (MyApplication.getLocalUser() != context.getOwner()) throw new AssertionError();
+		context.setState(new TradeStateComplete());
+		context.status = 4;
 	}
 }
