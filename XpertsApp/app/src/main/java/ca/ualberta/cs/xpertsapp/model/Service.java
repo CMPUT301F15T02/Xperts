@@ -169,7 +169,10 @@ public class Service implements IObservable {
 
 	@Override
 	public void removeObserver(IObserver observer) {
-		this.observers.remove(observer);
+		// if diskService, no observer
+		if (this.observers != null) {
+			this.observers.remove(observer);
+		}
 	}
 
 	@Override

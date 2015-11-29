@@ -106,6 +106,16 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        // Push local user's services and trades to their respective links
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+            }
+        }).start();
+
         TradeController tradeController = new TradeController();
         Integer pending = tradeController.getPendingTrades();
         notifications.setText(pending.toString());

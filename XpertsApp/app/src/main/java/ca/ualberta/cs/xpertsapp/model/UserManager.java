@@ -1,8 +1,5 @@
 package ca.ualberta.cs.xpertsapp.model;
 
-import android.os.AsyncTask;
-import android.widget.Toast;
-
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -17,15 +14,14 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
 /**
  * Manages the loaded users to allow circular references without getting stuck in a loading loop
  */
 public class UserManager implements IObserver {
 	private Map<String, User> users = new HashMap<String, User>();
+	private User diskUser = null;
 
-	private User offlineUser = null;
 	// Get/Set
 
 	/**
@@ -49,16 +45,17 @@ public class UserManager implements IObserver {
 	 * @return The User with that email or null
 	 */
 	public User getUser(String email) {
-		if (Constants.usersSync) {
-			// This is bad practice to ignore exception, but check internet will freeze few seconds
-			try {
-				Constants.usersSync = false;
-				IOManager.sharedManager().storeData(offlineUser, Constants.serverUserExtension() + offlineUser.getEmail());
-			} catch (Exception e) {
-				// no internet
-				Constants.usersSync = true;
-				//Toast.makeText(MyApplication.getContext(), "Offline", Toast.LENGTH_SHORT).show();
-				//System.out.println("System offline");
+
+		// Push local user if have internet
+		diskUser = IOManager.sharedManager().loadUserFromFile(MyApplication.getContext());
+		if (Constants.userSync) {
+			if (diskUser != null) {
+				try {
+					IOManager.sharedManager().storeData(diskUser, Constants.serverUserExtension() + diskUser.getEmail());
+					Constants.userSync = false;
+				} catch (Exception ex) {
+
+				}
 			}
 		}
 
@@ -66,7 +63,11 @@ public class UserManager implements IObserver {
 			return null;
 		}
 
-		// Load online first, so can register new user. If has internet, next time it will load here
+		// If we have the user loaded
+		if (this.users.containsKey(email)) {
+			return this.users.get(email);
+		}
+
 		try {
 			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + email, new TypeToken<SearchHit<User>>() {
 			});
@@ -83,13 +84,14 @@ public class UserManager implements IObserver {
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);
 		} catch (Exception e) {
-			// no internet
-			//System.out.println("System is offline");
-		}
 
-		// If we have the user loaded
-		if (this.users.containsKey(email)) {
-			return this.users.get(email);
+			// no internet
+			if (diskUser != null) {
+				if (diskUser.getEmail().equals(email)) {
+					System.out.println("ssss " + diskUser);
+					return diskUser;
+				}
+			}
 		}
 
 		return null;
@@ -111,6 +113,8 @@ public class UserManager implements IObserver {
 		if (foundUser == null) {
 			User newUser = new User(email);
 			this.addUser(newUser);
+			System.out.println("sss " + newUser);
+			IOManager.sharedManager().writeUserToFile(newUser, MyApplication.getContext());
 			return this.getUser(email);
 		}
 		return foundUser;
@@ -161,11 +165,10 @@ public class UserManager implements IObserver {
 	public void notify(IObservable observable) {
 		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
+			//Constants.userSync = false;
 		} catch (Exception e) {
 			// no internet
-			// offlineUser can be new registered and override old user
-			offlineUser = (User) observable;
+			//Constants.userSync = true;
 		}
 	}
-
 }

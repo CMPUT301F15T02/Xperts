@@ -147,23 +147,33 @@ public class User implements IObservable {
 	 */
 	public void addService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
+
+		// Write disk first, no observer
+		Constants.userSync = true;
+		IOManager.sharedManager().writeUserToFile(this, MyApplication.getContext());
+
 		this.services.add(service.getID());
 		if(!service.getOwner().getEmail().equals(this.getEmail())) {
 			service.setOwner(this.email);
 		}
-		Constants.usersSync = true;
 		ServiceManager.sharedManager().addService(service);
 		ServiceManager.sharedManager().notify(service);
 		this.notifyObservers();
 	}
 
 	/**
-	 * remove service form the use. the service still exists, but is unlinked
+	 * remove service form the user, the service still exists, but is unlinked
 	 * @param service the old service
 	 */
 	public void removeService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
+
 		this.services.remove(service.getID());
+
+		// Write disk first, no observer
+		Constants.userSync = true;
+		IOManager.sharedManager().writeUserToFile(this, MyApplication.getContext());
+
 		ServiceManager.sharedManager().removeService(service);
 		this.notifyObservers();
 	}
@@ -200,7 +210,7 @@ public class User implements IObservable {
 	 */
 	public void addTrade(Trade trade) {
 		this.trades.add(trade.getID());
-		Constants.usersSync = true;
+		IOManager.sharedManager().writeUserToFile(this, MyApplication.getContext());
 		TradeManager.sharedManager().addTrade(trade);
 		TradeManager.sharedManager().notify(trade);
 		this.notifyObservers();
@@ -232,7 +242,6 @@ public class User implements IObservable {
 	 * @return whether the active user has permission to edit this user. returns true for tests.
 	 */
 	protected boolean isEditable() {
-		// Compare two different objects, offline and online
 		return Constants.isTest || this.getEmail().equals(MyApplication.getLocalUser().getEmail());
 	}
 
@@ -266,8 +275,11 @@ public class User implements IObservable {
 	@Override
 	/** get told when something changes */
 	public void notifyObservers() {
-		for (IObserver observer : this.observers) {
-			observer.notify(this);
+		// if diskUser, no observers
+		if (this.observers != null) {
+			for (IObserver observer : this.observers) {
+				observer.notify(this);
+			}
 		}
 	}
 }

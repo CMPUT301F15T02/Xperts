@@ -1,5 +1,6 @@
 package ca.ualberta.cs.xpertsapp.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -17,11 +18,18 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -191,5 +199,72 @@ public class IOManager {
 
 	public static IOManager sharedManager() {
 		return IOManager.instance;
+	}
+
+	// Read local user from local storage
+	public User loadUserFromFile(Context context) {
+		User user = null;
+
+		try {
+			FileInputStream fis = context.openFileInput("user.sav");
+			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+			Gson gson = new Gson();
+			user = gson.fromJson(in, User.class);
+
+		} catch (FileNotFoundException e) {
+			return null;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return user;
+	}
+
+	// Write local user to local storage
+	public void writeUserToFile(User user, Context context) {
+		try {
+			FileOutputStream fos = context.openFileOutput("user.sav", 0);
+			OutputStreamWriter writer = new OutputStreamWriter(fos);
+			Gson gson = new Gson();
+			gson.toJson(user, writer);
+			Log.d("gson", gson.toJson(user));
+			writer.flush();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// Read local user's services or trades from local storage
+	public <T> ArrayList<T> loadFromFile(Context context, TypeToken<ArrayList<T>> typeToken, String filename) {
+		ArrayList<T> objects = new ArrayList<T>();
+		try {
+			FileInputStream fis = context.openFileInput(filename);
+			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+			Gson gson = new Gson();
+			objects = gson.fromJson(in, typeToken.getType());
+
+		} catch (FileNotFoundException e) {
+			return objects;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return objects;
+	}
+
+	// Write local user's services or trades to local storage
+	public <T> void writeToFile(ArrayList<T> objects, Context context, String filename) {
+		try {
+			FileOutputStream fos = context.openFileOutput(filename, 0);
+			OutputStreamWriter writer = new OutputStreamWriter(fos);
+			Gson gson = new Gson();
+			gson.toJson(objects, writer);
+			Log.d("gson", gson.toJson(objects));
+			writer.flush();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

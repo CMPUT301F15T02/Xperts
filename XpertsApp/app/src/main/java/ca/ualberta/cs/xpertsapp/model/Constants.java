@@ -9,6 +9,7 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
  */
 public class Constants {
 	public static boolean isOnline = false;
+	public static boolean userSync = false;
 	public static boolean usersSync = false;
 	public static boolean servicesSync = false;
 	public static boolean tradesSync = false;
@@ -40,7 +41,7 @@ public class Constants {
 		if (isTest) {
 			return "users_test/";
 		}
-		return "users/";
+		return "usershuy/";
 	}
 
 	/**
@@ -50,7 +51,7 @@ public class Constants {
 		if (isTest) {
 			return "services_test/";
 		}
-		return "services/";
+		return "serviceshuy/";
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class Constants {
 		if (isTest) {
 			return "trades_test/";
 		}
-		return "trades/";
+		return "tradeshuy/";
 	}
 
 	/**

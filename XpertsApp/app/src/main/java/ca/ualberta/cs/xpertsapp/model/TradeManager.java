@@ -42,7 +42,7 @@ public class TradeManager implements IObserver {
 	 * @return the trade or null if not found
 	 */
 	public Trade getTrade(String id) {
-		if (Constants.tradesSync) {
+		/*if (Constants.tradesSync) {
 			try {
 				for (Trade trade: offlineTrades) {
 					IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
@@ -52,7 +52,7 @@ public class TradeManager implements IObserver {
 				// No internet
 				System.out.println("System is offline");
 			}
-		}
+		}*/
 
 		// If we have the trade loaded
 		if (this.trades.containsKey(id)) {
