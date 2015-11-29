@@ -60,7 +60,7 @@ public class Constants {
 	/**
 	 * @return The URL extension for Images
 	 */
-	public static String serverImageExtensino() {
+	public static String serverImageExtension() {
 		if (isTest) {
 			return "images_test2/";
 		}

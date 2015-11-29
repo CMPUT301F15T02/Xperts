@@ -34,7 +34,7 @@ public class ImageManager {
 		// TODO:
 		try {
 			// Load the base64 encoded image
-			SearchHit<ImageContainer> loadedImage = IOManager.sharedManager().fetchData(Constants.serverImageExtensino() + id, new TypeToken<SearchHit<ImageContainer>>() {
+			SearchHit<ImageContainer> loadedImage = IOManager.sharedManager().fetchData(Constants.serverImageExtension() + id, new TypeToken<SearchHit<ImageContainer>>() {
 			});
 			if (loadedImage.isFound()) {
 				this.loadImage(id, loadedImage.getSource().b64Data);
@@ -74,7 +74,7 @@ public class ImageManager {
 		image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
 		byte[] b = byteArrayOutputStream.toByteArray();
 		String encodedImage = Base64.encodeToString(b, 2);
-		IOManager.sharedManager().storeData(new ImageContainer(encodedImage), Constants.serverImageExtensino() + id);
+		IOManager.sharedManager().storeData(new ImageContainer(encodedImage), Constants.serverImageExtension() + id);
 		return id;
 	}
 
