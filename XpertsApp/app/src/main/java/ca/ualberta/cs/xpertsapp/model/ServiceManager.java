@@ -136,7 +136,6 @@ public class ServiceManager implements IObserver {
 		// TODO:
 		Constants.refreshSync = true;
 		if (Constants.isOnline) {
-			System.out.println("added service " + ((Service) observable).getName());
 			IOManager.sharedManager().storeData(observable, Constants.serverServiceExtension() + ((Service) observable).getID());
 		}
 	}

@@ -2,7 +2,6 @@ package ca.ualberta.cs.xpertsapp.model;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -32,16 +31,30 @@ import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
 /**
  * Manages loading and saving data from disk and the network
- *
+ * <p/>
  * Limitation: does not delete local stuff when the server deletes it
  */
 public class IOManager {
 	// When writing to the server, we need to sleep to make sure the server can update before we fetch
 	private static final int sleepTime = 500;
-
+	// Singleton
+	private static IOManager instance = new IOManager();
 	private List<User> users = new ArrayList<User>();
 	private List<Service> services = new ArrayList<Service>();
 	private List<Trade> trades = new ArrayList<Trade>();
+
+	private IOManager() {
+	}
+
+	// Helper
+	private static String convertStreamToString(InputStream is) {
+		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+		return s.hasNext() ? s.next() : "";
+	}
+
+	public static IOManager sharedManager() {
+		return IOManager.instance;
+	}
 
 	public List<User> getUsers() {
 		return users;
@@ -53,24 +66,6 @@ public class IOManager {
 
 	public List<Trade> getTrades() {
 		return trades;
-	}
-
-	/**
-	 * Does Network Requests Asynchronously
-	 * this is where the magic happens
-	 */
-	private class AsyncRequest extends AsyncTask<HttpUriRequest, Void, HttpResponse> {
-
-		protected HttpResponse doInBackground(HttpUriRequest... request) {
-			HttpClient httpClient = new DefaultHttpClient();
-			HttpResponse response;
-			try {
-				response = httpClient.execute(request[0]);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-			return response;
-		}
 	}
 
 	/**
@@ -109,18 +104,30 @@ public class IOManager {
 	}
 
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
-		// TODO: LOOK LOCALLY
-		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
 		String loadedData;
-		try {
-			HttpResponse response = new AsyncRequest().execute(httpGet).get(); // Tier 1
-			loadedData = convertStreamToString(response.getEntity().getContent());
-		} catch (Exception e) {
-			// TODO: load localyl
-			throw new RuntimeException(e);
-		}
-		if (loadedData.equals("")) {
-			// TODO: SHOULD NEVER HAPPEN
+		if (Constants.isOnline) {
+			HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
+			try {
+				HttpResponse response = new AsyncRequest().execute(httpGet).get(); // Tier 1
+				loadedData = convertStreamToString(response.getEntity().getContent());
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			// Cache locally
+			try {
+				FileOutputStream outputStream = MyApplication.getContext().openFileOutput(meta.replace('/', '_'), Context.MODE_PRIVATE);
+				outputStream.write(loadedData.getBytes());
+				outputStream.close();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			try {
+				FileInputStream inputStream = MyApplication.getContext().openFileInput(meta.replace('/', '_'));
+				loadedData = convertStreamToString(inputStream);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 		return (new Gson()).fromJson(loadedData, typeToken.getType());
 	}
@@ -192,7 +199,7 @@ public class IOManager {
 			}
 			// Cache locally
 			try {
-				FileOutputStream outputStream = MyApplication.getContext().openFileOutput(searchMeta.replace('/', '_'), Context.MODE_PRIVATE);
+				FileOutputStream outputStream = MyApplication.getContext().openFileOutput("search_" + searchMeta.replace('/', '_'), Context.MODE_PRIVATE);
 				outputStream.write(loadedData.getBytes());
 				outputStream.close();
 			} catch (Exception e) {
@@ -200,7 +207,7 @@ public class IOManager {
 			}
 		} else {
 			try {
-				FileInputStream inputStream = MyApplication.getContext().openFileInput(searchMeta.replace('/', '_'));
+				FileInputStream inputStream = MyApplication.getContext().openFileInput("search_" + searchMeta.replace('/', '_'));
 				loadedData = convertStreamToString(inputStream);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
@@ -224,19 +231,21 @@ public class IOManager {
 		}
 	}
 
-	// Helper
-	private static String convertStreamToString(InputStream is) {
-		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-		return s.hasNext() ? s.next() : "";
-	}
+	/**
+	 * Does Network Requests Asynchronously
+	 * this is where the magic happens
+	 */
+	private class AsyncRequest extends AsyncTask<HttpUriRequest, Void, HttpResponse> {
 
-	// Singleton
-	private static IOManager instance = new IOManager();
-
-	private IOManager() {
-	}
-
-	public static IOManager sharedManager() {
-		return IOManager.instance;
+		protected HttpResponse doInBackground(HttpUriRequest... request) {
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpResponse response;
+			try {
+				response = httpClient.execute(request[0]);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			return response;
+		}
 	}
 }

@@ -25,9 +25,8 @@ public class TradeStatePending implements TradeState {
 
 	@Override
 	/** cancel the trade */
-	//TODO I think context.getOwner() should be getBorrower() but this isn't being used
 	public void cancel(Trade context) {
-		if (MyApplication.getLocalUser() != context.getOwner()) throw new AssertionError();
+		if (MyApplication.getLocalUser() != context.getBorrower()) throw new AssertionError();
 		context.setState(new TradeStateCancelled());
 		context.status = 2;
 	}
