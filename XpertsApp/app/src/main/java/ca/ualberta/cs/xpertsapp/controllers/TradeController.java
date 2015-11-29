@@ -21,8 +21,8 @@ public class TradeController {
      * @param borrowerServices A list of services the borrower is offering in this trade.
      * @param ownerServices The service the borrower is asking for from the owner.
      */
-    public void createTrade(User owner,ArrayList<Service> borrowerServices, ArrayList<Service> ownerServices) {
-        Trade newTrade = TradeManager.sharedManager().newTrade(owner, false);
+    public void createTrade(User owner,ArrayList<Service> borrowerServices, ArrayList<Service> ownerServices, Boolean isCounter) {
+        Trade newTrade = TradeManager.sharedManager().newTrade(owner, isCounter);
         for (Service service : borrowerServices) {
             newTrade.addBorrowerService(service);
         }

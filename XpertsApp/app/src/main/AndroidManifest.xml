@@ -130,6 +130,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ca.ualberta.cs.xpertsapp.views.TradeListActivity" />
         </activity>
+        <activity
+            android:name=".views.OfferCounterTradeActivity"
+            android:label="@string/title_activity_offer_counter_trade"
+            android:parentActivityName=".views.TradeListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.TradeListActivity" />
+        </activity>
     </application>
 
 </manifest>

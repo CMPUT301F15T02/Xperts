@@ -12,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +22,10 @@ import ca.ualberta.cs.xpertsapp.controllers.TradeController;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.Trade;
+import ca.ualberta.cs.xpertsapp.model.TradeManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 
-public class OfferTradeActivity extends Activity {
+public class OfferCounterTradeActivity extends Activity {
     private ServiceListAdapter serviceRequestAdapter;
     private ServiceListAdapter serviceListAdapter;
     private User user = MyApplication.getLocalUser();
@@ -33,13 +33,14 @@ public class OfferTradeActivity extends Activity {
     private ListView yourServices;
     private Intent intent;
     private Service initialService;
-    private ServiceManager serviceManager = ServiceManager.sharedManager();
-    private ArrayList<Service> initialServiceList = new ArrayList<Service>();
-    private OfferTradeActivity activity = this;
+    private TradeManager tradeManager = TradeManager.sharedManager();
+    private ArrayList<Service> ownerServices = new ArrayList<Service>();
+    private OfferCounterTradeActivity activity = this;
     private ArrayList<View> colouredItems = new ArrayList<View>();
+    private ArrayList<View> colouredItems2 = new ArrayList<View>();
     private ArrayList<Service> borrowerServices = new ArrayList<Service>();
     private TradeController tradeController = new TradeController();
-
+    private Trade trade;
 
     /**
      * used:
@@ -54,20 +55,44 @@ public class OfferTradeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_offer_trade);
-        requestServices = (ListView) findViewById(R.id.requestServiceList);
-        yourServices = (ListView) findViewById(R.id.yourServiceList);
+        setContentView(R.layout.activity_offer_counter_trade);
+        requestServices = (ListView) findViewById(R.id.requestServiceListCounter);
+        yourServices = (ListView) findViewById(R.id.yourServiceListCounter);
 
-        //get Service that user clicked on
+        //get Trade that user clicked on
         intent = getIntent();
-        String serviceID = intent.getStringExtra("INTENT_SERVICEID");
+        String tradeID = intent.getStringExtra("INTENT_TRADEID");
 
+        trade = tradeManager.getTrade(tradeID);
 
-        initialService = serviceManager.getService(serviceID);
-        initialServiceList.add(initialService);
-        //set list adapter to display list
-        serviceRequestAdapter = new ServiceListAdapter(this,initialServiceList);
+        serviceRequestAdapter = new ServiceListAdapter(this, trade.getOwnerServices());
         requestServices.setAdapter(serviceRequestAdapter);
+        //set list adapter to display list
+        requestServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //set colour - add to colourItems
+                View v = parent.getChildAt(position);
+                if (colouredItems2.contains(v)) {
+                    colouredItems2.remove(v);
+                    view.setBackgroundColor(Color.TRANSPARENT);
+                    ownerServices.remove(serviceRequestAdapter.getItem(position));
+                } else {
+                    colouredItems2.add(v);
+                    //set colour
+                    float[] hsv = new float[3];
+                    hsv[0] = (float) 203;
+                    hsv[1] = (float) 0.1;
+                    hsv[2] = (float) 0.75;
+                    view.setBackgroundColor(Color.HSVToColor(hsv));
+                    ownerServices.add(serviceRequestAdapter.getItem(position));
+                }
+            }
+        });
+
+        //set list adapter to display list
+        //serviceRequestAdapter = new ServiceListAdapter(this,ownerServices);
+        //requestServices.setAdapter(serviceRequestAdapter);
 
         yourServices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -97,7 +122,7 @@ public class OfferTradeActivity extends Activity {
     protected void onStart() {
         super.onStart();
         List<Service> Services;
-        Services = user.getServices();
+        Services = trade.getBorrowerServices();
         serviceListAdapter = new ServiceListAdapter(this,Services);
         yourServices.setAdapter(serviceListAdapter);
     }
@@ -105,7 +130,7 @@ public class OfferTradeActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_offer_trade, menu);
+        getMenuInflater().inflate(R.menu.menu_offer_counter_trade, menu);
         return true;
     }
 
@@ -116,18 +141,22 @@ public class OfferTradeActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
-
     /**
      * Called when Send Trade button is pushed. It creates a trade using a trade controller and
      * starts the next activity, which is BrowseServicesActivity.
      */
     public void makeTrade(View view) {
         //can make a trade without any borrower services
-        tradeController.createTrade(initialService.getOwner(), borrowerServices, initialServiceList, false);
+        //TODO change what's passed into createTrade
+        //createTrade(User owner, ArrayList < Service > borrowerServices, ArrayList < Service > ownerServices)
+        tradeController.createTrade(trade.getBorrower(), ownerServices, borrowerServices, true);
         //make a toast to say sent trade
         Context context = getApplicationContext();
         CharSequence text = "Trade request sent";

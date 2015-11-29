@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="ca.ualberta.cs.xpertsapp.views.OfferCounterTradeActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your services:"
+        android:id="@+id/requestTextCounter"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="195dp"
+        android:id="@+id/requestServiceListCounter"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/requestTextCounter" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="In exchange for:"
+        android:id="@+id/addServiceTextCounter"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yourServiceListCounter"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/addServiceTextCounter"
+        android:layout_above="@+id/sendTradeButtonCounter"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Trade"
+        android:id="@+id/sendTradeButtonCounter"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="makeTrade"/>
+
+</RelativeLayout>

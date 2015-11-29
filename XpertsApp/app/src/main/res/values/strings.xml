@@ -29,5 +29,6 @@
     <string name="title_activity_browse_service_details">Service Details</string>
     <string name="title_activity_incoming_offer">IncomingOfferActivity</string>
     <string name="title_activity_outgoing_offer">OutgoingOfferActivity</string>
+    <string name="title_activity_offer_counter_trade">OfferCounterTradeActivity</string>
 </resources>
 
