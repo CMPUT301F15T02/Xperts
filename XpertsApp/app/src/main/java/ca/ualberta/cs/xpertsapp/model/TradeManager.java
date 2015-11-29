@@ -22,7 +22,7 @@ import ca.ualberta.cs.xpertsapp.views.MainActivity;
  */
 public class TradeManager implements IObserver {
 	private Map<String, Trade> trades = new HashMap<String, Trade>();
-	private ArrayList<Trade> offlineTrades = new ArrayList<Trade>();
+	private ArrayList<Trade> diskTrades = new ArrayList<Trade>();
 
 	// Get/Set
 
@@ -42,17 +42,22 @@ public class TradeManager implements IObserver {
 	 * @return the trade or null if not found
 	 */
 	public Trade getTrade(String id) {
-		/*if (Constants.tradesSync) {
-			try {
-				for (Trade trade: offlineTrades) {
-					IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
+		// Push local user's trades if have internet
+		diskTrades = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Trade>>() {
+		}, "trades.sav");
+		if (Constants.tradesSync) {
+			if (diskTrades != null) {
+				try {
+					for (Trade trade : diskTrades) {
+						IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
+						System.out.println("push " + trade.toString());
+					}
+					Constants.tradesSync = false;
+				} catch (Exception e) {
+					// no internet
 				}
-				Constants.tradesSync = false;
-			} catch (Exception e) {
-				// No internet
-				System.out.println("System is offline");
 			}
-		}*/
+		}
 
 		// If we have the trade loaded
 		if (this.trades.containsKey(id)) {
@@ -76,7 +81,15 @@ public class TradeManager implements IObserver {
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);
 		} catch (Exception e) {
+
 			// no internet
+			if (diskTrades != null) {
+				for (Trade trade : diskTrades) {
+					if (trade.getID().equals(id)) {
+						return trade;
+					}
+				}
+			}
 		}
 
 		return null;
@@ -93,6 +106,22 @@ public class TradeManager implements IObserver {
 	}
 
 	void addTrade(Trade trade) {
+		boolean contains = false;
+
+		// Write disk first
+		// Don't add same object
+		for (Trade s : diskTrades) {
+			if (s.getID().equals(trade.getID())) {
+				contains = true;
+				break;
+			}
+		}
+		if (!contains) {
+			diskTrades.add(trade);
+			Constants.tradesSync = true;
+		}
+		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), "trades.sav");
+
 		trade.addObserver(this);
 		this.trades.put(trade.getID(), trade);
 		this.notify(trade);
@@ -103,9 +132,23 @@ public class TradeManager implements IObserver {
 	 * @param trade The trade to be removed from the system
 	 */
 	void removeTrade(Trade trade) {
+		// Delete disk, no sync
+		for (Trade t : diskTrades) {
+			if (t.getID().equals(trade.getID())) {
+				diskTrades.remove(t);
+				System.out.println("push remove" + t.getID());
+				break;
+			}
+		}
+		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), "trades.sav");
+
 		trade.removeObserver(this);
 		this.trades.remove(trade.getID());
-		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
+		try {
+			IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
+		} catch (Exception e) {
+
+		}
 	}
 
 	/**
@@ -134,9 +177,7 @@ public class TradeManager implements IObserver {
 		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverTradeExtension() + ((Trade) observable).getID());
 		} catch (Exception e) {
-			// Means no internet
-			offlineTrades.add((Trade) observable);
-			Constants.tradesSync = true;
+
 		}
 	}
 }

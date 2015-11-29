@@ -38,20 +38,19 @@ public class ServiceManager implements IObserver {
 	 * @return the service or null if it doesn't exist
 	 */
 	public Service getService(String id) {
+
 		// Push local user's services if have internet
 		diskServices = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Service>>() {
 		}, "services.sav");
 		if (Constants.servicesSync) {
-			if (diskServices != null) {
-				try {
-					for (Service service : diskServices) {
-						IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
-						System.out.println("push " + service.toString());
-					}
-					Constants.servicesSync = false;
-				} catch (Exception e) {
-					// no internet
+			try {
+				for (Service service : diskServices) {
+					IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
+					System.out.println("push " + service.toString());
 				}
+				Constants.servicesSync = false;
+			} catch (Exception e) {
+				// no internet
 			}
 		}
 
@@ -92,9 +91,20 @@ public class ServiceManager implements IObserver {
 	}
 
 	public void addService(Service service) {
+		boolean contains = false;
+
 		// Need to write disk first
-		Constants.servicesSync = true;
-		diskServices.add(service);
+		// Don't add same object
+		for (Service s : diskServices) {
+			if (s.getID().equals(service.getID())) {
+				contains = true;
+				break;
+			}
+		}
+		if (!contains) {
+			diskServices.add(service);
+			Constants.servicesSync = true;
+		}
 		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), "services.sav");
 
 		service.addObserver(this);

@@ -148,14 +148,15 @@ public class User implements IObservable {
 	public void addService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
 
-		// Write disk first, no observer
-		Constants.userSync = true;
-		IOManager.sharedManager().writeUserToFile(this, MyApplication.getContext());
-
 		this.services.add(service.getID());
 		if(!service.getOwner().getEmail().equals(this.getEmail())) {
 			service.setOwner(this.email);
 		}
+
+		// Write disk first, no observer
+		Constants.userSync = true;
+		IOManager.sharedManager().writeUserToFile(this, MyApplication.getContext());
+
 		ServiceManager.sharedManager().addService(service);
 		ServiceManager.sharedManager().notify(service);
 		this.notifyObservers();
