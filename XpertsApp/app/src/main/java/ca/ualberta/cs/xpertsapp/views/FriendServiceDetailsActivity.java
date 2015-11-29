@@ -1,6 +1,7 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
@@ -70,6 +72,11 @@ public class FriendServiceDetailsActivity extends Activity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.clone_service) {
             asc.cloneService(service.getName(), service.getDescription(), service.getCategory(), service.getPictures());
+            Context context = getApplicationContext();
+            CharSequence text = "Service Cloned";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
             return true;
         }
 

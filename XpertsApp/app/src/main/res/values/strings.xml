@@ -2,6 +2,7 @@
     <string name="app_name">XpertsApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_clone">Clone</string>
     <string name="title_activity_browse_services">Services</string>
     <string name="MyProfile">My Profile</string>
     <string name="Browse">Browse Services</string>
@@ -17,15 +18,15 @@
     <string name="title_activity_search_service">SearchServiceActivity</string>
     <string name="title_activity_edit_profile">Settings</string>
     <string name="title_activity_search_users">SearchUsersActivity</string>
-    <string name="title_activity_friend_profile">FriendProfileActivity</string>
+    <string name="title_activity_friend_profile">Friend Profile</string>
     <string name="todo">To Do</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="string_email">email</string>
     <string name="btn_login_text">LOGIN</string>
     <string name="btn_logout_text">Logout</string>
-    <string name="title_activity_friend_service_details">FriendServiceDetailsActivity</string>
+    <string name="title_activity_friend_service_details">Service Details</string>
     <string name="title_activity_offer_trade">OfferTradeActivity</string>
-    <string name="title_activity_browse_service_details">BrowseServiceDetailsActivity</string>
+    <string name="title_activity_browse_service_details">Service Details</string>
     <string name="title_activity_incoming_offer">IncomingOfferActivity</string>
     <string name="title_activity_outgoing_offer">OutgoingOfferActivity</string>
 </resources>
