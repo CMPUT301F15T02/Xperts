@@ -8,4 +8,6 @@ public interface TradeState {
 	void decline(Trade context);
 
 	void cancel(Trade context);
+
+	void complete(Trade context);
 }
