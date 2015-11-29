@@ -115,6 +115,9 @@ public class TradeListAdapter extends BaseAdapter {
         } else if (trade.getStatus()==3) {
             state.setText("Declined");
             state.setTextColor(Color.parseColor("#ffE15258"));
+        } else if (trade.getStatus() == 4) {
+            state.setText("Completed");
+            state.setTextColor(Color.parseColor("#ff51B46D"));
         }
 
         if (trade.getBorrower().equals(MyApplication.getLocalUser())) {

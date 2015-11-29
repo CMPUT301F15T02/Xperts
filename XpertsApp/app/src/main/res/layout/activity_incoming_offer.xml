@@ -75,4 +75,14 @@
         android:layout_marginRight="10dp"
         android:onClick="acceptTrade"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="COMPLETE"
+        android:id="@+id/completeButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:onClick="completeTrade"/>
+
 </RelativeLayout>
