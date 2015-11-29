@@ -20,7 +20,8 @@ import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
  */
 public class UserManager implements IObserver {
 	private Map<String, User> users = new HashMap<String, User>();
-	private User diskUser = null;
+	//private ArrayList<User> diskUsers = new ArrayList<User>();
+	private User diskUser;
 
 	// Get/Set
 
@@ -35,6 +36,11 @@ public class UserManager implements IObserver {
 	 * @param user Registers this as an observer on User and adds it to the List
 	 */
 	private void addUser(User user) {
+		boolean contains = false;
+
+		// Need to write disk first
+		IOManager.sharedManager().writeUserToFile(user);
+
 		user.addObserver(this);
 		this.users.put(user.getEmail(), user);
 		this.notify(user);
@@ -46,8 +52,9 @@ public class UserManager implements IObserver {
 	 */
 	public User getUser(String email) {
 
+		diskUser = IOManager.sharedManager().loadUserFromFile(email);
+
 		// Push local user if have internet
-		diskUser = IOManager.sharedManager().loadUserFromFile(MyApplication.getContext());
 		if (Constants.userSync) {
 			if (diskUser != null) {
 				try {
@@ -114,7 +121,7 @@ public class UserManager implements IObserver {
 			User newUser = new User(email);
 			this.addUser(newUser);
 			System.out.println("sss " + newUser);
-			IOManager.sharedManager().writeUserToFile(newUser, MyApplication.getContext());
+			IOManager.sharedManager().writeUserToFile(newUser);
 			return this.getUser(email);
 		}
 		return foundUser;

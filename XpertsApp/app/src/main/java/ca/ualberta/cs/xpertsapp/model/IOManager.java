@@ -202,7 +202,7 @@ public class IOManager {
 	}
 
 	// Read local user from local storage
-	public User loadUserFromFile(Context context) {
+	/*public User loadUserFromFile(Context context) {
 		User user = null;
 
 		try {
@@ -218,10 +218,10 @@ public class IOManager {
 		}
 
 		return user;
-	}
+	}*/
 
 	// Write local user to local storage
-	public void writeUserToFile(User user, Context context) {
+	/*public void writeUserToFile(User user, Context context) {
 		try {
 			FileOutputStream fos = context.openFileOutput("user.sav", 0);
 			OutputStreamWriter writer = new OutputStreamWriter(fos);
@@ -233,9 +233,9 @@ public class IOManager {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
+	}*/
 
-	// Read local user's services or trades from local storage
+	// Read users, services or trades from local storage
 	public <T> ArrayList<T> loadFromFile(Context context, TypeToken<ArrayList<T>> typeToken, String filename) {
 		ArrayList<T> objects = new ArrayList<T>();
 		try {
@@ -253,7 +253,7 @@ public class IOManager {
 		return objects;
 	}
 
-	// Write local user's services or trades to local storage
+	// Write to local storage
 	public <T> void writeToFile(ArrayList<T> objects, Context context, String filename) {
 		try {
 			FileOutputStream fos = context.openFileOutput(filename, 0);
@@ -266,5 +266,31 @@ public class IOManager {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	// Have to remove then re add
+	public void writeUserToFile(User user) {
+		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {}, "users.sav");
+		for (User u : diskUsers) {
+			if (u.getEmail().equals(user.getEmail())) {
+				diskUsers.remove(u);
+				break;
+			}
+		}
+		diskUsers.add(user);
+		//Constants.usersSync = true;
+		writeToFile(diskUsers, MyApplication.getContext(), "users.sav");
+	}
+
+	public User loadUserFromFile(String email) {
+		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {}, "users.sav");
+		User diskUser = null;
+		for (User user : diskUsers) {
+			if (user.getEmail().equals(email)) {
+				diskUser = user;
+				break;
+			}
+		}
+		return diskUser;
 	}
 }

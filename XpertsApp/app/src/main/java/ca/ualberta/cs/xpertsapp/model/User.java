@@ -114,6 +114,9 @@ public class User implements IObservable {
 		if (!this.isEditable()) throw new AssertionError();
 		this.friends.add(friend.getEmail());
 		this.notifyObservers();
+
+		// Write disk, no sync
+		IOManager.sharedManager().writeUserToFile(this);
 	}
 
 	/**
@@ -124,6 +127,9 @@ public class User implements IObservable {
 		if (!this.isEditable()) throw new AssertionError();
 		this.friends.remove(friend.getEmail());
 		this.notifyObservers();
+
+		// Write disk, no sync
+		IOManager.sharedManager().writeUserToFile(this);
 	}
 
 	/**
@@ -155,7 +161,7 @@ public class User implements IObservable {
 
 		// Write disk first, no observer
 		Constants.userSync = true;
-		IOManager.sharedManager().writeUserToFile(this, MyApplication.getContext());
+		IOManager.sharedManager().writeUserToFile(this);
 
 		ServiceManager.sharedManager().addService(service);
 		ServiceManager.sharedManager().notify(service);
@@ -173,7 +179,7 @@ public class User implements IObservable {
 
 		// Write disk first, no observer
 		Constants.userSync = true;
-		IOManager.sharedManager().writeUserToFile(this, MyApplication.getContext());
+		IOManager.sharedManager().writeUserToFile(this);
 
 		ServiceManager.sharedManager().removeService(service);
 		this.notifyObservers();
@@ -211,7 +217,12 @@ public class User implements IObservable {
 	 */
 	public void addTrade(Trade trade) {
 		this.trades.add(trade.getID());
-		IOManager.sharedManager().writeUserToFile(this, MyApplication.getContext());
+		IOManager.sharedManager().writeUserToFile(this);
+
+		// Write disk first, no observer
+		Constants.userSync = true;
+		IOManager.sharedManager().writeUserToFile(this);
+
 		TradeManager.sharedManager().addTrade(trade);
 		TradeManager.sharedManager().notify(trade);
 		this.notifyObservers();
@@ -224,6 +235,11 @@ public class User implements IObservable {
 	public void removeTrade(Trade trade) {
 		this.trades.remove(trade.getID());
 		//trade.getOwner().removeTradeFromOwner(trade);
+
+		// Write disk first, no observer
+		Constants.userSync = true;
+		IOManager.sharedManager().writeUserToFile(this);
+
 		TradeManager.sharedManager().removeTrade(trade);
 		this.notifyObservers();
 	}
