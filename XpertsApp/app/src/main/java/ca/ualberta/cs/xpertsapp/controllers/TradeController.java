@@ -19,14 +19,16 @@ public class TradeController {
      * and the owner service.
      * @param owner The owner of the trade
      * @param borrowerServices A list of services the borrower is offering in this trade.
-     * @param ownerService The service the borrower is asking for from the owner.
+     * @param ownerServices The service the borrower is asking for from the owner.
      */
-    public void createTrade(User owner,ArrayList<Service> borrowerServices, Service ownerService) {
+    public void createTrade(User owner,ArrayList<Service> borrowerServices, ArrayList<Service> ownerServices) {
         Trade newTrade = TradeManager.sharedManager().newTrade(owner, false);
         for (Service service : borrowerServices) {
             newTrade.addBorrowerService(service);
         }
-        newTrade.addOwnerService(ownerService);
+        for (Service service : ownerServices) {
+            newTrade.addOwnerService(service);
+        }
         newTrade.commit();
     }
 

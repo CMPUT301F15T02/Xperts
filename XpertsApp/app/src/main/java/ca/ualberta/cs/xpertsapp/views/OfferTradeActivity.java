@@ -61,6 +61,12 @@ public class OfferTradeActivity extends Activity {
         //get Service that user clicked on
         intent = getIntent();
         String serviceID = intent.getStringExtra("INTENT_SERVICEID");
+        String tradeID = intent.getStringExtra("INTENT_TRADEID");
+        if (tradeID == null) {
+            //offer is not a counter trade
+        }
+
+
         initialService = serviceManager.getService(serviceID);
         initialServiceList.add(initialService);
         //set list adapter to display list
@@ -125,7 +131,7 @@ public class OfferTradeActivity extends Activity {
      */
     public void makeTrade(View view) {
         //can make a trade without any borrower services
-        tradeController.createTrade(initialService.getOwner(), borrowerServices, initialService);
+        tradeController.createTrade(initialService.getOwner(), borrowerServices, initialServiceList);
         //make a toast to say sent trade
         Context context = getApplicationContext();
         CharSequence text = "Trade request sent";

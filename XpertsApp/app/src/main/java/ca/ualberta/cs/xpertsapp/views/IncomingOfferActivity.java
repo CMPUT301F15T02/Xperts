@@ -14,6 +14,7 @@ import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
+import ca.ualberta.cs.xpertsapp.controllers.TradeController;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.Trade;
@@ -24,6 +25,7 @@ public class IncomingOfferActivity extends Activity {
     private ServiceListAdapter serviceBorrowerAdapter;
     private ServiceManager serviceManager = ServiceManager.sharedManager();
     private TradeManager tradeManager = TradeManager.sharedManager();
+    private TradeController tradeController = new TradeController();
     private TextView borrowerName;
     private ListView borrowerServices;
     private ListView ownerServices;
@@ -32,6 +34,7 @@ public class IncomingOfferActivity extends Activity {
     private Button accept;
     private Button decline;
     private Button complete;
+    private Button offerCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,10 @@ public class IncomingOfferActivity extends Activity {
         accept = (Button) findViewById(R.id.acceptButton);
         decline = (Button) findViewById(R.id.declineButton);
         complete = (Button) findViewById(R.id.completeButton);
+        offerCounter = (Button) findViewById(R.id.counterButton);
         complete.setVisibility(View.INVISIBLE);
+        offerCounter.setVisibility(View.INVISIBLE);
+
         //status = 0 means pending
         if (trade.getStatus() != 0) {
             accept.setVisibility(View.INVISIBLE);
@@ -53,6 +59,10 @@ public class IncomingOfferActivity extends Activity {
         //status = 1 means accepted
         if (trade.getStatus() == 1) {
             complete.setVisibility(View.VISIBLE);
+        }
+        //status = 3 means declined
+        if (trade.getStatus() == 3) {
+            offerCounter.setVisibility(View.VISIBLE);
         }
 
         borrowerName = (TextView) findViewById(R.id.incomingBorrowerName);
@@ -159,5 +169,15 @@ public class IncomingOfferActivity extends Activity {
     public void completeTrade(View view) {
         trade.complete();
         finish();
+    }
+
+    /**
+     * Offers a counter trade.
+     * @param view The counter trade button.
+     */
+    public void counterTrade(View view) {
+        //go to OfferTradeActivity to create new trade initialized with items from this trade
+        //pass in trade id.
+        //maybe make new OfferCounterTradeActivity
     }
 }

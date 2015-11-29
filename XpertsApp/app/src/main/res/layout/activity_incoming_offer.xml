@@ -85,4 +85,14 @@
         android:layout_marginRight="10dp"
         android:onClick="completeTrade"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OFFER COUNTER TRADE"
+        android:id="@+id/counterButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:onClick="counterTrade"/>
+
 </RelativeLayout>
