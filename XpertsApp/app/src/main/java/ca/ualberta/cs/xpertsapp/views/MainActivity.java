@@ -99,14 +99,6 @@ public class MainActivity extends Activity {
         });
 
         notifications = (TextView) findViewById(R.id.notifications);
-        TradeController tradeController = new TradeController();
-        Integer pending = tradeController.getPendingTrades();
-        notifications.setText(pending.toString());
-        if (pending == 0) {
-            notifications.setVisibility(View.INVISIBLE);
-        } else {
-            notifications.setVisibility(View.VISIBLE);
-        }
     }
 
     /**
@@ -115,14 +107,17 @@ public class MainActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        TradeController tradeController = new TradeController();
-        Integer pending = tradeController.getPendingTrades();
-        notifications.setText(pending.toString());
-        if (pending == 0) {
-            notifications.setVisibility(View.INVISIBLE);
-        } else {
-            notifications.setVisibility(View.VISIBLE);
+        if(MyApplication.isLoggedIn()) {
+            TradeController tradeController = new TradeController();
+            Integer pending = tradeController.getPendingTrades();
+            notifications.setText(pending.toString());
+            if (pending == 0) {
+                notifications.setVisibility(View.INVISIBLE);
+            } else {
+                notifications.setVisibility(View.VISIBLE);
+            }
         }
+
     }
 
     /**
@@ -131,13 +126,16 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        TradeController tradeController = new TradeController();
-        Integer pending = tradeController.getPendingTrades();
-        notifications.setText(pending.toString());
-        if (pending == 0) {
-            notifications.setVisibility(View.INVISIBLE);
-        } else {
-            notifications.setVisibility(View.VISIBLE);
+        if(MyApplication.isLoggedIn()) {
+
+            TradeController tradeController = new TradeController();
+            Integer pending = tradeController.getPendingTrades();
+            notifications.setText(pending.toString());
+            if (pending == 0) {
+                notifications.setVisibility(View.INVISIBLE);
+            } else {
+                notifications.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -170,7 +168,7 @@ public class MainActivity extends Activity {
                 //Toast.makeText(context, "Internet connection detected", Toast.LENGTH_SHORT).show();
 
                 // Whether the sync should be refreshed
-                if (Constants.refreshSync) {
+                if (Constants.refreshSync && MyApplication.isLoggedIn()) {
                     IOManager.sharedManager().pushToServer();
                     IOManager.sharedManager().pullFromServer();
                 }
