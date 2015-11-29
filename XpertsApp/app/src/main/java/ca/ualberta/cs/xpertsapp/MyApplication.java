@@ -63,7 +63,7 @@ public class MyApplication extends Application {
 	 * @see #loginScreen()
 	 */
 	public static boolean isLoggedIn() {
-		return MyApplication.preferences.getBoolean(LOGGED_IN, false);
+		return Constants.isTest || MyApplication.preferences.getBoolean(LOGGED_IN, false);
 	}
 	/**
 	 * @return The active user's email stored in shared preferences
@@ -77,10 +77,10 @@ public class MyApplication extends Application {
 	 * @return The active user for the app
 	 */
 	public static User getLocalUser() {
-		loginCheck();
 		if(Constants.isTest){
 			return UserManager.sharedManager().registerUser(Constants.testEmail);
 		}
+		loginCheck();
 		String email = MyApplication.getLocalEmail();
 		if (email == null) {
 //			loginScreen();
