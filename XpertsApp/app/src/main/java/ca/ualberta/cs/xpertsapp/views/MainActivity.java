@@ -174,7 +174,7 @@ public class MainActivity extends Activity {
             // Checks to see if the device has a connection.
             if (networkInfo != null) {
                 Constants.isOnline = true;
-                //Toast.makeText(context, "Internet connection detected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Internet connection detected", Toast.LENGTH_SHORT).show();
 
                 // Whether the sync should be refreshed
                 if (Constants.refreshSync && MyApplication.isLoggedIn()) {

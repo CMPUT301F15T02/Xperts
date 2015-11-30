@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.Service;
 import ca.ualberta.cs.xpertsapp.model.User;
+import ca.ualberta.cs.xpertsapp.model.UserManager;
 
 /**
  * Activity that allows user to view their profile. It is called from MainActivity.
@@ -69,9 +71,11 @@ public class ViewProfileActivity extends Activity {
         addService = (Button) findViewById(R.id.add);
         serviceList = (ListView) findViewById(R.id.serviceList);
         User user = MyApplication.getLocalUser();
+
         name.setText(user.getName());
         email.setText(user.getEmail());
         location.setText(user.getLocation());
+       // Toast.makeText(context, "Internet connection lost", Toast.LENGTH_SHORT).show();
 
         serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -96,6 +100,7 @@ public class ViewProfileActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+
         User user = MyApplication.getLocalUser();
         List<Service> Services = user.getServices();
         serviceListAdapter = new ServiceListAdapter(this,Services);
