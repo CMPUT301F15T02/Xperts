@@ -53,6 +53,9 @@ public class TradeControllerTest extends TestCase {
         super.tearDown2();
     }
 
+    /**
+     * Use case 04.01.01 OfferTrade and 04.04.01 OfferCounterTrade
+     */
     public void testCreateTrade() {
         setUp2();
 
@@ -91,6 +94,9 @@ public class TradeControllerTest extends TestCase {
         tearDown2();
     }
 
+    /**
+     * Use case 04.06.01 DeleteTrade
+     */
     //deleteTrade(String id)
     public void testDeleteTrade() {
         setUp2();
@@ -129,6 +135,9 @@ public class TradeControllerTest extends TestCase {
         tearDown2();
     }
 
+    /**
+     * Used for use case 04.02.01 NotifyOwner
+     */
     public void testGetPendingTrades() {
         setUp2();
 
