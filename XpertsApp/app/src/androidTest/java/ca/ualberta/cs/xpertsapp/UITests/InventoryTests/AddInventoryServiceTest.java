@@ -147,7 +147,7 @@ public class AddInventoryServiceTest extends TestCase {
                 Boolean check = Boolean.FALSE;
                 List<Service> services = UserManager.sharedManager().getUser(Constants.testEmail).getServices();
                 for(int i = 0; i < services.size(); i++){
-                        if (services.get(i).getName() == "Test Service 1"){
+                        if (services.get(i).getName().equals("Test Service 1")){
                                 check = Boolean.TRUE;
                         }
                 }
