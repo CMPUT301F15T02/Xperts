@@ -183,7 +183,9 @@ public class IOManager {
 
 	public void clearCache() {
 		for (File file : MyApplication.getContext().getFilesDir().listFiles()) {
-			file.delete();
+			if (file.getAbsolutePath() != null) {
+				file.delete();
+			}
 		}
 	}
 

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,8 @@ public class FriendServiceDetailsActivity extends Activity {
     private TextView description;
     public TextView getDescription() {return description;}
     private Intent intent;
+    private ImageView imageView;
+    public ImageView getImageView() {return imageView;}
     private FriendServiceDetailsActivity activity = this;
     private Service service;
     private CheckBox cb;
@@ -51,6 +54,7 @@ public class FriendServiceDetailsActivity extends Activity {
         setContentView(R.layout.activity_friend_service_details);
         theTitle = (TextView) findViewById(R.id.friendServiceTV);
         category = (TextView) findViewById(R.id.friendCategory);
+        imageView = (ImageView) findViewById(R.id.friendImageView);
         description = (TextView) findViewById(R.id.friendLongDescription);
         intent = getIntent();
         String Service_id = intent.getStringExtra(Constants.IntentServiceName);
@@ -58,6 +62,9 @@ public class FriendServiceDetailsActivity extends Activity {
         theTitle.setText(service.getName());
         category.setText(service.getCategory().toString());
         description.setText(service.getDescription());
+        if (!(service.getPictures().isEmpty())) {
+            imageView.setImageBitmap(service.getPictures().get(0));
+        }
         cloneBtn = (Button) findViewById(R.id.cloneBtn2);
         cloneBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

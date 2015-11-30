@@ -33,7 +33,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		Constants.isTest = true;
 		Constants.isOnline = true;
 
-		IOManager.sharedManager().clearCache();
+/*		IOManager.sharedManager().clearCache();
 
 		// Cleanup the last test
 		UserManager.sharedManager().clearCache();
@@ -46,6 +46,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().deleteData(Constants.serverImageExtension());
 
 		IOManager.sharedManager().clearCache();
+		*/
 	}
 
 	protected void tearDown2() {
