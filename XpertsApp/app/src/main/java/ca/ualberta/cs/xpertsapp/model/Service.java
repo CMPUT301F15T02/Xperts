@@ -129,6 +129,15 @@ public class Service implements IObservable {
 	}
 
 	/**
+	 * @param index the index of the image to remove
+	 */
+	public void removePicture(int index) {
+		if (!this.isEditable()) throw new AssertionError();
+		this.pictures.remove(index);
+		this.notifyObservers();
+	}
+
+	/**
 	 * @return whether or not the service can be seen by others
 	 */
 	public boolean isShareable() {
