@@ -152,7 +152,8 @@ public class Service implements IObservable {
 	}
 
 	protected boolean isEditable() {
-		return Constants.isTest || this.getOwner() == MyApplication.getLocalUser();
+		// Compare two different objects, one offline and one online
+		return Constants.isTest || this.getOwner().getEmail().equals(MyApplication.getLocalUser().getEmail());
 	}
 
 	// IObservable
@@ -168,7 +169,10 @@ public class Service implements IObservable {
 
 	@Override
 	public void removeObserver(IObserver observer) {
-		this.observers.remove(observer);
+		// if diskService, no observer
+		if (this.observers != null) {
+			this.observers.remove(observer);
+		}
 	}
 
 	@Override

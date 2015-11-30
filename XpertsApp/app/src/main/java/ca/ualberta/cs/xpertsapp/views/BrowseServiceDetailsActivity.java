@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,8 @@ public class BrowseServiceDetailsActivity extends Activity {
     private Intent intent;
     private BrowseServiceDetailsActivity activity = this;
     private Service service;
+    private ImageView imageView;
+    public ImageView getImageView() {return imageView;}
     private AddServiceController asc = new AddServiceController();
 
     @Override
@@ -40,12 +43,16 @@ public class BrowseServiceDetailsActivity extends Activity {
         theTitle = (TextView) findViewById(R.id.serviceTitle2);
         category = (TextView) findViewById(R.id.categoryTextView2);
         description = (TextView) findViewById(R.id.longDescriptionTextView2);
+        imageView = (ImageView) findViewById(R.id.imageView2);
         intent = getIntent();
         String Service_id = intent.getStringExtra("INTENT_SERVICEID");
         service = ServiceManager.sharedManager().getService(Service_id);
         theTitle.setText(service.getName());
         category.setText(service.getCategory().toString());
         description.setText(service.getDescription());
+        if (!(service.getPictures().isEmpty())) {
+            imageView.setImageBitmap(service.getPictures().get(0));
+        }
         cloneBtn = (Button) findViewById(R.id.cloneBtn);
         cloneBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

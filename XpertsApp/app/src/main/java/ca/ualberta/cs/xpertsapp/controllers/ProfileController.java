@@ -24,6 +24,7 @@ public class ProfileController {
         try {
             friend = UserManager.sharedManager().getUser(email);
         } catch (RuntimeException e) {
+            e.printStackTrace();
             return null;
         }
         if (friend == null) {

@@ -22,7 +22,9 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
 import ca.ualberta.cs.xpertsapp.model.Constants;
+import ca.ualberta.cs.xpertsapp.model.IOManager;
 import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
@@ -55,6 +57,7 @@ public class ViewProfileActivity extends Activity {
     public TextView getLocation() {
         return location;
     }
+    List<Service> services;
 
     /**
      * Sets text for user's name, email and location and the click listener for ListView of services.
