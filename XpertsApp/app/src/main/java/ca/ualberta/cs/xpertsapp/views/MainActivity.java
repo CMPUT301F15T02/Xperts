@@ -96,14 +96,6 @@ public class MainActivity extends Activity {
         });
 
         notifications = (TextView) findViewById(R.id.notifications);
-        TradeController tradeController = new TradeController();
-        Integer pending = tradeController.getPendingTrades();
-        notifications.setText(pending.toString());
-        if (pending == 0) {
-            notifications.setVisibility(View.INVISIBLE);
-        } else {
-            notifications.setVisibility(View.VISIBLE);
-        }
     }
 
     /**
