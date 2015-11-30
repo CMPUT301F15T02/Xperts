@@ -1,6 +1,7 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,7 +54,7 @@ public class TopTradersActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String email = topTraderAdapter.getItem(position).getEmail();
                 Intent intent;
-                if(email.equals(MyApplication.getLocalUser().getEmail())){
+                if (email.equals(MyApplication.getLocalUser().getEmail())) {
                     intent = new Intent(activity, ViewProfileActivity.class);
                 } else {
                     intent = new Intent(activity, FriendProfileActivity.class);
@@ -81,7 +83,11 @@ public class TopTradersActivity extends Activity {
         try {
             AllUsers = UserManager.sharedManager().findUsers("*");
         } catch (Exception e) {
-
+            Context context = getApplicationContext();
+            CharSequence text = "Failed to load top users, server busy. Please try again.";
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
         }
         Collections.sort(AllUsers, new Comparator<User>() {
             public int compare(User one, User two) {
