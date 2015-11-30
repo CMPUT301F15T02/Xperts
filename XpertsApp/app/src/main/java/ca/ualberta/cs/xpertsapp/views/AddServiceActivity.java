@@ -193,7 +193,7 @@ when the save button is pressed the pictures are added to the service.
 			//Toast.makeText(this,getIntent().getStringExtra("filename"), Toast.LENGTH_LONG).show();
 			//Toast.makeText(this,data.getStringExtra("filename"), Toast.LENGTH_LONG).show();
 			Bitmap bMap = BitmapFactory.decodeFile(getIntent().getStringExtra("filename"));
-			getPictures().add(bMap);
+			getPictures().add(0,bMap);
 			/* old code from unsaved bitmaps
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");

@@ -115,7 +115,8 @@ public class Service implements IObservable {
 	 */
 	public void addPicture(Bitmap picture) {
 		if (!this.isEditable()) throw new AssertionError();
-		this.pictures.add(ImageManager.sharedManager().registerImage(picture));
+		//adding to index 0 is a placeholder until we can deal with multiple images
+		this.pictures.add(0,ImageManager.sharedManager().registerImage(picture));
 		this.notifyObservers();
 	}
 
