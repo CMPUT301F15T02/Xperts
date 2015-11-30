@@ -16,10 +16,16 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,9 +45,6 @@ public class IOManager {
 	private static final int sleepTime = 500;
 	// Singleton
 	private static IOManager instance = new IOManager();
-	private List<User> users = new ArrayList<User>();
-	private List<Service> services = new ArrayList<Service>();
-	private List<Trade> trades = new ArrayList<Trade>();
 
 	private IOManager() {
 	}
@@ -54,53 +57,6 @@ public class IOManager {
 
 	public static IOManager sharedManager() {
 		return IOManager.instance;
-	}
-
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public List<Service> getServices() {
-		return services;
-	}
-
-	public List<Trade> getTrades() {
-		return trades;
-	}
-
-	/**
-	 * Push changes of local user
-	 */
-	public void pushToServer() {
-		new Thread(new Runnable() {
-			User user = MyApplication.getLocalUser();
-
-			@Override
-			public void run() {
-				IOManager.sharedManager().storeData(user, Constants.serverUserExtension() + user.getEmail());
-				for (Service service : user.getServices()) {
-					IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
-				}
-
-				for (Trade trade : user.getTrades()) {
-					IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
-				}
-			}
-		}).start();
-	}
-
-	/**
-	 * Cache users, services, trades
-	 */
-	public void pullFromServer() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				users = UserManager.sharedManager().findUsers("*");
-				services = ServiceManager.sharedManager().findServices("*");
-				//trades = TradeManager.sharedManager().findTrades("*");
-			}
-		}).start();
 	}
 
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
@@ -239,13 +195,76 @@ public class IOManager {
 
 		protected HttpResponse doInBackground(HttpUriRequest... request) {
 			HttpClient httpClient = new DefaultHttpClient();
-			HttpResponse response;
+			HttpResponse response = null;
 			try {
 				response = httpClient.execute(request[0]);
 			} catch (Exception e) {
-				throw new RuntimeException(e);
+				//throw new RuntimeException(e);
 			}
 			return response;
 		}
+	}
+
+	// Read only friends, services or trades of local user from local storage
+	public <T> ArrayList<T> loadFromFile(Context context, TypeToken<ArrayList<T>> typeToken, String filename) {
+		ArrayList<T> objects = new ArrayList<T>();
+		try {
+			FileInputStream fis = context.openFileInput(filename);
+			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+			Gson gson = new Gson();
+			objects = gson.fromJson(in, typeToken.getType());
+
+		} catch (FileNotFoundException e) {
+			return objects;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+		return objects;
+	}
+
+	// Write to local storage
+	public <T> void writeToFile(ArrayList<T> objects, Context context, String filename) {
+		try {
+			FileOutputStream fos = context.openFileOutput(filename, 0);
+			OutputStreamWriter writer = new OutputStreamWriter(fos);
+			Gson gson = new Gson();
+			gson.toJson(objects, writer);
+			Log.d("gson", gson.toJson(objects));
+			writer.flush();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	// Replace a user from users
+	// Have to remove then re add
+	public void writeUserToFile(User user) {
+		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {
+		}, Constants.diskUser());
+		for (User u : diskUsers) {
+			if (u.getEmail().equals(user.getEmail())) {
+				diskUsers.remove(u);
+				break;
+			}
+		}
+		diskUsers.add(user);
+		//Constants.usersSync = true;
+		writeToFile(diskUsers, MyApplication.getContext(), Constants.diskUser());
+	}
+
+	// Get a user from users
+	public User loadUserFromFile(String email) {
+		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {
+		}, Constants.diskUser());
+		User diskUser = null;
+		for (User user : diskUsers) {
+			if (user.getEmail().equals(email)) {
+				diskUser = user;
+				break;
+			}
+		}
+		return diskUser;
 	}
 }

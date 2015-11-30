@@ -112,6 +112,7 @@ public class AddServiceActivity extends Activity {
 				asc.addService(getTheTitle(), getDescription(), category, getPrivate(),getPictures());
 			}
 			catch (RuntimeException e){
+				e.printStackTrace();
 				Toast.makeText(getApplicationContext(), "Runtime error",
 						Toast.LENGTH_LONG).show();
 			}

@@ -14,6 +14,7 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
+import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
 /**
@@ -21,6 +22,7 @@ import ca.ualberta.cs.xpertsapp.views.MainActivity;
  */
 public class TradeManager implements IObserver {
 	private Map<String, Trade> trades = new HashMap<String, Trade>();
+	private ArrayList<Trade> diskTrades = new ArrayList<Trade>();
 
 	// Get/Set
 
@@ -40,17 +42,34 @@ public class TradeManager implements IObserver {
 	 * @return the trade or null if not found
 	 */
 	public Trade getTrade(String id) {
+		// Push local user's trades if have internet
+		diskTrades = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Trade>>() {
+		}, "trades.sav");
+		if (Constants.tradesSync) {
+			if (diskTrades != null) {
+				try {
+					for (Trade trade : diskTrades) {
+						IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
+						System.out.println("push " + trade.toString());
+					}
+					Constants.tradesSync = false;
+				} catch (Exception e) {
+					// no internet
+				}
+			}
+		}
+
 		// If we have the trade loaded
 		if (this.trades.containsKey(id)) {
 			return this.trades.get(id);
 		}
-		// TODO:
+
 		try {
-			SearchHit<Trade> loadedTrades = IOManager.sharedManager().fetchData(Constants.serverTradeExtension() + id, new TypeToken<SearchHit<Trade>>() {
+			SearchHit<Trade> loadedTrade = IOManager.sharedManager().fetchData(Constants.serverTradeExtension() + id, new TypeToken<SearchHit<Trade>>() {
 			});
-			if (loadedTrades.isFound()) {
-				this.addTrade(loadedTrades.getSource());
-				return loadedTrades.getSource();
+			if (loadedTrade.isFound()) {
+				this.addTrade(loadedTrade.getSource());
+				return loadedTrade.getSource();
 			} else {
 				// TODO:
 				return null;
@@ -61,7 +80,19 @@ public class TradeManager implements IObserver {
 			throw new RuntimeException(e);
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);
+		} catch (Exception e) {
+
+			// no internet
+			if (diskTrades != null) {
+				for (Trade trade : diskTrades) {
+					if (trade.getID().equals(id)) {
+						return trade;
+					}
+				}
+			}
 		}
+
+		return null;
 	}
 
 	/**
@@ -75,8 +106,25 @@ public class TradeManager implements IObserver {
 	}
 
 	void addTrade(Trade trade) {
+		boolean contains = false;
+
+		// Write disk first
+		// Don't add same object
+		for (Trade s : diskTrades) {
+			if (s.getID().equals(trade.getID())) {
+				contains = true;
+				break;
+			}
+		}
+		if (!contains) {
+			diskTrades.add(trade);
+			Constants.tradesSync = true;
+		}
+		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), "trades.sav");
+
 		trade.addObserver(this);
 		this.trades.put(trade.getID(), trade);
+		this.notify(trade);
 	}
 
 	/**
@@ -84,9 +132,23 @@ public class TradeManager implements IObserver {
 	 * @param trade The trade to be removed from the system
 	 */
 	void removeTrade(Trade trade) {
+		// Delete disk, no sync
+		for (Trade t : diskTrades) {
+			if (t.getID().equals(trade.getID())) {
+				diskTrades.remove(t);
+				System.out.println("push remove" + t.getID());
+				break;
+			}
+		}
+		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), "trades.sav");
+
 		trade.removeObserver(this);
 		this.trades.remove(trade.getID());
-		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
+		try {
+			IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade.getID());
+		} catch (Exception e) {
+
+		}
 	}
 
 	/**
@@ -112,10 +174,10 @@ public class TradeManager implements IObserver {
 	@Override
 	/** gets notified by things its watching */
 	public void notify(IObservable observable) {
-		// TODO:
-		Constants.refreshSync = true;
-		if (Constants.isOnline) {
+		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverTradeExtension() + ((Trade) observable).getID());
+		} catch (Exception e) {
+
 		}
 	}
 }

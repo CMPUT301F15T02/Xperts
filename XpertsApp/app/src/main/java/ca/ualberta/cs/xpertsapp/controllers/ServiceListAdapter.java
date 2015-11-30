@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +95,7 @@ public class ServiceListAdapter extends BaseAdapter {
         s_name.setText(s.getName());
         s_owner.setText(s.getOwner().getName());
         s_category.setText(s.getCategory().toString());
+
         return vi;
     }
 }

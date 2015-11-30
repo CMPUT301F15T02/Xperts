@@ -114,6 +114,9 @@ public class User implements IObservable {
 		if (!this.isEditable()) throw new AssertionError();
 		this.friends.add(friend.getEmail());
 		this.notifyObservers();
+
+		// Write disk, no sync
+		IOManager.sharedManager().writeUserToFile(this);
 	}
 
 	/**
@@ -124,6 +127,9 @@ public class User implements IObservable {
 		if (!this.isEditable()) throw new AssertionError();
 		this.friends.remove(friend.getEmail());
 		this.notifyObservers();
+
+		// Write disk, no sync
+		IOManager.sharedManager().writeUserToFile(this);
 	}
 
 	/**
@@ -147,22 +153,33 @@ public class User implements IObservable {
 	 */
 	public void addService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
+
 		this.services.add(service.getID());
-		if(!service.getOwner().equals(this)) {
+		if(!service.getOwner().getEmail().equals(this.getEmail())) {
 			service.setOwner(this.email);
 		}
+
+		// Write disk first, no observer
+		Constants.userSync = true;
+		IOManager.sharedManager().writeUserToFile(this);
+
 		ServiceManager.sharedManager().addService(service);
 		ServiceManager.sharedManager().notify(service);
 		this.notifyObservers();
 	}
 
 	/**
-	 * remove service form the use. the service still exists, but is unlinked
+	 * remove service form the user, the service still exists, but is unlinked
 	 * @param service the old service
 	 */
 	public void removeService(Service service) {
 		if (!this.isEditable()) throw new AssertionError();
+
 		this.services.remove(service.getID());
+
+		// Write disk first, no observer
+		Constants.userSync = true;
+		IOManager.sharedManager().writeUserToFile(this);
 
 		ServiceManager.sharedManager().removeService(service);
 		this.notifyObservers();
@@ -200,6 +217,12 @@ public class User implements IObservable {
 	 */
 	public void addTrade(Trade trade) {
 		this.trades.add(trade.getID());
+		IOManager.sharedManager().writeUserToFile(this);
+
+		// Write disk first, no observer
+		Constants.userSync = true;
+		IOManager.sharedManager().writeUserToFile(this);
+
 		TradeManager.sharedManager().addTrade(trade);
 		TradeManager.sharedManager().notify(trade);
 		this.notifyObservers();
@@ -211,6 +234,23 @@ public class User implements IObservable {
 	 */
 	public void removeTrade(Trade trade) {
 		this.trades.remove(trade.getID());
+		//trade.getOwner().removeTradeFromOwner(trade);
+
+		// Write disk first, no observer
+		Constants.userSync = true;
+		IOManager.sharedManager().writeUserToFile(this);
+
+		TradeManager.sharedManager().removeTrade(trade);
+		this.notifyObservers();
+	}
+
+	/**
+	 * This is called from removeTrade() and is used to remove the trade from the owner as well.
+	 * @param trade the trade that's being removed
+	 */
+	public void removeTradeFromOwner(Trade trade) {
+		//TODO
+		this.trades.remove(trade.getID());
 		TradeManager.sharedManager().removeTrade(trade);
 		this.notifyObservers();
 	}
@@ -219,13 +259,15 @@ public class User implements IObservable {
 	 * @return whether the active user has permission to edit this user. returns true for tests.
 	 */
 	protected boolean isEditable() {
-		return Constants.isTest || this == MyApplication.getLocalUser();
+		return Constants.isTest || this.getEmail().equals(MyApplication.getLocalUser().getEmail());
 	}
 
 	/**
 	 * @return if the active user is this user
 	 */
-	protected boolean isOwner(){return this == MyApplication.getLocalUser();}
+	protected boolean isOwner() {
+		return this.getEmail().equals(MyApplication.getLocalUser().getEmail());
+	}
 
 	/**
 	 * @see IObservable
@@ -250,8 +292,11 @@ public class User implements IObservable {
 	@Override
 	/** get told when something changes */
 	public void notifyObservers() {
-		for (IObserver observer : this.observers) {
-			observer.notify(this);
+		// if diskUser, no observers
+		if (this.observers != null) {
+			for (IObserver observer : this.observers) {
+				observer.notify(this);
+			}
 		}
 	}
 }

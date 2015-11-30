@@ -21,6 +21,8 @@ import ca.ualberta.cs.xpertsapp.views.MainActivity;
  */
 public class UserManager implements IObserver {
 	private Map<String, User> users = new HashMap<String, User>();
+	//private ArrayList<User> diskUsers = new ArrayList<User>();
+	private User diskUser;
 
 	// Get/Set
 
@@ -35,6 +37,9 @@ public class UserManager implements IObserver {
 	 * @param user Registers this as an observer on User and adds it to the List
 	 */
 	private void addUser(User user) {
+		// Need to write disk first
+		IOManager.sharedManager().writeUserToFile(user);
+
 		user.addObserver(this);
 		this.users.put(user.getEmail(), user);
 		this.notify(user);
@@ -45,14 +50,30 @@ public class UserManager implements IObserver {
 	 * @return The User with that email or null
 	 */
 	public User getUser(String email) {
+
+		diskUser = IOManager.sharedManager().loadUserFromFile(email);
+
+		// Push local user if have internet
+		if (Constants.userSync) {
+			if (diskUser != null) {
+				try {
+					IOManager.sharedManager().storeData(diskUser, Constants.serverUserExtension() + diskUser.getEmail());
+					Constants.userSync = false;
+				} catch (Exception ex) {
+
+				}
+			}
+		}
+
 		if (email == null) {
 			return null;
 		}
+
 		// If we have the user loaded
 		if (this.users.containsKey(email)) {
 			return this.users.get(email);
 		}
-		// TODO: Only return a user if one existed
+
 		try {
 			SearchHit<User> loadedUser = IOManager.sharedManager().fetchData(Constants.serverUserExtension() + email, new TypeToken<SearchHit<User>>() {
 			});
@@ -68,7 +89,17 @@ public class UserManager implements IObserver {
 			throw new RuntimeException(e);
 		} catch (IllegalStateException e) {
 			throw new RuntimeException(e);
+		} catch (Exception e) {
+
+			// no internet
+			if (diskUser != null) {
+				if (diskUser.getEmail().equals(email)) {
+					return diskUser;
+				}
+			}
 		}
+
+		return null;
 	}
 
 	/**
@@ -87,6 +118,7 @@ public class UserManager implements IObserver {
 		if (foundUser == null) {
 			User newUser = new User(email);
 			this.addUser(newUser);
+			IOManager.sharedManager().writeUserToFile(newUser);
 			return this.getUser(email);
 		}
 		return foundUser;
@@ -101,11 +133,12 @@ public class UserManager implements IObserver {
 	 * @return The list of matching users with the most relevant first
 	 */
 	public List<User> findUsers(String meta) {
-		List<SearchHit<User>> found = IOManager.sharedManager().searchData(Constants.serverUserExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<User>>() {
-		});
+
+		List<SearchHit<User>> found = IOManager.sharedManager().searchData(Constants.serverUserExtension() + Constants.serverSearchExtension() + meta, new TypeToken<SearchResponse<User>>() {});
+
 		List<User> users = new ArrayList<User>();
 		for (SearchHit<User> user : found) {
-			users.add(this.getUser(user.getSource().getEmail()));
+			users.add(user.getSource());
 		}
 		return users;
 	}
@@ -134,10 +167,9 @@ public class UserManager implements IObserver {
 	/** Gets notified when an observable being observed is observer and changes */
 	@Override
 	public void notify(IObservable observable) {
-		// TODO: store locally
-		Constants.refreshSync = true;
-		if (Constants.isOnline) {
+		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
+		} catch (Exception e) {
 		}
 	}
 }
