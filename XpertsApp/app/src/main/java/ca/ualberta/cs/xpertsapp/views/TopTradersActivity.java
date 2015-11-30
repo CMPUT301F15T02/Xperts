@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -28,10 +27,10 @@ import ca.ualberta.cs.xpertsapp.model.UserManager;
  * This activity displays the list of top traders using the app
  */
 public class TopTradersActivity extends Activity {
-    private ListView friendsList;
+    private ListView getTraderList;
     private TopTradersActivity activity = this;
     private ProfileController pc = new ProfileController();
-    public ListView getFriendsList() {return friendsList;};
+    public ListView getTraderList() {return getTraderList;};
     private TopTraderAdapter topTraderAdapter;
 
     // For UI Test
@@ -48,9 +47,9 @@ public class TopTradersActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_traders);
 
-        friendsList = (ListView) findViewById(R.id.listView);
+        getTraderList = (ListView) findViewById(R.id.listView);
 
-        friendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        getTraderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String email = topTraderAdapter.getItem(position).getEmail();
@@ -101,7 +100,7 @@ public class TopTradersActivity extends Activity {
             }
         });
         topTraderAdapter = new TopTraderAdapter(this,AllUsers);
-        friendsList.setAdapter(topTraderAdapter);
+        getTraderList.setAdapter(topTraderAdapter);
     }
 
     /**

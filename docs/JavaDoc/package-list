@@ -1,7 +1,9 @@
 ca.ualberta.cs.xpertsapp
-ca.ualberta.cs.xpertsapp.BrowseTests
-ca.ualberta.cs.xpertsapp.FriendTests
-ca.ualberta.cs.xpertsapp.InventoryTests
+ca.ualberta.cs.xpertsapp.UITests
+ca.ualberta.cs.xpertsapp.UITests.BrowseTests
+ca.ualberta.cs.xpertsapp.UITests.FriendTests
+ca.ualberta.cs.xpertsapp.UITests.InventoryTests
+ca.ualberta.cs.xpertsapp.UITests.TradeTests
 ca.ualberta.cs.xpertsapp.UnitTests
 ca.ualberta.cs.xpertsapp.controllers
 ca.ualberta.cs.xpertsapp.interfaces
