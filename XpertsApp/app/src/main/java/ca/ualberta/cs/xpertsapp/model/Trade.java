@@ -212,6 +212,7 @@ public class Trade implements IObservable {
 	public void accept() {
 		this.fixState();
 		this.state.accept(this);
+		this.notifyObservers();
 	}
 
 	/**
@@ -220,6 +221,7 @@ public class Trade implements IObservable {
 	public void decline() {
 		this.fixState();
 		this.state.decline(this);
+		this.notifyObservers();
 	}
 
 	/**
@@ -228,6 +230,7 @@ public class Trade implements IObservable {
 	public void cancel() {
 		this.fixState();
 		this.state.cancel(this);
+		this.notifyObservers();
 	}
 
 	/**
@@ -236,6 +239,7 @@ public class Trade implements IObservable {
 	public void complete() {
 		this.fixState();
 		this.state.complete(this);
+		this.notifyObservers();
 	}
 
 	/**
