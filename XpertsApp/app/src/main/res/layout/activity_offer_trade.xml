@@ -1,41 +1,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_height="wrap_content"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingBottom="0dp"
     tools:context="ca.ualberta.cs.xpertsapp.views.OfferTradeActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You are making a request for:"
+        android:text="YOU ARE MAKING A REQUEST FOR"
         android:id="@+id/requestText"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/grey"
+        android:layout_marginBottom="10dp" />
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="125dp"
+        android:layout_height="75dp"
         android:id="@+id/requestServiceList"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/requestText" />
+        android:layout_below="@+id/requestText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add your services to trade"
+        android:text="ADD YOUR SERVICES TO TRADE"
         android:id="@+id/addServiceText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"/>
+        android:layout_below="@+id/requestServiceList"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/grey" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/yourServiceList"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/addServiceText"
-        android:layout_above="@+id/sendTradeButton"/>
+        android:layout_above="@+id/sendTradeButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -44,6 +51,10 @@
         android:id="@+id/sendTradeButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="makeTrade"/>
+        android:onClick="makeTrade"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/yellow"
+        android:textColor="#ffffffff" />
 
 </RelativeLayout>
