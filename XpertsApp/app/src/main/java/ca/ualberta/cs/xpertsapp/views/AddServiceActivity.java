@@ -3,6 +3,7 @@ package ca.ualberta.cs.xpertsapp.views;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -51,7 +52,10 @@ public class AddServiceActivity extends Activity {
 	public CategoryList getCL() {return CL;}
 	private Button SaveButton;
 	public Button getSaveButton() {return SaveButton;}
+	private Button photoButton;
+	public Button getPhotoButton() {return photoButton;}
 	private Intent intent;
+	//public Intent gettheIntent() {return intent;}
 	private int REQUEST_TAKE_PHOTO = 1;
 	private List<Bitmap> pictures;
 	public List<Bitmap> getPictures() {return pictures;}
@@ -71,6 +75,7 @@ public class AddServiceActivity extends Activity {
 		Description = (EditText) findViewById(R.id.editText2);
 		Private = (CheckBox) findViewById(R.id.checkBox);
 		CL = CategoryList.sharedCategoryList();
+		photoButton = (Button) findViewById(R.id.imageButton);
 		pictures = new ArrayList<Bitmap>();
 		//Category.setAdapter();
 		ArrayAdapter<Category> categoryArrayAdapter = new ArrayAdapter<Category>(this, android.R.layout.simple_spinner_dropdown_item,getCL().getCategories());
@@ -126,9 +131,9 @@ public class AddServiceActivity extends Activity {
 	}
 
 	/**
-	 * this does work from android developers
-	 *
-
+	 * this code is from http://developer.android.com/training/camera/photobasics.html
+	 * it is about saving photos to files. Useful for larger files
+	 */
 	String mCurrentPhotoPath;
 
 	private File createImageFile() throws IOException {
@@ -163,27 +168,36 @@ public class AddServiceActivity extends Activity {
 			if (photoFile != null) {
 				takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
 						Uri.fromFile(photoFile));
-				getPictures().add(photoFile);
+				//Toast.makeText(this,photoFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+				getIntent().putExtra("filename", photoFile.getAbsolutePath());
 				startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
 
 			}
 		}
 	}
-	*/
 
+/* When add a picture is selected this method dispaches the take picture activity using the phone's camera
 	public void dispatchTakePictureIntent(View view) {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
 			startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
 		}
 	}
-
+/*When the take picture activity returns this function stores the Bitmap image into the the activity variable pictures
+when the save button is pressed the pictures are added to the service.
+ */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+			//Toast.makeText(this,getIntent().getStringExtra("filename"), Toast.LENGTH_LONG).show();
+			//Toast.makeText(this,data.getStringExtra("filename"), Toast.LENGTH_LONG).show();
+			Bitmap bMap = BitmapFactory.decodeFile(getIntent().getStringExtra("filename"));
+			getPictures().add(bMap);
+			/* old code from unsaved bitmaps
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");
 			getPictures().add(imageBitmap);
+			*/
 		}
 	}
 

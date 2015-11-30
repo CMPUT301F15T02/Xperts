@@ -43,7 +43,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension());
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
-		IOManager.sharedManager().deleteData(Constants.serverImageExtensino());
+		IOManager.sharedManager().deleteData(Constants.serverImageExtension());
 
 		IOManager.sharedManager().clearCache();
 	}
@@ -59,7 +59,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension());
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension());
-		IOManager.sharedManager().deleteData(Constants.serverImageExtensino());
+		IOManager.sharedManager().deleteData(Constants.serverImageExtension());
 
 		IOManager.sharedManager().clearCache();
 
