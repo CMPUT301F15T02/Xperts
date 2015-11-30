@@ -12,8 +12,13 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
 import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
+import ca.ualberta.cs.xpertsapp.model.Constants;
+import ca.ualberta.cs.xpertsapp.model.Service;
+import ca.ualberta.cs.xpertsapp.model.ServiceManager;
+import ca.ualberta.cs.xpertsapp.model.UserManager;
 import ca.ualberta.cs.xpertsapp.views.AddServiceActivity;
 import ca.ualberta.cs.xpertsapp.views.MainActivity;
 import ca.ualberta.cs.xpertsapp.views.ViewProfileActivity;
@@ -139,7 +144,14 @@ public class AddInventoryServiceTest extends TestCase {
                         }
                 });
                 getInstrumentation().waitForIdleSync(); // makes sure that all the threads finish
-
+                Boolean check = Boolean.FALSE;
+                List<Service> services = UserManager.sharedManager().getUser(Constants.testEmail).getServices();
+                for(int i = 0; i < services.size(); i++){
+                        if (services.get(i).getName() == "Test Service 1"){
+                                check = Boolean.TRUE;
+                        }
+                }
+                assertEquals(check,Boolean.TRUE);
                 tearDown2();
         }
 }

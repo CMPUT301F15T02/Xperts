@@ -177,28 +177,17 @@ public class AddServiceActivity extends Activity {
 		}
 	}
 
-/* When add a picture is selected this method dispaches the take picture activity using the phone's camera
-	public void dispatchTakePictureIntent(View view) {
-		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-			startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-		}
-	}
-/*When the take picture activity returns this function stores the Bitmap image into the the activity variable pictures
-when the save button is pressed the pictures are added to the service.
+
+/*When the take picture activity returns this function converts the jpg file back into a Bitmap and
+stores the Bitmap image into the the activity variable pictures when the save button is pressed the
+pictures are added to the service.
  */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-			//Toast.makeText(this,getIntent().getStringExtra("filename"), Toast.LENGTH_LONG).show();
-			//Toast.makeText(this,data.getStringExtra("filename"), Toast.LENGTH_LONG).show();
 			Bitmap bMap = BitmapFactory.decodeFile(getIntent().getStringExtra("filename"));
 			getPictures().add(0,bMap);
-			/* old code from unsaved bitmaps
-			Bundle extras = data.getExtras();
-			Bitmap imageBitmap = (Bitmap) extras.get("data");
-			getPictures().add(imageBitmap);
-			*/
+
 		}
 	}
 
