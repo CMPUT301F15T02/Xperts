@@ -131,29 +131,37 @@ public class FriendsActivity extends Activity {
         builder.setPositiveButton("Search", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String email = editTextEmail.getText().toString();
-                //call to search for user from controller
-                User friend = pc.addFriend(email);
-                if (friend == null) {
-                    //TODO update list view with friend
-                    //no user with that email exists
-                    Context context = getApplicationContext();
-                    CharSequence text = "No user with that email exists!";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                } else if (friend.equals(MyApplication.getLocalUser())) {
+                if (email.equals(MyApplication.getLocalEmail())) {
                     Context context = getApplicationContext();
                     CharSequence text = "You can't add yourself!";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 } else {
-                    friendsListAdapter.updateFriendsList(MyApplication.getLocalUser().getFriends());
-                    Context context = getApplicationContext();
-                    CharSequence text = "Friend added";
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
+                    //call to search for user from controller
+                    User friend = pc.addFriend(email);
+                    if (friend == null) {
+                        //TODO update list view with friend
+                        //no user with that email exists
+                        Context context = getApplicationContext();
+                        CharSequence text = "No user with that email exists!";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    } else if (friend.equals(MyApplication.getLocalUser())) {
+                        Context context = getApplicationContext();
+                        CharSequence text = "You can't add yourself!";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    } else {
+                        friendsListAdapter.updateFriendsList(MyApplication.getLocalUser().getFriends());
+                        Context context = getApplicationContext();
+                        CharSequence text = "Friend added";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
                 }
             }
         });
