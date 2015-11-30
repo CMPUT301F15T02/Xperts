@@ -58,6 +58,11 @@ public class OutgoingOfferActivity extends Activity {
         if (trade.getStatus() != 0) {
             cancel.setVisibility(View.INVISIBLE);
         }
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                cancelTrade(v);
+            }
+        });
     }
 
     /**

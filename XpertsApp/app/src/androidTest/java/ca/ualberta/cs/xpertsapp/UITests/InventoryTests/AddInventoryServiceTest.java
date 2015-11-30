@@ -1,10 +1,16 @@
 package ca.ualberta.cs.xpertsapp.UITests.InventoryTests;
 
 import android.app.Instrumentation;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.UnitTests.TestCase;
 import ca.ualberta.cs.xpertsapp.controllers.AddServiceController;
@@ -21,7 +27,10 @@ public class AddInventoryServiceTest extends TestCase {
         private Button saveButton;
         private Button profileButton;
         private Button addServiceButton;
+        private Button imageButton;
+        private List<Bitmap> pictures;
         AddServiceActivity activity2;
+        private Intent intent;
         Instrumentation instrumentation;
         Instrumentation.ActivityMonitor monitor;
         Instrumentation.ActivityMonitor monitor2;
@@ -82,6 +91,16 @@ public class AddInventoryServiceTest extends TestCase {
 
                 activity2 = (AddServiceActivity) instrumentation.waitForMonitorWithTimeout(monitor2, TIME_OUT);
                 assertNotNull(activity2);
+
+                imageButton = activity2.getPhotoButton();
+                pictures = activity2.getPictures();
+                activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                                imageButton.performClick();
+
+                        }
+                });
 
                 Title = activity2.getTheTitle();
                 activity.runOnUiThread(new Runnable() {

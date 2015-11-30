@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +30,10 @@ public class TradeListActivity extends Activity {
     private TradeListActivity activity = this;
     private TradeListAdapter tradeListAdapter;
     private ListView tradesListView;
+    private Button inBtn;
+    public Button getInBtn() {return inBtn;}
+    private Button outBtn;
+    public Button getOutBtn() {return outBtn;}
 
     /**
      * This sets the click listener for the trade listView.
@@ -48,8 +53,20 @@ public class TradeListActivity extends Activity {
                 if (tradeListAdapter.getItem(position).getBorrower().equals(MyApplication.getLocalUser())) {
                     intent = new Intent(activity, OutgoingOfferActivity.class);
                 }
-                intent.putExtra("INTENT_ID",tradeListAdapter.getItem(position).getID());
+                intent.putExtra("INTENT_ID", tradeListAdapter.getItem(position).getID());
                 startActivity(intent);
+            }
+        });
+        inBtn = (Button) findViewById(R.id.incomingButton);
+        inBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                viewIncoming(v);
+            }
+        });
+        outBtn = (Button) findViewById(R.id.outgoingButton);
+        outBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                viewOutgoing(v);
             }
         });
     }
@@ -119,7 +136,7 @@ public class TradeListActivity extends Activity {
      * @param view The button Outgoing that is clicked
      */
     public void viewOutgoing(View view) {
-        UserManager.sharedManager().clearCache();
+//        UserManager.sharedManager().clearCache();
         User user = MyApplication.getLocalUser();
         List<Trade> trades = user.getTrades();
         List<Trade> outgoing = new ArrayList<Trade>();
@@ -129,6 +146,8 @@ public class TradeListActivity extends Activity {
             }
         }
         tradeListAdapter.updateTradeList(outgoing);
+        inBtn.setBackgroundColor(getResources().getColor(R.color.grey));
+        outBtn.setBackgroundColor(getResources().getColor(R.color.yellow));
     }
 
     /**
@@ -146,5 +165,8 @@ public class TradeListActivity extends Activity {
             }
         }
         tradeListAdapter.updateTradeList(incoming);
+        inBtn.setBackgroundColor(getResources().getColor(R.color.yellow));
+        outBtn.setBackgroundColor(getResources().getColor(R.color.grey));
+
     }
 }

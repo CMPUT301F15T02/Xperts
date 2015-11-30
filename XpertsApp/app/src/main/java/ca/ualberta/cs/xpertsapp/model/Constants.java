@@ -74,7 +74,7 @@ public class Constants {
 	 * @return The URL extension for searching
 	 */
 	public static String serverSearchExtension() {
-		return "_search?q=";
+		return "_search?size=999&q=";
 	}
 
 	/**
