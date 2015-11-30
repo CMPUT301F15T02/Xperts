@@ -39,6 +39,8 @@ public class FriendProfileActivity extends Activity {
     private ListView services;
     private ServiceListAdapter serviceListAdapter;
     private FriendProfileActivity activity = this;
+    private Button deleteBtn;
+    public Button getDeleteBtn() {return deleteBtn;};
 
 
     /**

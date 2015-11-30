@@ -87,8 +87,7 @@ public class TradeListAdapter extends BaseAdapter {
         TextView service = (TextView) vi.findViewById(R.id.trade_list_service);
         TextView category = (TextView) vi.findViewById(R.id.trade_list_category);
         TextView state = (TextView) vi.findViewById(R.id.trade_list_state);
-        TextView incoming = (TextView) vi.findViewById(R.id.trade_list_madeOfferFor);
-        TextView outgoing = (TextView) vi.findViewById(R.id.trade_list_receivedRequestFor);
+        TextView recipient = (TextView) vi.findViewById(R.id.trade_list_receivedRequestFor);
 
         if (trade.getBorrower().equals(MyApplication.getLocalUser())){
             user.setText(trade.getOwner().getName());
@@ -100,32 +99,31 @@ public class TradeListAdapter extends BaseAdapter {
 
 
         //status = 0 -> pending
-        //status = 1 -> accepted
+        //status = 1 -> in progress
         //status = 2 -> cancelled
         //status = 3 -> declined
+        //status = 4 -> completed
         if (trade.getStatus()==0) {
-            state.setText("Pending");
-            state.setTextColor(Color.parseColor("#ff0C2233"));
+            state.setText("• Pending");
+            state.setTextColor(Color.parseColor("#ffB7C0C7"));
         } else if (trade.getStatus()==1) {
-            state.setText("In progress");
-            state.setTextColor(Color.parseColor("#ff8c1a"));
+            state.setText("• In progress");
+            state.setTextColor(Color.parseColor("#FFFFC045"));
         } else if (trade.getStatus()==2) {
-            state.setText("Cancelled");
-            state.setTextColor(Color.parseColor("#ffE15258"));
+            state.setText("• Cancelled");
+            state.setTextColor(Color.parseColor("#ffD0021B"));
         } else if (trade.getStatus()==3) {
-            state.setText("Declined");
-            state.setTextColor(Color.parseColor("#ffE15258"));
+            state.setText("• Declined");
+            state.setTextColor(Color.parseColor("#ffD0021B"));
         } else if (trade.getStatus() == 4) {
-            state.setText("Completed");
+            state.setText("• Completed");
             state.setTextColor(Color.parseColor("#ff51B46D"));
         }
 
         if (trade.getBorrower().equals(MyApplication.getLocalUser())) {
-            incoming.setTextColor(Color.TRANSPARENT);
-            outgoing.setTextColor(Color.parseColor("#ff4A4A4A"));
+            recipient.setText("RECEIVED YOUR REQUEST FOR");
         } else {
-            outgoing.setTextColor(Color.TRANSPARENT);
-            incoming.setTextColor(Color.parseColor("#ff4A4A4A"));
+            recipient.setText("MADE AN OFFER FOR");
         }
         return vi;
     }

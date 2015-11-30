@@ -45,9 +45,29 @@ public class IncomingOfferActivity extends Activity {
         trade = tradeManager.getTrade(tradeID);
 
         accept = (Button) findViewById(R.id.acceptButton);
+        accept.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                acceptTrade(v);
+            }
+        });
         decline = (Button) findViewById(R.id.declineButton);
+        decline.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                declineTrade(v);
+            }
+        });
         complete = (Button) findViewById(R.id.completeButton);
+        complete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                completeTrade(v);
+            }
+        });
         offerCounter = (Button) findViewById(R.id.counterButton);
+        offerCounter.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                counterTrade(v);
+            }
+        });
         complete.setVisibility(View.INVISIBLE);
         offerCounter.setVisibility(View.INVISIBLE);
 
