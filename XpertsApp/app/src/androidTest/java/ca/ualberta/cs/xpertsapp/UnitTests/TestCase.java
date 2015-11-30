@@ -46,7 +46,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		IOManager.sharedManager().deleteData(Constants.serverImageExtension());
 
 		IOManager.sharedManager().clearCache();
-		
+
 	}
 
 	protected void tearDown2() {

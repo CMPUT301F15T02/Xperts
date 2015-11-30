@@ -94,14 +94,17 @@ public class AddInventoryServiceTest extends TestCase {
 
                 imageButton = activity2.getPhotoButton();
                 pictures = activity2.getPictures();
-                activity.runOnUiThread(new Runnable() {
+                Bitmap.Config conf = Bitmap.Config.ARGB_8888; // see other conf types
+                Bitmap bmp = Bitmap.createBitmap(100, 100, conf);
+                pictures.add(0,bmp);
+                /*activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                                 imageButton.performClick();
 
                         }
                 });
-
+*/
                 Title = activity2.getTheTitle();
                 activity.runOnUiThread(new Runnable() {
                         public void run() {
