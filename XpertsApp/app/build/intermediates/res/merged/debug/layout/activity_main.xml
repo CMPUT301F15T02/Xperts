@@ -1,0 +1,115 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="#0c2233">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:id="@+id/logo"
+        android:src="@drawable/logo"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="@string/MyProfile"
+        android:id="@+id/MyProfileBtn"
+        style="@style/btnWhiteText"
+        android:layout_marginTop="32dp"
+        android:layout_below="@+id/logo"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Browse"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/BrowseBtn"
+        android:background="@android:color/transparent"
+        android:textColor="#80ffffff"
+        android:singleLine="false"
+        android:fontFamily="sans-serif-light"
+        android:textSize="26sp"
+        android:layout_below="@+id/MyProfileBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Trades"
+        android:onClick="viewProfile"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/TradesBtn"
+        android:background="@android:color/transparent"
+        android:textColor="#80ffffff"
+        android:singleLine="false"
+        android:fontFamily="sans-serif-light"
+        android:textSize="26sp"
+        android:layout_below="@+id/BrowseBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Friends"
+        android:onClick="viewProfile"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/FriendsBtn"
+        android:background="@android:color/transparent"
+        android:textColor="#80ffffff"
+        android:singleLine="false"
+        android:fontFamily="sans-serif-light"
+        android:textSize="26sp"
+        android:layout_below="@+id/TradesBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_activity_top_traders"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/TopTradersBtn"
+        android:background="@android:color/transparent"
+        android:textColor="#80ffffff"
+        android:singleLine="false"
+        android:fontFamily="sans-serif-light"
+        android:textSize="26sp"
+        android:layout_below="@+id/FriendsBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_logout_text"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/btn_logout"
+        android:background="@android:color/transparent"
+        android:textColor="#80ffffff"
+        android:singleLine="false"
+        android:fontFamily="sans-serif-light"
+        android:textSize="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:gravity="center"
+        android:text="0"
+        android:id="@+id/notifications"
+        android:layout_alignTop="@+id/TradesBtn"
+        android:layout_toEndOf="@+id/TradesBtn"
+        android:background="@drawable/textview_circle"
+        android:textColor="#0c2233"/>
+
+</RelativeLayout><!-- From: file:/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/res/layout/activity_main.xml -->

@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="0dp"
+    tools:context="ca.ualberta.cs.xpertsapp.views.OfferCounterTradeActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD OR REMOVE YOUR SERVICES:"
+        android:id="@+id/requestTextCounter"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/grey"
+        android:layout_marginBottom="10dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="195dp"
+        android:id="@+id/requestServiceListCounter"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/requestTextCounter" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD OR REMOVE THEIR SERVICES:"
+        android:id="@+id/addServiceTextCounter"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/requestServiceListCounter"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/grey" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yourServiceListCounter"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/addServiceTextCounter"
+        android:layout_above="@+id/sendTradeButtonCounter"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Trade"
+        android:id="@+id/sendTradeButtonCounter"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="makeTrade"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/yellow"
+        android:textColor="#ffffffff" />
+</RelativeLayout><!-- From: file:/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/res/layout/activity_offer_counter_trade.xml -->

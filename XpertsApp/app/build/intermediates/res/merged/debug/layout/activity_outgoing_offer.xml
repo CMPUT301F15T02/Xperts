@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="0dp"
+    tools:context="ca.ualberta.cs.xpertsapp.views.OutgoingOfferActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YOU SENT A REQUEST FOR"
+        android:id="@+id/constantText3"
+        android:textColor="@color/grey"
+        android:theme="@style/headerText"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="115dp"
+        android:id="@+id/ownerServicesOut"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/constantText3"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IN EXCHANGE FOR:"
+        android:id="@+id/constantText5"
+        android:layout_below="@+id/ownerServicesOut"
+        android:layout_centerHorizontal="true"
+        android:theme="@style/headerText"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/grey" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/borrowerServicesOut"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/constantText5"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/cancelButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CANCEL TRADE"
+        android:id="@+id/cancelButton"
+        android:background="@color/red"
+        android:textColor="@color/white50"
+        android:singleLine="false"
+        android:textSize="16sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/borrowerServicesOut"
+        android:layout_alignParentEnd="true" />
+
+</RelativeLayout>
+<!-- From: file:/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/res/layout/activity_outgoing_offer.xml -->

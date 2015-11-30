@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:src="@color/grey" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Service Title"
+        android:id="@+id/serviceTextView"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:theme="@style/titleText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CATEGORY"
+        android:id="@+id/categoryTextView"
+        android:layout_below="@+id/serviceTextView"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/yellow"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Public"
+        android:id="@+id/privacyTextView"
+        android:layout_below="@+id/serviceTextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/grey"
+        />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DESCRIPTION"
+        android:id="@+id/descriptionTextView"
+        android:theme="@style/headerText"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="A description about this wonderful service."
+        android:id="@+id/longDescriptionTextView"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_below="@+id/descriptionTextView"
+        android:layout_marginTop="20dp"
+        android:theme="@style/bodyText"
+        android:layout_alignParentEnd="false" />
+
+</RelativeLayout><!-- From: file:/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/res/layout/activity_service_details.xml -->

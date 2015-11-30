@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView android:id="@+id/trade_list_borrower"
+        android:text="Borrower Name"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textIsSelectable="false"
+        android:textColor="@color/darkBlue" />
+
+    <TextView android:id="@+id/trade_list_service"
+        android:text="Service"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_alignParentBottom="false"
+        android:layout_below="@+id/trade_list_borrower"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/blue" />
+
+    <TextView android:id="@+id/trade_list_category"
+        android:text="Category"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="40dp"
+        android:textColor="@color/yellow"
+        android:layout_below="@+id/trade_list_service" />
+
+    <TextView android:id="@+id/trade_list_state"
+        android:text="• State"
+        android:textSize="12sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/darkGrey"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/trade_list_service"
+        android:layout_marginRight="20dp" />
+
+    <TextView android:id="@+id/trade_list_receivedRequestFor"
+        android:text="RECEIVED YOUR REQUEST FOR"
+        android:textSize="10sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/trade_list_borrower"
+        android:textColor="@color/grey"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="false"
+        android:textIsSelectable="false"
+        android:layout_alignBottom="@+id/trade_list_borrower" />
+
+</RelativeLayout><!-- From: file:/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/res/layout/trade_list_item.xml -->

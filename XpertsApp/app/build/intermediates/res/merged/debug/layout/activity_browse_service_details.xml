@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:id="@+id/imageView2"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:src="@color/grey" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Service Title"
+        android:id="@+id/serviceTitle2"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/imageView2"
+        android:layout_alignParentStart="true"
+        android:theme="@style/titleText"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CATEGORY"
+        android:id="@+id/categoryTextView2"
+        android:layout_below="@+id/serviceTitle2"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/yellow"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DESCRIPTION"
+        android:id="@+id/descriptionTextView2"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:theme="@style/headerText"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="A description about this wonderful service."
+        android:id="@+id/longDescriptionTextView2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_below="@+id/descriptionTextView2"
+        android:layout_marginTop="20dp"
+        android:theme="@style/bodyText"
+        android:layout_alignParentEnd="false" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trade"
+            android:id="@+id/makeATrade"
+            android:theme="@style/simpleBtn"
+            android:background="@color/yellow"
+            android:textColor="#ffffffff"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_weight="0.50" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clone"
+            android:id="@+id/cloneBtn"
+            android:theme="@style/simpleBtn"
+            android:background="@color/blue"
+            android:textColor="#ffffffff"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignStart="@+id/categoryTextView2"
+            android:layout_alignParentStart="false"
+            android:layout_weight="0.5" />
+    </LinearLayout>
+
+</RelativeLayout><!-- From: file:/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/res/layout/activity_browse_service_details.xml -->

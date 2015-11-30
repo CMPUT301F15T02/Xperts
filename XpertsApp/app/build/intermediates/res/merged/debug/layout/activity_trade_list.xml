@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    tools:context="ca.ualberta.cs.xpertsapp.views.TradeListActivity" >
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:weightSum="1"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="INCOMING"
+            android:id="@+id/incomingButton"
+            android:theme="@style/simpleBtn"
+            android:background="@color/yellow"
+            android:textColor="#ffffffff"
+            android:layout_weight="0.50" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OUTGOING"
+            android:id="@+id/outgoingButton"
+            android:theme="@style/simpleBtn"
+            android:background="@color/grey"
+            android:textColor="#ffffffff"
+            android:layout_weight="0.5" />
+    </LinearLayout>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tradeListView"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/linearLayout" />
+
+</RelativeLayout>
+<!-- From: file:/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/res/layout/activity_trade_list.xml -->

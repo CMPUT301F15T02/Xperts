@@ -1,0 +1,217 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:2:1-151:12
+	xmlns:android
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:2:11-69
+	package
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:3:5-39
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:5:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:6:22-76
+uses-permission#android.permission.CAMERA
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:8:5-65
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:8:22-62
+uses-feature#android.hardware.camera
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:10:5-60
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:10:19-57
+uses-feature#android.hardware.camera.autofocus
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:11:5-70
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:11:19-67
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:13:5-81
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:13:22-78
+application
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:15:5-149:19
+MERGED from [com.android.support:support-v4:22.2.1] /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:19:9-41
+	android:allowBackup
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:17:9-35
+	android:icon
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:18:9-42
+	android:theme
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:20:9-44
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:16:9-38
+activity#ca.ualberta.cs.xpertsapp.views.MainActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:21:9-30:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:23:13-45
+	android:theme
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:24:13-60
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:22:13-47
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:25:13-29:29
+action#android.intent.action.MAIN
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:26:17-69
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:26:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:28:17-77
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:28:27-74
+activity#ca.ualberta.cs.xpertsapp.views.ServiceDetailsActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:31:9-66
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:31:19-63
+activity#ca.ualberta.cs.xpertsapp.views.AddServiceActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:32:9-62
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:32:19-59
+activity#ca.ualberta.cs.xpertsapp.views.BrowseServicesActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:33:9-48:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:35:13-67
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:37:13-61
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:34:13-57
+	android:launchMode
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:36:13-43
+intent-filter#android.intent.action.SEARCH
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:38:13-40:29
+action#android.intent.action.SEARCH
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:39:17-71
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:39:25-68
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:42:13-44:79
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:43:17-63
+	android:value
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:44:17-76
+meta-data#android.app.searchable
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:45:13-47:54
+	android:resource
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:47:17-51
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:46:17-54
+activity#ca.ualberta.cs.xpertsapp.views.TopTradersActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:49:9-56:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:51:13-63
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:52:13-61
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:50:13-53
+activity#ca.ualberta.cs.xpertsapp.views.FriendsActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:57:9-64:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:59:13-59
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:60:13-61
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:58:13-50
+activity#ca.ualberta.cs.xpertsapp.views.TradeListActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:65:9-72:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:67:13-58
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:68:13-61
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:66:13-52
+activity#ca.ualberta.cs.xpertsapp.views.ViewProfileActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:73:9-80:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:75:13-64
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:76:13-61
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:74:13-54
+activity#ca.ualberta.cs.xpertsapp.views.EditProfileActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:81:9-88:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:83:13-64
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:84:13-68
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:82:13-54
+activity#ca.ualberta.cs.xpertsapp.views.FriendProfileActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:89:9-96:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:91:13-66
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:92:13-64
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:90:13-56
+activity#ca.ualberta.cs.xpertsapp.views.LoginActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:97:9-101:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:99:13-45
+	android:theme
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:100:13-60
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:98:13-48
+activity#ca.ualberta.cs.xpertsapp.views.FriendServiceDetailsActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:102:9-108:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:104:13-74
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:103:13-63
+activity#ca.ualberta.cs.xpertsapp.views.OfferTradeActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:109:9-116:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:111:13-63
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:112:13-71
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:110:13-53
+activity#ca.ualberta.cs.xpertsapp.views.BrowseServiceDetailsActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:117:9-124:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:119:13-74
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:120:13-71
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:118:13-63
+activity#ca.ualberta.cs.xpertsapp.views.IncomingOfferActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:125:9-132:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:127:13-66
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:128:13-66
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:126:13-56
+activity#ca.ualberta.cs.xpertsapp.views.OutgoingOfferActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:133:9-140:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:135:13-66
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:136:13-66
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:134:13-56
+activity#ca.ualberta.cs.xpertsapp.views.OfferCounterTradeActivity
+ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:141:9-148:20
+	android:label
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:143:13-71
+	android:parentActivityName
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:144:13-66
+	android:name
+		ADDED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml:142:13-60
+uses-sdk
+INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:support-v4:22.2.1] /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:20:5-43
+	android:targetSdkVersion
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/AndroidManifest.xml

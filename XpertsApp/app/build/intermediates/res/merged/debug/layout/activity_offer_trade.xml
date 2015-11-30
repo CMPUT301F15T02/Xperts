@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="0dp"
+    tools:context="ca.ualberta.cs.xpertsapp.views.OfferTradeActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="YOU ARE MAKING A REQUEST FOR"
+        android:id="@+id/requestText"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/grey"
+        android:layout_marginBottom="10dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:id="@+id/requestServiceList"
+        android:layout_below="@+id/requestText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD YOUR SERVICES TO TRADE"
+        android:id="@+id/addServiceText"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/requestServiceList"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/grey" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/yourServiceList"
+        android:layout_below="@+id/addServiceText"
+        android:layout_above="@+id/sendTradeButton"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Trade"
+        android:id="@+id/sendTradeButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="makeTrade"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/yellow"
+        android:textColor="#ffffffff" />
+
+</RelativeLayout>
+<!-- From: file:/Users/hammadjutt/Dev/CMPUT/301/Project/Xperts/XpertsApp/app/src/main/res/layout/activity_offer_trade.xml -->
