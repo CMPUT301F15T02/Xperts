@@ -4,7 +4,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +40,7 @@ public class ServiceManager implements IObserver {
 
 		// Push local user's services if have internet
 		diskServices = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Service>>() {
-		}, "services.sav");
+		}, Constants.diskService());
 		if (Constants.servicesSync) {
 			try {
 				for (Service service : diskServices) {
@@ -86,7 +85,6 @@ public class ServiceManager implements IObserver {
 				}
 			}
 		}
-
 		return null;
 	}
 
@@ -105,7 +103,7 @@ public class ServiceManager implements IObserver {
 			diskServices.add(service);
 			Constants.servicesSync = true;
 		}
-		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), "services.sav");
+		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService());
 
 		service.addObserver(this);
 		this.services.put(service.getID(), service);
@@ -124,11 +122,10 @@ public class ServiceManager implements IObserver {
 		for (Service s : diskServices) {
 			if (s.getID().equals(service.getID())) {
 				diskServices.remove(s);
-				System.out.println("push remove" + s.getName());
 				break;
 			}
 		}
-		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), "services.sav");
+		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService());
 
 		service.removeObserver(this);
 		this.services.remove(service.getID());
@@ -195,10 +192,7 @@ public class ServiceManager implements IObserver {
 	public void notify(IObservable observable) {
 		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverServiceExtension() + ((Service) observable).getID());
-			//Constants.servicesSync = false;
 		} catch (Exception e) {
-			// no internet
-			//Constants.servicesSync = true;
 		}
 	}
 }

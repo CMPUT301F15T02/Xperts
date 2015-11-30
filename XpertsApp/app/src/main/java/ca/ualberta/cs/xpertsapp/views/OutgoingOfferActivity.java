@@ -1,13 +1,16 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -29,12 +32,12 @@ public class OutgoingOfferActivity extends Activity {
     private ServiceListAdapter serviceBorrowerAdapter;
     private ServiceManager serviceManager = ServiceManager.sharedManager();
     private TradeManager tradeManager = TradeManager.sharedManager();
-    private TextView ownerName;
     private ListView borrowerServices;
     private ListView ownerServices;
     private Intent intent;
     private Trade trade;
     private TradeController tradeController = new TradeController();
+    private Button cancel;
 
     /**
      * This sets the owner name and gets the trade from the intent.
@@ -47,11 +50,14 @@ public class OutgoingOfferActivity extends Activity {
         String tradeID = intent.getStringExtra("INTENT_ID");
         trade = tradeManager.getTrade(tradeID);
 
-        ownerName = (TextView) findViewById(R.id.outgoingOwnerName);
         borrowerServices = (ListView) findViewById(R.id.borrowerServicesOut);
         ownerServices = (ListView) findViewById(R.id.ownerServicesOut);
 
-        ownerName.setText(trade.getOwner().getName());
+
+        cancel = (Button) findViewById(R.id.cancelButton);
+        if (trade.getStatus() != 0) {
+            cancel.setVisibility(View.INVISIBLE);
+        }
     }
 
     /**
@@ -84,22 +90,22 @@ public class OutgoingOfferActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
 
     /**
-     * This should cancel the trade. Only the borrower in the trade can cancel a trade. It deletes
-     * the trade from the system and from both the owner and borrower.
+     * This should cancel the trade. Only the borrower in the trade can cancel a trade and only when
+     * it's status is pending. It deletes the trade from the system and from both the owner and borrower.
      * * @param view cancel button that was pressed
      */
     public void cancelTrade(View view) {
         //need to cancel the trade here
-        tradeController.deleteTrade(trade.getID());
-        finish();
+        //state must be pending
+        if (trade.getStatus()==0) {
+            tradeController.deleteTrade(trade.getID());
+            finish();
+        }
     }
 }

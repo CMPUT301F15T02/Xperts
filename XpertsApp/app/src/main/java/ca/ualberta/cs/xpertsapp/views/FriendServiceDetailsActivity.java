@@ -1,13 +1,16 @@
 package ca.ualberta.cs.xpertsapp.views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
@@ -25,6 +28,10 @@ public class FriendServiceDetailsActivity extends Activity {
     private AddServiceController asc = new AddServiceController();
     private TextView theTitle;
     public TextView getTheTitle() {return theTitle;}
+    private Button cloneBtn;
+    public Button getCloneBtn() {return cloneBtn;}
+    private Button tradeBtn;
+    public Button getTradeBtn() {return tradeBtn;}
     private TextView category;
     public TextView getCategory() {return category;}
     private TextView description;
@@ -51,6 +58,18 @@ public class FriendServiceDetailsActivity extends Activity {
         theTitle.setText(service.getName());
         category.setText(service.getCategory().toString());
         description.setText(service.getDescription());
+        cloneBtn = (Button) findViewById(R.id.cloneBtn2);
+        cloneBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                cloneService();
+            }
+        });
+        tradeBtn = (Button) findViewById(R.id.makeATrade2);
+        tradeBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                goToOfferTrade(v);
+            }
+        });
     }
 
     @Override
@@ -67,11 +86,6 @@ public class FriendServiceDetailsActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.clone_service) {
-            asc.cloneService(service.getName(), service.getDescription(), service.getCategory(), service.getPictures());
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -87,6 +101,14 @@ public class FriendServiceDetailsActivity extends Activity {
         if (resultCode == RESULT_OK) {
 
         }
+    }
+    private void cloneService() {
+        asc.cloneService(service.getName(), service.getDescription(), service.getCategory(), service.getPictures());
+        Context context = getApplicationContext();
+        CharSequence text = "Service Cloned";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
     public void goToOfferTrade(View view) {
         Intent intent = new Intent(this, OfferTradeActivity.class);

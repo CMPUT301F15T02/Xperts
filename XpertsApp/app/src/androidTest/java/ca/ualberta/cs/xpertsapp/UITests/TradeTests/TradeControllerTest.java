@@ -71,9 +71,11 @@ public class TradeControllerTest extends TestCase {
 
         ArrayList<Service> borrowerServices = new ArrayList<Service>();
         borrowerServices.add(newService);
+        ArrayList<Service> ownerServices = new ArrayList<Service>();
+        ownerServices.add(testService);
         // Create a new trade
         TradeController tc = new TradeController();
-        tc.createTrade(myFriend, borrowerServices, testService);
+        tc.createTrade(myFriend, borrowerServices, ownerServices, false);
 
         assertEquals(TradeManager.sharedManager().getTrades().size(), 1);
         assertEquals(user.getTrades().size(), 1);
@@ -108,9 +110,11 @@ public class TradeControllerTest extends TestCase {
 
         ArrayList<Service> borrowerServices = new ArrayList<Service>();
         borrowerServices.add(newService);
+        ArrayList<Service> ownerServices = new ArrayList<Service>();
+        ownerServices.add(testService);
         // Create a new trade
         TradeController tc = new TradeController();
-        tc.createTrade(myFriend, borrowerServices, testService);
+        tc.createTrade(myFriend, borrowerServices, ownerServices, false);
 
         assertEquals(TradeManager.sharedManager().getTrades().size(), 1);
         assertEquals(user.getTrades().size(), 1);
@@ -144,9 +148,11 @@ public class TradeControllerTest extends TestCase {
 
         ArrayList<Service> borrowerServices = new ArrayList<Service>();
         borrowerServices.add(newService);
+        ArrayList<Service> ownerServices = new ArrayList<Service>();
+        ownerServices.add(testService);
         // Create a new trade
         TradeController tc = new TradeController();
-        tc.createTrade(myFriend, borrowerServices, testService);
+        tc.createTrade(myFriend, borrowerServices, ownerServices, false);
 
         assertEquals(TradeManager.sharedManager().getTrades().size(), 1);
         assertEquals(user.getTrades().size(), 1);

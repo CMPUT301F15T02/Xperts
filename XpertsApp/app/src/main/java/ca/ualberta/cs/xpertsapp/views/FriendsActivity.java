@@ -15,14 +15,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.security.InvalidParameterException;
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.FriendsListAdapter;
 import ca.ualberta.cs.xpertsapp.controllers.ProfileController;
-import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 
@@ -67,7 +65,12 @@ public class FriendsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends);
 
-        buttonAddFriend = (Button) findViewById(R.id.button);
+        buttonAddFriend = (Button) findViewById(R.id.addFriend);
+        buttonAddFriend.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addFriend(v);
+            }
+        });
         friendsList = (ListView) findViewById(R.id.listView);
 
         friendsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -107,10 +110,7 @@ public class FriendsActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }

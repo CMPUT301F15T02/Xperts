@@ -1,14 +1,10 @@
 package ca.ualberta.cs.xpertsapp.model;
 
-import android.provider.Settings.Secure;
-
-import ca.ualberta.cs.xpertsapp.MyApplication;
-
 /**
  * A class with only static methods which are used to retrieve constant strings
  */
 public class Constants {
-	public static boolean isOnline = false;
+	public static boolean isOnline = true;
 	public static boolean userSync = false;
 	public static boolean usersSync = false;
 	public static boolean servicesSync = false;
@@ -39,7 +35,7 @@ public class Constants {
 	 */
 	public static String serverUserExtension() {
 		if (isTest) {
-			return "users_test/";
+			return "users_test2/";
 		}
 		return "users/";
 	}
@@ -49,7 +45,7 @@ public class Constants {
 	 */
 	public static String serverServiceExtension() {
 		if (isTest) {
-			return "services_test/";
+			return "services_test2/";
 		}
 		return "services/";
 	}
@@ -59,7 +55,7 @@ public class Constants {
 	 */
 	public static String serverTradeExtension() {
 		if (isTest) {
-			return "trades_test/";
+			return "trades_test2/";
 		}
 		return "trades/";
 	}
@@ -67,9 +63,9 @@ public class Constants {
 	/**
 	 * @return The URL extension for Images
 	 */
-	public static String serverImageExtensino() {
+	public static String serverImageExtension() {
 		if (isTest) {
-			return "images_test/";
+			return "images_test2/";
 		}
 		return "images/";
 	}
@@ -79,5 +75,25 @@ public class Constants {
 	 */
 	public static String serverSearchExtension() {
 		return "_search?q=";
+	}
+
+	/**
+	 * @return The filename for caching Users
+	 */
+	public static String diskUser() {
+		if (isTest) {
+			return "users_test.sav";
+		}
+		return "users.sav";
+	}
+
+	/**
+	 * @return The filename for caching Services
+	 */
+	public static String diskService() {
+		if (isTest) {
+			return "services_test.sav";
+		}
+		return "services.sav";
 	}
 }

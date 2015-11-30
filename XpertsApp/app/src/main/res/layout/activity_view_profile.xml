@@ -1,11 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".views.ViewProfileActivity" >
+    tools:context=".views.ViewProfileActivity"
+    android:background="@color/navy">
 
     <Button
         android:id="@+id/add"
@@ -15,7 +16,9 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="100dp"
-        android:onClick="addService"/>
+        android:onClick="addService"
+        android:background="@color/blue"
+        android:textColor="@color/white50" />
 
     <ListView
         android:id="@+id/serviceList"
@@ -24,45 +27,56 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="150dp">
+        android:background="#ffffffff"
+        android:layout_below="@+id/add">
     </ListView>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Name"
         android:id="@+id/profileName"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/yellow"
+        android:layout_marginLeft="30dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="email@domain.com"
         android:id="@+id/profileEmail"
         android:layout_below="@+id/profileName"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white50"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="city"
         android:id="@+id/profileCity"
         android:layout_below="@+id/profileEmail"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white50"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
+        android:layout_height="30dp"
+        android:text="Edit Profile"
         android:id="@+id/editButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/add"
-        android:layout_alignBottom="@+id/profileEmail"
         android:onClick="editProfile"
-        />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/transparent"
+        android:textColor="@color/white50"
+        android:layout_marginRight="16dp"
+        android:textSize="12sp" />
 
 </RelativeLayout>

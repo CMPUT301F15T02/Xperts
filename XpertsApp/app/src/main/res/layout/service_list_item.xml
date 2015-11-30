@@ -24,7 +24,8 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/service_list_image"
         android:textIsSelectable="false"
-        android:textColor="@color/blue" />
+        android:textColor="@color/blue"
+        android:layout_marginTop="10dp" />
 
     <TextView android:id="@+id/service_list_owner"
         android:text="by: Owner Name"
@@ -41,9 +42,10 @@
         android:text="Category"
         android:textSize="14sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:textColor="@color/grey"
-        android:layout_alignBottom="@+id/service_list_owner"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignTop="@+id/service_list_owner" />
 
 </RelativeLayout>

@@ -14,6 +14,7 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
+import ca.ualberta.cs.xpertsapp.views.MainActivity;
 
 /**
  * Manages the loaded users to allow circular references without getting stuck in a loading loop
@@ -36,8 +37,6 @@ public class UserManager implements IObserver {
 	 * @param user Registers this as an observer on User and adds it to the List
 	 */
 	private void addUser(User user) {
-		boolean contains = false;
-
 		// Need to write disk first
 		IOManager.sharedManager().writeUserToFile(user);
 
@@ -170,9 +169,7 @@ public class UserManager implements IObserver {
 	public void notify(IObservable observable) {
 		try {
 			IOManager.sharedManager().storeData(observable, Constants.serverUserExtension() + ((User) observable).getEmail());
-			//Constants.userSync = false;
 		} catch (Exception e) {
-			//Constants.userSync = true;
 		}
 	}
 }

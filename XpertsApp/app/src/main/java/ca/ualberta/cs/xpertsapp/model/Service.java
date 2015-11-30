@@ -115,7 +115,7 @@ public class Service implements IObservable {
 	 */
 	public void addPicture(Bitmap picture) {
 		if (!this.isEditable()) throw new AssertionError();
-		pictures.add(ImageManager.sharedManager().registerImage(picture));
+		this.pictures.add(ImageManager.sharedManager().registerImage(picture));
 		this.notifyObservers();
 	}
 
@@ -124,7 +124,7 @@ public class Service implements IObservable {
 	 */
 	public void removePicture(String id) {
 		if (!this.isEditable()) throw new AssertionError();
-		pictures.remove(id);
+		this.pictures.remove(id);
 		this.notifyObservers();
 	}
 

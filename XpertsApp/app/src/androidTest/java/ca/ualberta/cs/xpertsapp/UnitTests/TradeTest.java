@@ -10,6 +10,7 @@ import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.Trade;
 import ca.ualberta.cs.xpertsapp.model.TradeManager;
 import ca.ualberta.cs.xpertsapp.model.TradeStateAccepted;
+import ca.ualberta.cs.xpertsapp.model.TradeStateComplete;
 import ca.ualberta.cs.xpertsapp.model.TradeStateDeclined;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
@@ -134,11 +135,11 @@ public class TradeTest extends TestCase {
 		User user = MyApplication.getLocalUser();
 		String trade1String = "" +
 				"{" +
-				"\"borrower\":\"" + user.getEmail() + "\"," +
+				"\"owner\":\"" + user.getEmail() + "\"," +
 				"\"borrowerServices\":[]," +
 				"\"id\":\"0001\"," +
 				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
-				"\"owner\":\"1\"," +
+				"\"borrower\":\"1\"," +
 				"\"ownerServices\":[]," +
 				"\"proposedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
 				"\"isCounterOffer\":false," +
@@ -146,11 +147,11 @@ public class TradeTest extends TestCase {
 				"}";
 		String trade2String = "" +
 				"{" +
-				"\"borrower\":\"" + user.getEmail() + "\"," +
+				"\"owner\":\"" + user.getEmail() + "\"," +
 				"\"borrowerServices\":[]," +
 				"\"id\":\"0002\"," +
 				"\"lastUpdatedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
-				"\"owner\":\"1\"," +
+				"\"borrower\":\"1\"," +
 				"\"ownerServices\":[]," +
 				"\"proposedDate\":\"Nov 1, 2015 6:11:40 PM\"," +
 				"\"isCounterOffer\":false," +
@@ -170,6 +171,9 @@ public class TradeTest extends TestCase {
 
 		assertEquals(trade1.getState().getClass(), TradeStateAccepted.class);
 		assertEquals(trade2.getState().getClass(), TradeStateDeclined.class);
+
+		user.getTrades().get(0).complete();
+		assertEquals(trade1.getState().getClass(), TradeStateComplete.class);
 
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade1.getID());
 		IOManager.sharedManager().deleteData(Constants.serverTradeExtension() + trade2.getID());

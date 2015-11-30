@@ -174,6 +174,7 @@ public class Trade implements IObservable {
 	 * status = 1 -> accepted
 	 * status = 2 -> cancelled
 	 * status = 3 -> declined
+	 * status = 4 -> complete
 	 * @return an int saying the state the trade is in
 	 */
 	public int getStatus() {
@@ -187,10 +188,7 @@ public class Trade implements IObservable {
 		return this.getBorrower().getEmail().equals(MyApplication.getLocalUser().getEmail());
 	}
 
-	/**
-	 * The user wants to accept the incoming trade. The state is changed.
-	 */
-	public void accept() {
+	private void fixState() {
 		if (this.state == null) {
 			if (this.status == 0) {
 				this.state = new TradeStatePending();
@@ -200,10 +198,19 @@ public class Trade implements IObservable {
 				this.state = new TradeStateCancelled();
 			} else if (this.status == 3) {
 				this.state = new TradeStateDeclined();
+			} else if (this.status == 4) {
+				this.state = new TradeStateComplete();
 			} else {
 				throw new RuntimeException("Invalid status");
 			}
 		}
+	}
+
+	/**
+	 * The user wants to accept the incoming trade. The state is changed.
+	 */
+	public void accept() {
+		this.fixState();
 		this.state.accept(this);
 	}
 
@@ -211,19 +218,7 @@ public class Trade implements IObservable {
 	 * The user wants to decline the incoming trade. The state is changed.
 	 */
 	public void decline() {
-		if (this.state == null) {
-			if (this.status == 0) {
-				this.state = new TradeStatePending();
-			} else if (this.status == 1) {
-				this.state = new TradeStateAccepted();
-			} else if (this.status == 2) {
-				this.state = new TradeStateCancelled();
-			} else if (this.status == 3) {
-				this.state = new TradeStateDeclined();
-			} else {
-				throw new RuntimeException("Invalid status");
-			}
-		}
+		this.fixState();
 		this.state.decline(this);
 	}
 
@@ -231,20 +226,16 @@ public class Trade implements IObservable {
 	 * The sender wants to cancel the outgoing trade. The state is changed.
 	 */
 	public void cancel() {
-		if (this.state == null) {
-			if (this.status == 0) {
-				this.state = new TradeStatePending();
-			} else if (this.status == 1) {
-				this.state = new TradeStateAccepted();
-			} else if (this.status == 2) {
-				this.state = new TradeStateCancelled();
-			} else if (this.status == 3) {
-				this.state = new TradeStateDeclined();
-			} else {
-				throw new RuntimeException("Invalid status");
-			}
-		}
+		this.fixState();
 		this.state.cancel(this);
+	}
+
+	/**
+	 * The sender has received their thing and wants to mark the trade as complete
+	 */
+	public void complete() {
+		this.fixState();
+		this.state.complete(this);
 	}
 
 	/**
@@ -283,6 +274,4 @@ public class Trade implements IObservable {
 			observer.notify(this);
 		}
 	}
-
-
 }

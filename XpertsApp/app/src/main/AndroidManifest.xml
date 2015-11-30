@@ -47,6 +47,14 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
+            android:name=".views.TopTradersActivity"
+            android:label="@string/title_activity_top_traders"
+            android:parentActivityName=".views.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.MainActivity" />
+        </activity>
+        <activity
             android:name=".views.FriendsActivity"
             android:label="@string/title_activity_friends"
             android:parentActivityName=".views.MainActivity" >
@@ -125,6 +133,14 @@
         <activity
             android:name=".views.OutgoingOfferActivity"
             android:label="@string/title_activity_outgoing_offer"
+            android:parentActivityName=".views.TradeListActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ca.ualberta.cs.xpertsapp.views.TradeListActivity" />
+        </activity>
+        <activity
+            android:name=".views.OfferCounterTradeActivity"
+            android:label="@string/title_activity_offer_counter_trade"
             android:parentActivityName=".views.TradeListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

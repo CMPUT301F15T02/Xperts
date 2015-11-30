@@ -1,9 +1,7 @@
 package ca.ualberta.cs.xpertsapp.model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -29,7 +27,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -40,44 +37,53 @@ import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
 /**
  * Manages loading and saving data from disk and the network
- *
+ * <p/>
  * Limitation: does not delete local stuff when the server deletes it
  */
 public class IOManager {
 	// When writing to the server, we need to sleep to make sure the server can update before we fetch
 	private static final int sleepTime = 500;
+	// Singleton
+	private static IOManager instance = new IOManager();
 
-	/**
-	 * Does Network Requests Asynchronously
-	 * this is where the magic happens
-	 */
-	private class AsyncRequest extends AsyncTask<HttpUriRequest, Void, HttpResponse> {
+	private IOManager() {
+	}
 
-		protected HttpResponse doInBackground(HttpUriRequest... request) {
-			HttpClient httpClient = new DefaultHttpClient();
-			HttpResponse response = null;
-			try {
-				response = httpClient.execute(request[0]);
-			} catch (Exception e) {
-				//throw new RuntimeException(e);
-			}
-			return response;
-		}
+	// Helper
+	private static String convertStreamToString(InputStream is) {
+		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+		return s.hasNext() ? s.next() : "";
+	}
+
+	public static IOManager sharedManager() {
+		return IOManager.instance;
 	}
 
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
-		// TODO: LOOK LOCALLY
-		HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
 		String loadedData;
-		try {
-			HttpResponse response = new AsyncRequest().execute(httpGet).get(); // Tier 1
-			loadedData = convertStreamToString(response.getEntity().getContent());
-		} catch (Exception e) {
-			// TODO: load localyl
-			throw new RuntimeException(e);
-		}
-		if (loadedData.equals("")) {
-			// TODO: SHOULD NEVER HAPPEN
+		if (Constants.isOnline) {
+			HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
+			try {
+				HttpResponse response = new AsyncRequest().execute(httpGet).get(); // Tier 1
+				loadedData = convertStreamToString(response.getEntity().getContent());
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+			// Cache locally
+			try {
+				FileOutputStream outputStream = MyApplication.getContext().openFileOutput(meta.replace('/', '_'), Context.MODE_PRIVATE);
+				outputStream.write(loadedData.getBytes());
+				outputStream.close();
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		} else {
+			try {
+				FileInputStream inputStream = MyApplication.getContext().openFileInput(meta.replace('/', '_'));
+				loadedData = convertStreamToString(inputStream);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 		return (new Gson()).fromJson(loadedData, typeToken.getType());
 	}
@@ -149,7 +155,7 @@ public class IOManager {
 			}
 			// Cache locally
 			try {
-				FileOutputStream outputStream = MyApplication.getContext().openFileOutput(searchMeta.replace('/', '_'), Context.MODE_PRIVATE);
+				FileOutputStream outputStream = MyApplication.getContext().openFileOutput("search_" + searchMeta.replace('/', '_'), Context.MODE_PRIVATE);
 				outputStream.write(loadedData.getBytes());
 				outputStream.close();
 			} catch (Exception e) {
@@ -157,7 +163,7 @@ public class IOManager {
 			}
 		} else {
 			try {
-				FileInputStream inputStream = MyApplication.getContext().openFileInput(searchMeta.replace('/', '_'));
+				FileInputStream inputStream = MyApplication.getContext().openFileInput("search_" + searchMeta.replace('/', '_'));
 				loadedData = convertStreamToString(inputStream);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
@@ -165,11 +171,7 @@ public class IOManager {
 		}
 		// Return found
 		SearchResponse<T> loadedThings = (new Gson()).fromJson(loadedData, typeToken.getType());
-		List<SearchHit<T>> hits = new ArrayList<SearchHit<T>>();
-		if (loadedThings.getHits() == null) {
-			return hits;
-		}
-		hits = new ArrayList<SearchHit<T>>(loadedThings.getHits().getHits());
+		List<SearchHit<T>> hits = new ArrayList<SearchHit<T>>(loadedThings.getHits().getHits());
 		Collections.sort(hits, new Comparator<SearchHit<T>>() {
 			@Override
 			public int compare(SearchHit<T> lhs, SearchHit<T> rhs) {
@@ -185,57 +187,25 @@ public class IOManager {
 		}
 	}
 
-	// Helper
-	private static String convertStreamToString(InputStream is) {
-		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-		return s.hasNext() ? s.next() : "";
-	}
+	/**
+	 * Does Network Requests Asynchronously
+	 * this is where the magic happens
+	 */
+	private class AsyncRequest extends AsyncTask<HttpUriRequest, Void, HttpResponse> {
 
-	// Singleton
-	private static IOManager instance = new IOManager();
-
-	private IOManager() {
-	}
-
-	public static IOManager sharedManager() {
-		return IOManager.instance;
-	}
-
-	// Read local user from local storage
-	/*public User loadUserFromFile(Context context) {
-		User user = null;
-
-		try {
-			FileInputStream fis = context.openFileInput("user.sav");
-			BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-			Gson gson = new Gson();
-			user = gson.fromJson(in, User.class);
-
-		} catch (FileNotFoundException e) {
-			return null;
-		} catch (IOException e) {
-			throw new RuntimeException(e);
+		protected HttpResponse doInBackground(HttpUriRequest... request) {
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpResponse response = null;
+			try {
+				response = httpClient.execute(request[0]);
+			} catch (Exception e) {
+				//throw new RuntimeException(e);
+			}
+			return response;
 		}
+	}
 
-		return user;
-	}*/
-
-	// Write local user to local storage
-	/*public void writeUserToFile(User user, Context context) {
-		try {
-			FileOutputStream fos = context.openFileOutput("user.sav", 0);
-			OutputStreamWriter writer = new OutputStreamWriter(fos);
-			Gson gson = new Gson();
-			gson.toJson(user, writer);
-			Log.d("gson", gson.toJson(user));
-			writer.flush();
-			fos.close();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}*/
-
-	// Read users, services or trades from local storage
+	// Read only friends, services or trades of local user from local storage
 	public <T> ArrayList<T> loadFromFile(Context context, TypeToken<ArrayList<T>> typeToken, String filename) {
 		ArrayList<T> objects = new ArrayList<T>();
 		try {
@@ -268,9 +238,11 @@ public class IOManager {
 		}
 	}
 
+	// Replace a user from users
 	// Have to remove then re add
 	public void writeUserToFile(User user) {
-		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {}, "users.sav");
+		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {
+		}, Constants.diskUser());
 		for (User u : diskUsers) {
 			if (u.getEmail().equals(user.getEmail())) {
 				diskUsers.remove(u);
@@ -279,11 +251,13 @@ public class IOManager {
 		}
 		diskUsers.add(user);
 		//Constants.usersSync = true;
-		writeToFile(diskUsers, MyApplication.getContext(), "users.sav");
+		writeToFile(diskUsers, MyApplication.getContext(), Constants.diskUser());
 	}
 
+	// Get a user from users
 	public User loadUserFromFile(String email) {
-		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {}, "users.sav");
+		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {
+		}, Constants.diskUser());
 		User diskUser = null;
 		for (User user : diskUsers) {
 			if (user.getEmail().equals(email)) {

@@ -1,9 +1,8 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import android.content.Context;
-import android.net.wifi.WifiManager;
-
 import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.Constants;
@@ -28,6 +27,12 @@ public class OfflineTest extends TestCase {
 
 	@Override
 	protected void tearDown2(){
+		super.tearDown2();
+	}
+
+	public void test_09_01_01() {
+		setUp2();
+
 		// Disable internet
 		Constants.isOnline = false;
 		// Create a new service
@@ -44,15 +49,7 @@ public class OfflineTest extends TestCase {
 		Service onlineService = loadedService.getSource();
 
 		assertEquals(offlineService.getID(), onlineService.getID());
-
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension() + offlineService.getID());
-		super.tearDown2();
-	}
-
-	public void test_09_01_01() {
-		setUp2();
-
-		
 
 		tearDown2();
 	}
@@ -64,7 +61,6 @@ public class OfflineTest extends TestCase {
 		Constants.isOnline = false;
 		// Create a new trade
 		Trade offlineTrade = TradeManager.sharedManager().newTrade(newTestUser("testborrower@xperts.com"), false);
-		//offlineTrade.set("Some new offline trade");
 		// Add trade offline
 		User user = MyApplication.getLocalUser();
 		user.addTrade(offlineTrade);
@@ -82,11 +78,29 @@ public class OfflineTest extends TestCase {
 		tearDown2();
 	}
 
+	// Test cache friends and services for offline use
 	public void test_09_03_01() {
 		setUp2();
 
-		// TODO: Test cache friends and servies for offline use
-		assertTrue(false);
+		User user = MyApplication.getLocalUser();
+
+		Service offlineService = ServiceManager.sharedManager().newService();
+		user.addService(offlineService);
+		user.addFriend(newTestUser("testborrower@xperts.com"));
+
+		// Read service from cache
+		ArrayList<Service> offlineServices = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Service>>() {
+		}, Constants.diskService());
+		for (Service service : offlineServices) {
+			if (service.getID().equals(offlineService.getID())) {
+				assertEquals(service.getID(), offlineService.getID());
+				break;
+			}
+		}
+
+		// Read friend from cache
+		User friend = IOManager.sharedManager().loadUserFromFile("testborrower@xperts.com");
+		assertEquals(friend.getEmail(), "testborrower@xperts.com");
 
 		tearDown2();
 	}
