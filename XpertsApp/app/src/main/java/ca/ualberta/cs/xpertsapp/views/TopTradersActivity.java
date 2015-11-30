@@ -40,7 +40,8 @@ public class TopTradersActivity extends Activity {
     }
 
     /**
-     * This sets the click listener for the user list.
+     * This sets the click listener for the list of top traders.
+     * Navigates to the profile of the user that was clicked on.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,8 @@ public class TopTradersActivity extends Activity {
     }
 
     /**
-     * This initializes the friendListAdapter to display the top traders
+     * This initializes the TopTraderAdapter to display the top traders.
+     * Loads all users and sorts them based on the number of active and complete trades.
      */
     @Override
     protected void onStart() {
@@ -102,15 +104,6 @@ public class TopTradersActivity extends Activity {
         friendsList.setAdapter(topTraderAdapter);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
-    }
     /**
      * Calculates the top trader score for a user
      * @param user The user to calculate the trader score for

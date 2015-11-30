@@ -30,6 +30,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 	protected static SharedPreferences pref;
 
 	protected void setUp2() {
+
 		Constants.isTest = true;
 		Constants.isOnline = true;
 
