@@ -27,7 +27,6 @@ public class MyApplication extends Application {
 	public static final String EMAIL_KEY = Constants.EMAIL_KEY;
 	public static final String LOGGED_IN = Constants.LOGGED_IN;
 	int PRIVATE_MODE = 0;
-	private static boolean online;
 
 	/**
 	 *  Sets up context and {@link SharedPreferences}
