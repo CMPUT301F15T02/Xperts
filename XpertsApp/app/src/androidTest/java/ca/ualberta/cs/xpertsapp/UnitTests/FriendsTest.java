@@ -6,14 +6,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
-import ca.ualberta.cs.xpertsapp.controllers.FriendsListAdapter;
-import ca.ualberta.cs.xpertsapp.model.Constants;
-import ca.ualberta.cs.xpertsapp.model.IOManager;
+import ca.ualberta.cs.xpertsapp.adapters.FriendsListAdapter;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 import ca.ualberta.cs.xpertsapp.views.FriendsActivity;

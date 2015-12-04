@@ -15,16 +15,13 @@ import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
 import ca.ualberta.cs.xpertsapp.controllers.BrowseController;
-import ca.ualberta.cs.xpertsapp.controllers.ServiceListAdapter;
-import ca.ualberta.cs.xpertsapp.model.IOManager;
+import ca.ualberta.cs.xpertsapp.adapters.ServiceListAdapter;
 import ca.ualberta.cs.xpertsapp.model.Service;
 
 /**

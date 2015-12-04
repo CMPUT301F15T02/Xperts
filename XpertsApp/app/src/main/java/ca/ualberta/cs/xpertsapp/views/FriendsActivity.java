@@ -19,7 +19,7 @@ import java.util.List;
 
 import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.R;
-import ca.ualberta.cs.xpertsapp.controllers.FriendsListAdapter;
+import ca.ualberta.cs.xpertsapp.adapters.FriendsListAdapter;
 import ca.ualberta.cs.xpertsapp.controllers.ProfileController;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
