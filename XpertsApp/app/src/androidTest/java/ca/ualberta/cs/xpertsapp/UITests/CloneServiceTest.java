@@ -96,6 +96,10 @@ public class CloneServiceTest extends TestCase {
         Service toClone = (Service) browseActivity.getServiceListView().getAdapter().getItem(0);
         assertTrue(friendsServices.contains(toClone));
 
+        instrumentation.removeMonitor(monitorBrowse);
+        instrumentation = getInstrumentation();
+        monitorService = instrumentation.addMonitor(BrowseServiceDetailsActivity.class.getName(), null, false);
+
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -106,9 +110,6 @@ public class CloneServiceTest extends TestCase {
             }
         });
         getInstrumentation().waitForIdleSync(); // makes sure that all the threads finish
-        instrumentation.removeMonitor(monitorBrowse);
-        instrumentation = getInstrumentation();
-        monitorService = instrumentation.addMonitor(BrowseServiceDetailsActivity.class.getName(), null, false);
 
         BrowseServiceDetailsActivity serviceActivity = (BrowseServiceDetailsActivity) instrumentation.waitForMonitorWithTimeout(monitorService, TIME_OUT);
         assertNotNull(serviceActivity);
