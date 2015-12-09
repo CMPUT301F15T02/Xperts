@@ -50,7 +50,6 @@ public class TradeManager implements IObserver {
 				try {
 					for (Trade trade : diskTrades) {
 						IOManager.sharedManager().storeData(trade, Constants.serverTradeExtension() + trade.getID());
-						System.out.println("push " + trade.toString());
 					}
 					Constants.tradesSync = false;
 				} catch (Exception e) {

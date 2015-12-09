@@ -45,7 +45,6 @@ public class ServiceManager implements IObserver {
 			try {
 				for (Service service : diskServices) {
 					IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
-					System.out.println("push " + service.toString());
 				}
 				Constants.servicesSync = false;
 			} catch (Exception e) {

@@ -184,18 +184,5 @@ public class BrowseServicesActivity extends Activity implements AdapterView.OnIt
     public void updateListView(){
         services = Controller.getServices(currentCategory, currentQuery);
         serviceAdapter.updateServiceList(services);
-
-        // Cache
-        /*ArrayList<Service> cachedServices = new ArrayList<Service>();
-        ArrayList<Service> diskServices = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Service>>() {
-        }, "services.sav");
-        for (Service service : diskServices) {
-            System.out.println("bbb" + service.toString());
-            if (!service.getOwner().getEmail().equals(MyApplication.getLocalUser().getEmail())) {
-                cachedServices.add(service);
-            }
-        }
-
-        serviceAdapter.updateServiceList(cachedServices);*/
     }
 }

@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -113,8 +114,7 @@ public class AddServiceActivity extends Activity {
 			}
 			catch (RuntimeException e){
 				e.printStackTrace();
-				Toast.makeText(getApplicationContext(), "Runtime error",
-						Toast.LENGTH_LONG).show();
+				Log.d(this.getClass().getSimpleName(), "Runtime error");
 			}
 		}
 		else{
@@ -122,8 +122,7 @@ public class AddServiceActivity extends Activity {
 				asc.editService(getTheTitle(), getDescription(), category, getPrivate(),intent.getStringExtra(Constants.IntentServiceName), getPictures());
 			}
 			catch (RuntimeException e){
-				Toast.makeText(getApplicationContext(), "Runtime error",
-						Toast.LENGTH_LONG).show();
+				Log.d(this.getClass().getSimpleName(), "Runtime error");
 			}
 		}
 		setResult(RESULT_OK);
