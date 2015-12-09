@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -22,6 +23,17 @@ public class TradeManager implements IObserver {
 
 	private Map<String, Trade> trades = new HashMap<String, Trade>();
 	private ArrayList<Trade> diskTrades = new ArrayList<Trade>();
+
+	/**
+	 * @return A list of loaded trades
+	 */
+	public List<Trade> getTrades() {
+		List<Trade> users = new ArrayList<Trade>();
+		for (Trade user : this.trades.values()) {
+			users.add(user);
+		}
+		return users;
+	}
 
 	/**
 	 * Return the found trade, always find online first, only if no internet cache will be loaded

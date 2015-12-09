@@ -89,7 +89,7 @@ public class OfflineTest extends TestCase {
 
 		// Read service from cache
 		ArrayList<Service> offlineServices = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Service>>() {
-		}, Constants.diskService());
+		}, Constants.diskService);
 		for (Service service : offlineServices) {
 			if (service.getID().equals(offlineService.getID())) {
 				assertEquals(service.getID(), offlineService.getID());

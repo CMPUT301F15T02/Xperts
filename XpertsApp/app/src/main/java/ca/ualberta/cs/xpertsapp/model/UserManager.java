@@ -25,6 +25,13 @@ public class UserManager implements IObserver {
 	private User diskUser;
 
 	/**
+	 * @return A List of loaded Users
+	 */
+	public List<User> getUsers() {
+		return new ArrayList<User>(this.users.values());
+	}
+
+	/**
 	 * @param user Registers this as an observer on User and adds it to the List
 	 */
 	private void addUser(User user) {
