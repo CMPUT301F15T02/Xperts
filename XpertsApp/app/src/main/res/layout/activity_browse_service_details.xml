@@ -86,7 +86,7 @@
             android:text="Clone"
             android:id="@+id/cloneBtn"
             android:theme="@style/simpleBtn"
-            android:background="@color/blue"
+            android:background="@color/yellow"
             android:textColor="#ffffffff"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
