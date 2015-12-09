@@ -85,8 +85,8 @@ public class TopTradersActivity extends Activity {
             AllUsers = UserManager.sharedManager().findUsers("*");
         } catch (Exception e) {
             Context context = getApplicationContext();
-            CharSequence text = "Failed to load top users, server busy. Please try again.";
-            int duration = Toast.LENGTH_LONG;
+            CharSequence text = "Server busy. Please try again.";
+            int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, text, duration);
             toast.show();
         }

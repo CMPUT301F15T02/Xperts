@@ -206,7 +206,14 @@ public class IOManager {
 		}
 	}
 
-	// Read only friends, services or trades of local user from local storage
+	/**
+	 * Read from cache friends, services or trades related to local user
+	 * @param context = MyApplication.getContext()
+	 * @param typeToken depending on class type
+	 * @param filename depending on class type
+	 * @param <T> either User, Service, Trade
+	 * @return a list of friends, services or trades
+	 */
 	public <T> ArrayList<T> loadFromFile(Context context, TypeToken<ArrayList<T>> typeToken, String filename) {
 		ArrayList<T> objects = new ArrayList<T>();
 		try {
@@ -224,7 +231,13 @@ public class IOManager {
 		return objects;
 	}
 
-	// Write to local storage
+	/**
+	 * Write to cache only friends, services, or trades related to local user
+	 * @param objects = list of friends, services or trades
+	 * @param context = MyApplication.getContext()
+	 * @param filename depending on class type
+	 * @param <T> either User, Service or Trade
+	 */
 	public <T> void writeToFile(ArrayList<T> objects, Context context, String filename) {
 		try {
 			FileOutputStream fos = context.openFileOutput(filename, 0);
@@ -239,11 +252,14 @@ public class IOManager {
 		}
 	}
 
-	// Replace a user from users
-	// Have to remove then re add
+	/**
+	 * Cache local user to disk
+	 * @param user = MyApplication.getLocalUser()
+	 */
 	public void writeUserToFile(User user) {
 		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {
 		}, Constants.diskUser);
+		// Replace a user in users, have to remove then re add
 		for (User u : diskUsers) {
 			if (u.getEmail().equals(user.getEmail())) {
 				diskUsers.remove(u);
@@ -255,7 +271,11 @@ public class IOManager {
 		writeToFile(diskUsers, MyApplication.getContext(), Constants.diskUser);
 	}
 
-	// Get a user from users
+	/**
+	 * Get local user from users in cache
+	 * @param email is local user's email
+	 * @return local user
+	 */
 	public User loadUserFromFile(String email) {
 		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {
 		}, Constants.diskUser);

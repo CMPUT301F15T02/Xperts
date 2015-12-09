@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:text="CANCEL TRADE"
         android:id="@+id/cancelButton"
-        android:background="@color/yellow"
+        android:background="@color/blue"
         android:textColor="@color/white50"
         android:singleLine="false"
         android:textSize="16sp"

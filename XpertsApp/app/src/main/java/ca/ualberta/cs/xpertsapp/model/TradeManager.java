@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -14,34 +13,23 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
-import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
+
 
 /**
  * Manages loaded trades to prevent circular loading
  */
 public class TradeManager implements IObserver {
+
 	private Map<String, Trade> trades = new HashMap<String, Trade>();
 	private ArrayList<Trade> diskTrades = new ArrayList<Trade>();
 
-	// Get/Set
-
 	/**
-	 * @return A list of loaded trades
-	 */
-	public List<Trade> getTradess() {
-		List<Trade> users = new ArrayList<Trade>();
-		for (Trade user : this.trades.values()) {
-			users.add(user);
-		}
-		return users;
-	}
-
-	/**
+	 * Return the found trade, always find online first, only if no internet cache will be loaded
 	 * @param id the Id of the trade to look for
 	 * @return the trade or null if not found
 	 */
 	public Trade getTrade(String id) {
+
 		// Push local user's trades if have internet
 		diskTrades = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Trade>>() {
 		}, Constants.diskTrade);

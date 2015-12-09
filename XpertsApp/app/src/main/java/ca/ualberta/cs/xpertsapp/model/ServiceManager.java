@@ -15,7 +15,7 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
+
 
 /**
  * Manages services
@@ -26,13 +26,7 @@ public class ServiceManager implements IObserver {
 	private ArrayList<Service> diskServices = new ArrayList<Service>();
 
 	/**
-	 * @return the list of loaded services
-	 */
-	public List<Service> getServicess() {
-		return new ArrayList<Service>(this.services.values());
-	}
-
-	/**
+	 * Return the found service, always find online first, only if no internet cache will be loaded
 	 * @param id the id of the service to look for
 	 * @return the service or null if it doesn't exist
 	 */
