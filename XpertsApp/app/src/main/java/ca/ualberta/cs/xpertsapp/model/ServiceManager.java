@@ -28,7 +28,7 @@ public class ServiceManager implements IObserver {
 	/**
 	 * @return the list of loaded services
 	 */
-	public List<Service> getServices() {
+	public List<Service> getServicess() {
 		return new ArrayList<Service>(this.services.values());
 	}
 

@@ -127,13 +127,4 @@ public class MyApplication extends Application {
 		login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		MyApplication.context.startActivity(login);
 	}
-
-	// Doesn't work for emulator
-	/*public static boolean isOnline() {
-		ConnectivityManager cm =
-				(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-
-		return netInfo != null && netInfo.isConnected();
-	}*/
 }

@@ -29,7 +29,7 @@ public class TradeManager implements IObserver {
 	/**
 	 * @return A list of loaded trades
 	 */
-	public List<Trade> getTrades() {
+	public List<Trade> getTradess() {
 		List<Trade> users = new ArrayList<Trade>();
 		for (Trade user : this.trades.values()) {
 			users.add(user);
@@ -44,7 +44,7 @@ public class TradeManager implements IObserver {
 	public Trade getTrade(String id) {
 		// Push local user's trades if have internet
 		diskTrades = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Trade>>() {
-		}, "trades.sav");
+		}, Constants.diskTrade());
 		if (Constants.tradesSync) {
 			if (diskTrades != null) {
 				try {
@@ -120,7 +120,7 @@ public class TradeManager implements IObserver {
 			diskTrades.add(trade);
 			Constants.tradesSync = true;
 		}
-		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), "trades.sav");
+		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), Constants.diskTrade());
 
 		trade.addObserver(this);
 		this.trades.put(trade.getID(), trade);
@@ -136,11 +136,10 @@ public class TradeManager implements IObserver {
 		for (Trade t : diskTrades) {
 			if (t.getID().equals(trade.getID())) {
 				diskTrades.remove(t);
-				System.out.println("push remove" + t.getID());
 				break;
 			}
 		}
-		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), "trades.sav");
+		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), Constants.diskTrade());
 
 		trade.removeObserver(this);
 		this.trades.remove(trade.getID());

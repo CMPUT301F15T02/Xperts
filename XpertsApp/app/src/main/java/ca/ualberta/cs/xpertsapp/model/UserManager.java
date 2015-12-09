@@ -21,7 +21,6 @@ import ca.ualberta.cs.xpertsapp.views.MainActivity;
  */
 public class UserManager implements IObserver {
 	private Map<String, User> users = new HashMap<String, User>();
-	//private ArrayList<User> diskUsers = new ArrayList<User>();
 	private User diskUser;
 
 	// Get/Set

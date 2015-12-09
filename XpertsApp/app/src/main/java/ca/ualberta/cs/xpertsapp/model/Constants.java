@@ -6,12 +6,9 @@ package ca.ualberta.cs.xpertsapp.model;
 public class Constants {
 	public static boolean isOnline = true;
 	public static boolean userSync = false;
-	public static boolean usersSync = false;
 	public static boolean servicesSync = false;
 	public static boolean tradesSync = false;
 
-	public static boolean allowOnline = true;
-	public static boolean allowPhotoDownload = true;
 	public static boolean isTest = false;
 	public static final String PREF_FILE = "XpertsPreferences";
 	public static final String EMAIL_KEY = "email";
@@ -95,5 +92,15 @@ public class Constants {
 			return "services_test.sav";
 		}
 		return "services.sav";
+	}
+
+	/**
+	 * @return The filename for caching Trades
+	 */
+	public static String diskTrade() {
+		if (isTest) {
+			return "trades_test.sav";
+		}
+		return "trades.sav";
 	}
 }
