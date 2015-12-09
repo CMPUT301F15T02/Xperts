@@ -4,12 +4,12 @@ package ca.ualberta.cs.xpertsapp.model;
  * A class with only static methods which are used to retrieve constant strings
  */
 public class Constants {
-	public static boolean isOnline = true;
 	public static boolean userSync = false;
 	public static boolean servicesSync = false;
 	public static boolean tradesSync = false;
 
 	public static boolean isTest = false;
+	public static boolean allowOnline = true;
 	public static final String PREF_FILE = "XpertsPreferences";
 	public static final String EMAIL_KEY = "email";
 	public static final String LOGGED_IN = "loggedIn";
@@ -75,32 +75,18 @@ public class Constants {
 	}
 
 	/**
-	 * @return The filename for caching Users
+	 * Filename for caching Users
 	 */
-	public static String diskUser() {
-		if (isTest) {
-			return "users_test.sav";
-		}
-		return "users.sav";
-	}
+	public static String diskUser = isTest ? "users_test.sav" : "users.sav";
 
 	/**
-	 * @return The filename for caching Services
+	 * Filename for caching Services
 	 */
-	public static String diskService() {
-		if (isTest) {
-			return "services_test.sav";
-		}
-		return "services.sav";
-	}
+	public static String diskService = isTest ? "services_test.sav" : "services.sav";
 
 	/**
-	 * @return The filename for caching Trades
+	 * Filename for caching Trades
 	 */
-	public static String diskTrade() {
-		if (isTest) {
-			return "trades_test.sav";
-		}
-		return "trades.sav";
-	}
+	public static String diskTrade = isTest ? "trades_test.sav" : "trades.sav";
+
 }

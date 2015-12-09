@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,7 +60,7 @@ public class IOManager {
 
 	public <T> T fetchData(String meta, TypeToken<T> typeToken) {
 		String loadedData;
-		if (Constants.isOnline) {
+		if (Constants.allowOnline) {
 			HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + meta);
 			try {
 				HttpResponse response = new AsyncRequest().execute(httpGet).get(); // Tier 1
@@ -144,7 +143,7 @@ public class IOManager {
 
 	public <T> List<SearchHit<T>> searchData(String searchMeta, TypeToken<SearchResponse<T>> typeToken) {
 		String loadedData;
-		if (Constants.isOnline) {
+		if (Constants.allowOnline) {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpGet httpGet = new HttpGet(Constants.serverBaseURL() + searchMeta);
 			try {
@@ -244,7 +243,7 @@ public class IOManager {
 	// Have to remove then re add
 	public void writeUserToFile(User user) {
 		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {
-		}, Constants.diskUser());
+		}, Constants.diskUser);
 		for (User u : diskUsers) {
 			if (u.getEmail().equals(user.getEmail())) {
 				diskUsers.remove(u);
@@ -253,13 +252,13 @@ public class IOManager {
 		}
 		diskUsers.add(user);
 		//Constants.usersSync = true;
-		writeToFile(diskUsers, MyApplication.getContext(), Constants.diskUser());
+		writeToFile(diskUsers, MyApplication.getContext(), Constants.diskUser);
 	}
 
 	// Get a user from users
 	public User loadUserFromFile(String email) {
 		ArrayList<User> diskUsers = loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<User>>() {
-		}, Constants.diskUser());
+		}, Constants.diskUser);
 		User diskUser = null;
 		for (User user : diskUsers) {
 			if (user.getEmail().equals(email)) {

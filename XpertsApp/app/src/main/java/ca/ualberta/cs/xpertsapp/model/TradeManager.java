@@ -44,7 +44,7 @@ public class TradeManager implements IObserver {
 	public Trade getTrade(String id) {
 		// Push local user's trades if have internet
 		diskTrades = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Trade>>() {
-		}, Constants.diskTrade());
+		}, Constants.diskTrade);
 		if (Constants.tradesSync) {
 			if (diskTrades != null) {
 				try {
@@ -120,7 +120,7 @@ public class TradeManager implements IObserver {
 			diskTrades.add(trade);
 			Constants.tradesSync = true;
 		}
-		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), Constants.diskTrade());
+		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), Constants.diskTrade);
 
 		trade.addObserver(this);
 		this.trades.put(trade.getID(), trade);
@@ -139,7 +139,7 @@ public class TradeManager implements IObserver {
 				break;
 			}
 		}
-		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), Constants.diskTrade());
+		IOManager.sharedManager().writeToFile(diskTrades, MyApplication.getContext(), Constants.diskTrade);
 
 		trade.removeObserver(this);
 		this.trades.remove(trade.getID());

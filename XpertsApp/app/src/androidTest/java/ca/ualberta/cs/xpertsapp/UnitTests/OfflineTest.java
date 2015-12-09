@@ -12,7 +12,6 @@ import ca.ualberta.cs.xpertsapp.model.ServiceManager;
 import ca.ualberta.cs.xpertsapp.model.Trade;
 import ca.ualberta.cs.xpertsapp.model.TradeManager;
 import ca.ualberta.cs.xpertsapp.model.User;
-import ca.ualberta.cs.xpertsapp.model.UserManager;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 
 public class OfflineTest extends TestCase {
@@ -34,7 +33,7 @@ public class OfflineTest extends TestCase {
 		setUp2();
 
 		// Disable internet
-		Constants.isOnline = false;
+		Constants.allowOnline = false;
 		// Create a new service
 		Service offlineService = ServiceManager.sharedManager().newService();
 		offlineService.setName("Some new offline service");
@@ -43,7 +42,7 @@ public class OfflineTest extends TestCase {
 		user.addService(offlineService);
 
 		// Enable online, automatically push
-		Constants.isOnline = true;
+		Constants.allowOnline = true;
 
 		SearchHit<Service> loadedService = IOManager.sharedManager().fetchData(Constants.serverServiceExtension() + offlineService.getID(), new TypeToken<SearchHit<Service>>() {});
 		Service onlineService = loadedService.getSource();
@@ -58,7 +57,7 @@ public class OfflineTest extends TestCase {
 		setUp2();
 
 		// Disable internet
-		Constants.isOnline = false;
+		Constants.allowOnline = false;
 		// Create a new trade
 		Trade offlineTrade = TradeManager.sharedManager().newTrade(newTestUser("testborrower@xperts.com"), false);
 		// Add trade offline
@@ -66,7 +65,7 @@ public class OfflineTest extends TestCase {
 		user.addTrade(offlineTrade);
 
 		// Enable online & automatically push
-		Constants.isOnline = true;
+		Constants.allowOnline = true;
 
 		SearchHit<Trade> loadedTrade = IOManager.sharedManager().fetchData(Constants.serverTradeExtension() + offlineTrade.getID(), new TypeToken<SearchHit<Trade>>() {});
 		Trade onlineTrade = loadedTrade.getSource();

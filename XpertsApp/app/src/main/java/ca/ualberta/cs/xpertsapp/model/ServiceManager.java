@@ -40,7 +40,7 @@ public class ServiceManager implements IObserver {
 
 		// Push local user's services if have internet
 		diskServices = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Service>>() {
-		}, Constants.diskService());
+		}, Constants.diskService);
 		if (Constants.servicesSync) {
 			try {
 				for (Service service : diskServices) {
@@ -103,7 +103,7 @@ public class ServiceManager implements IObserver {
 			diskServices.add(service);
 			Constants.servicesSync = true;
 		}
-		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService());
+		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService);
 
 		service.addObserver(this);
 		this.services.put(service.getID(), service);
@@ -125,7 +125,7 @@ public class ServiceManager implements IObserver {
 				break;
 			}
 		}
-		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService());
+		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService);
 
 		service.removeObserver(this);
 		this.services.remove(service.getID());
