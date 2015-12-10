@@ -1,12 +1,8 @@
 package ca.ualberta.cs.xpertsapp.UnitTests;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.test.ActivityInstrumentationTestCase2;
 
-import java.util.List;
-
-import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.CategoryList;
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.IOManager;
@@ -32,7 +28,7 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 	protected void setUp2() {
 
 		Constants.isTest = true;
-		Constants.isOnline = true;
+		Constants.allowOnline = true;
 
 		IOManager.sharedManager().clearCache();
 

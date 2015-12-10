@@ -15,7 +15,7 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
+
 
 /**
  * Manages services
@@ -33,6 +33,7 @@ public class ServiceManager implements IObserver {
 	}
 
 	/**
+	 * Return the found service, always find online first, only if no internet cache will be loaded
 	 * @param id the id of the service to look for
 	 * @return the service or null if it doesn't exist
 	 */
@@ -40,12 +41,11 @@ public class ServiceManager implements IObserver {
 
 		// Push local user's services if have internet
 		diskServices = IOManager.sharedManager().loadFromFile(MyApplication.getContext(), new TypeToken<ArrayList<Service>>() {
-		}, Constants.diskService());
+		}, Constants.diskService);
 		if (Constants.servicesSync) {
 			try {
 				for (Service service : diskServices) {
 					IOManager.sharedManager().storeData(service, Constants.serverServiceExtension() + service.getID());
-					System.out.println("push " + service.toString());
 				}
 				Constants.servicesSync = false;
 			} catch (Exception e) {
@@ -103,7 +103,7 @@ public class ServiceManager implements IObserver {
 			diskServices.add(service);
 			Constants.servicesSync = true;
 		}
-		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService());
+		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService);
 
 		service.addObserver(this);
 		this.services.put(service.getID(), service);
@@ -125,7 +125,7 @@ public class ServiceManager implements IObserver {
 				break;
 			}
 		}
-		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService());
+		IOManager.sharedManager().writeToFile(diskServices, MyApplication.getContext(), Constants.diskService);
 
 		service.removeObserver(this);
 		this.services.remove(service.getID());

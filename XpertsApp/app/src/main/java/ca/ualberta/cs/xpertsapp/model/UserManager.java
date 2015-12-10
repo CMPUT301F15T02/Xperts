@@ -14,17 +14,15 @@ import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
-import ca.ualberta.cs.xpertsapp.views.MainActivity;
+
 
 /**
  * Manages the loaded users to allow circular references without getting stuck in a loading loop
  */
 public class UserManager implements IObserver {
-	private Map<String, User> users = new HashMap<String, User>();
-	//private ArrayList<User> diskUsers = new ArrayList<User>();
-	private User diskUser;
 
-	// Get/Set
+	private Map<String, User> users = new HashMap<String, User>();
+	private User diskUser;
 
 	/**
 	 * @return A List of loaded Users
@@ -46,14 +44,14 @@ public class UserManager implements IObserver {
 	}
 
 	/**
+	 * Return the found user, always find online first, only if no internet cache will be loaded
 	 * @param email The email of the user
 	 * @return The User with that email or null
 	 */
 	public User getUser(String email) {
 
-		diskUser = IOManager.sharedManager().loadUserFromFile(email);
-
 		// Push local user if have internet
+		diskUser = IOManager.sharedManager().loadUserFromFile(email);
 		if (Constants.userSync) {
 			if (diskUser != null) {
 				try {

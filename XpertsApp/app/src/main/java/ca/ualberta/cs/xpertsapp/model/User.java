@@ -7,6 +7,7 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.interfaces.IObservable;
 import ca.ualberta.cs.xpertsapp.interfaces.IObserver;
 
+
 /**
  * This class is used to internally represent a real life user of this digital application for android.  Some functions run in O(1) time (maybe) and others do not.
  * Pl0x only have one instance of user representing a person at any given time.
@@ -24,12 +25,9 @@ public class User implements IObservable {
 	private List<String> trades = new ArrayList<String>();
 
 	// Constructor
-
 	protected User(String email) {
 		this.email = email;
 	}
-
-	// Get/Set
 
 	/**
 	 * Get the email
@@ -159,7 +157,7 @@ public class User implements IObservable {
 			service.setOwner(this.email);
 		}
 
-		// Write disk first, no observer
+		// Write disk first
 		Constants.userSync = true;
 		IOManager.sharedManager().writeUserToFile(this);
 
@@ -177,7 +175,7 @@ public class User implements IObservable {
 
 		this.services.remove(service.getID());
 
-		// Write disk first, no observer
+		// Write disk first
 		Constants.userSync = true;
 		IOManager.sharedManager().writeUserToFile(this);
 
@@ -219,7 +217,7 @@ public class User implements IObservable {
 		this.trades.add(trade.getID());
 		IOManager.sharedManager().writeUserToFile(this);
 
-		// Write disk first, no observer
+		// Write disk first
 		Constants.userSync = true;
 		IOManager.sharedManager().writeUserToFile(this);
 
@@ -236,7 +234,7 @@ public class User implements IObservable {
 		this.trades.remove(trade.getID());
 		//trade.getOwner().removeTradeFromOwner(trade);
 
-		// Write disk first, no observer
+		// Write disk first
 		Constants.userSync = true;
 		IOManager.sharedManager().writeUserToFile(this);
 

@@ -50,9 +50,11 @@ public class BrowseServiceDetailsActivity extends Activity {
         theTitle.setText(service.getName());
         category.setText(service.getCategory().toString());
         description.setText(service.getDescription());
-        if (!(service.getPictures().isEmpty())) {
-            imageView.setImageBitmap(service.getPictures().get(0));
-        }
+        try {
+            if (!(service.getPictures().isEmpty())) {
+                imageView.setImageBitmap(service.getPictures().get(0));
+            }
+        } catch (Exception e) {};
         cloneBtn = (Button) findViewById(R.id.cloneBtn);
         cloneBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

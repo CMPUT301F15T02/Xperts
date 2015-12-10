@@ -58,9 +58,10 @@ public class AddServiceController {
         newService.setDescription(description);
         newService.setCategory(category);
         newService.setShareable(Boolean.TRUE);
-        for (int i = 0; i < 1;i++)
-        {
-            newService.addPicture(pictures.get(i));
+        if (pictures.size()>0) {
+            for (int i = 0; i < 1; i++) {
+                newService.addPicture(pictures.get(i));
+            }
         }
         MyApplication.getLocalUser().addService(newService);
     }

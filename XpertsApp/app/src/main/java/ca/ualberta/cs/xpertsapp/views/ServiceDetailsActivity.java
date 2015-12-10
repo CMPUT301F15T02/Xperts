@@ -60,11 +60,13 @@ public class ServiceDetailsActivity extends Activity {
 			{isPublic.setText(Constants.notShareable);}
 		category.setText(service.getCategory().toString());
 		description.setText(service.getDescription());
-		if (!(service.getPictures().isEmpty())) {
-			if (service.getPictures().get(0) != null) {
-				image.setImageBitmap(service.getPictures().get(0));
+		try {
+			if (!(service.getPictures().isEmpty())) {
+				if (service.getPictures().get(0) != null) {
+					image.setImageBitmap(service.getPictures().get(0));
+				}
 			}
-		}
+		} catch (Exception e) {};
 		Notified();
 
  	}
@@ -83,11 +85,13 @@ public class ServiceDetailsActivity extends Activity {
 		{isPublic.setText(Constants.notShareable);}
 		category.setText(service.getCategory().toString());
 		description.setText(service.getDescription());
-		if (!(service.getPictures().isEmpty())) {
-			if (service.getPictures().get(0) != null) {
-				image.setImageBitmap(service.getPictures().get(0));
+		try {
+			if (!(service.getPictures().isEmpty())) {
+				if (service.getPictures().get(0) != null) {
+					image.setImageBitmap(service.getPictures().get(0));
+				}
 			}
-		}
+		} catch (Exception e) {};
 	}
 
 	@Override

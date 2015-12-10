@@ -55,6 +55,6 @@
         android:onClick="makeTrade"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:background="@color/yellow"
+        android:background="@color/blue"
         android:textColor="#ffffffff" />
 </RelativeLayout>

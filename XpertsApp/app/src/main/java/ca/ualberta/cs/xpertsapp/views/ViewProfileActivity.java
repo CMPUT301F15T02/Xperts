@@ -71,7 +71,6 @@ public class ViewProfileActivity extends Activity {
         name.setText(user.getName());
         email.setText(user.getEmail());
         location.setText(user.getLocation());
-       // Toast.makeText(context, "Internet connection lost", Toast.LENGTH_SHORT).show();
 
         serviceList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -4,15 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.Build;
 import android.widget.Toast;
 
 import ca.ualberta.cs.xpertsapp.model.Constants;
 import ca.ualberta.cs.xpertsapp.model.User;
 import ca.ualberta.cs.xpertsapp.model.UserManager;
 import ca.ualberta.cs.xpertsapp.views.LoginActivity;
+
 
 /**
  * Custom application class to store login state and active user
@@ -127,13 +125,4 @@ public class MyApplication extends Application {
 		login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		MyApplication.context.startActivity(login);
 	}
-
-	// Doesn't work for emulator
-	/*public static boolean isOnline() {
-		ConnectivityManager cm =
-				(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-		NetworkInfo netInfo = cm.getActiveNetworkInfo();
-
-		return netInfo != null && netInfo.isConnected();
-	}*/
 }
