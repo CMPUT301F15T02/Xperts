@@ -34,9 +34,9 @@ import ca.ualberta.cs.xpertsapp.MyApplication;
 import ca.ualberta.cs.xpertsapp.model.es.SearchHit;
 import ca.ualberta.cs.xpertsapp.model.es.SearchResponse;
 
+
 /**
  * Manages loading and saving data from disk and the network
- * <p/>
  * Limitation: does not delete local stuff when the server deletes it
  */
 public class IOManager {

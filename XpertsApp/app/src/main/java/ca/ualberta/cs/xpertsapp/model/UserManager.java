@@ -124,7 +124,6 @@ public class UserManager implements IObserver {
 
 	/**
 	 * Get a list of users sorted by match relevance
-	 * <p/>
 	 * Uses the url [...]/_search?q='%s'
 	 *
 	 * @param meta What to search for

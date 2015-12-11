@@ -170,11 +170,11 @@ public class Trade implements IObservable {
 	}
 
 	/**
-	 * status = 0 -> pending
-	 * status = 1 -> accepted
-	 * status = 2 -> cancelled
-	 * status = 3 -> declined
-	 * status = 4 -> complete
+	 * status = 0 - pending
+	 * status = 1 - accepted
+	 * status = 2 - cancelled
+	 * status = 3 - declined
+	 * status = 4 - complete
 	 * @return an int saying the state the trade is in
 	 */
 	public int getStatus() {

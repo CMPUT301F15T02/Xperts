@@ -5,6 +5,7 @@ ca.ualberta.cs.xpertsapp.UITests.FriendTests
 ca.ualberta.cs.xpertsapp.UITests.InventoryTests
 ca.ualberta.cs.xpertsapp.UITests.TradeTests
 ca.ualberta.cs.xpertsapp.UnitTests
+ca.ualberta.cs.xpertsapp.adapters
 ca.ualberta.cs.xpertsapp.controllers
 ca.ualberta.cs.xpertsapp.interfaces
 ca.ualberta.cs.xpertsapp.model
