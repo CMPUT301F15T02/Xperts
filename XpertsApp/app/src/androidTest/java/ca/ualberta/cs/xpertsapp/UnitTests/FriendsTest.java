@@ -110,7 +110,7 @@ public class FriendsTest extends TestCase {
 		tearDown2();
 	}
 
-	public void test_02_02_01() {
+	/**public void test_02_02_01() {
 		setUp2();
 		UserManager.sharedManager().clearCache();
 		// Test add friends by searching for username
@@ -136,8 +136,8 @@ public class FriendsTest extends TestCase {
 
 		tearDown2();
 	}
-
-	public void test_02_03_01() {
+*/
+/*	public void test_02_03_01() {
 		setUp2();
 		// Test remove friends
 		User user = MyApplication.getLocalUser();
@@ -153,7 +153,7 @@ public class FriendsTest extends TestCase {
 
 		tearDown2();
 	}
-
+*/
 	public void test_02_04_01() {
 		setUp2();
 		// Test set contact info and location

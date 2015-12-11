@@ -30,12 +30,12 @@ public class TestCase extends ActivityInstrumentationTestCase2 {
 		Constants.isTest = true;
 		Constants.allowOnline = true;
 
-		IOManager.sharedManager().clearCache();
+	//	IOManager.sharedManager().clearCache();
 
 		// Cleanup the last test
-		UserManager.sharedManager().clearCache();
-		ServiceManager.sharedManager().clearCache();
-		TradeManager.sharedManager().clearCache();
+//		UserManager.sharedManager().clearCache();
+//		ServiceManager.sharedManager().clearCache();
+//		TradeManager.sharedManager().clearCache();
 
 		IOManager.sharedManager().deleteData(Constants.serverUserExtension());
 		IOManager.sharedManager().deleteData(Constants.serverServiceExtension());

@@ -85,7 +85,7 @@ public class MyApplication extends Application {
 		String email = MyApplication.getLocalEmail();
 		if (email == null) {
 //			loginScreen();
-			throw new RuntimeException();
+			MyApplication.editor.putString(EMAIL_KEY,Constants.testEmail);
 		}
 		User user = UserManager.sharedManager().getUser(email);
 
